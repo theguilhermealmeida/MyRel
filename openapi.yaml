@@ -670,22 +670,26 @@ paths:
                       type: array
 
   /search: # search for a user and return a array with found users
-    get:
+    post:
       operationId: R701
       summary: "R701: Search"
       description: "Search for a user. Access: USR, ADM"
       tags:
         - "M08: Search"
-      parameters:
-        - name: query
-          in: query
-          description: "Search query"
-          required: true
-          schema:
-            type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                search:
+                  type: string
+              required:
+                - search
       responses:
         "200":
-          description: "Show a search result. Access: USR, ADM"
+          description: "Search for a user. Access: USR, ADM"
           content:
             application/json:
               schema:
@@ -699,5 +703,4 @@ paths:
                       type: string
                     name:
                       type: string
-                    
-    
+                  
