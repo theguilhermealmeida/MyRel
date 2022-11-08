@@ -15,6 +15,8 @@ tags:
   - name: "M04: Posts"
   - name: "M05: Comment"
   - name: "M06: Reaction"
+  - name: "M07: Feed"
+  - name: "M08: Search"
 paths:
   /login:
     get:
@@ -295,12 +297,10 @@ paths:
                     date:
                       type: string
                       format: date-time
-                    likes:
-                      type: integer
                     comments:
                       type: integer
-                    liked:
-                      type: boolean
+                    reactions:
+                      type: array
                     text :
                       type: string
     post:
@@ -361,12 +361,10 @@ paths:
                   date:
                     type: string
                     format: date-time
-                  likes:
-                    type: integer
                   comments:
                     type: integer
-                  liked:
-                    type: boolean
+                  reactions:
+                    type: array
                   text :
                     type: string
     put:
@@ -419,6 +417,158 @@ paths:
       responses:
         "200":
           description: "Delete a post. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+  /comment:
+    get:
+      operationId: R401
+      summary: "R401: Get Comments"
+      description: "Get all comments. Access: USR, ADM"
+      tags:
+        - "M05: Comments"
+      responses:
+        "200":
+          description: "Show all comments. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user:
+                      type: string
+                    text:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    reactions:
+                      type: array
+    post:
+      operationId: R402
+      summary: "R402: Create Comment"
+      description: "Create a new comment. Access: USR, ADM"
+      tags:
+        - "M05: Comments"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                post:
+                  type: integer
+                text:
+                  type: string
+              required:
+                - text
+                - post
+      responses:
+        "200":
+          description: "Create a new comment. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+  
+  /comment/{id}:
+    get:
+      operationId: R403
+      summary: "R403: Get Comment"
+      description: "Get a comment. Access: USR, ADM"
+      tags:
+        - "M05: Comments"
+      parameters:
+        - name: id
+          in: path
+          description: "Comment ID"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Show a comment. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user:
+                    type: string
+                  text:
+                    type: string
+                  date:
+                    type: string
+                    format: date-time
+                  reactions:
+                    type: array
+    put:
+      operationId: R404
+      summary: "R404: Update Comment"
+      description: "Update a comment. Access: USR, ADM"
+      tags:
+        - "M05: Comments"
+      parameters:
+        - name: id
+          in: path
+          description: "Comment ID"
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+              required:
+                - text
+      responses:
+        "200":
+          description: "Update a comment. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+    delete:
+      operationId: R405
+      summary: "R405: Delete Comment"
+      description: "Delete a comment. Access: USR, ADM"
+      tags:
+        - "M05: Comments"
+      parameters:
+        - name: id
+          in: path
+          description: "Comment ID"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Delete a comment. Access: USR, ADM"
           content:
             application/json:
               schema:
