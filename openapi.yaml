@@ -149,7 +149,7 @@ paths:
                   description: "Failed registration. Redirecting back to register form"
                   value: "/register"
 
-  /user
+  /user:
     get:
       operationId: R201
       summary: "R201: User Profile"
@@ -179,6 +179,9 @@ paths:
                   format: email
                 name:
                   type: string
+                
+
+
     delete:
       operationId: R203
       summary: "R203: Delete User Profile"
