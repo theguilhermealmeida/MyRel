@@ -14,7 +14,7 @@ tags:
   - name: "M03: User Notifications"
   - name: "M04: Posts"
   - name: "M05: Comments"
-  - name: "M06: Reaction"
+  - name: "M06: Reactions"
   - name: "M07: Feed"
   - name: "M08: Search"
 paths:
