@@ -269,4 +269,160 @@ paths:
                 properties:
                   success:
                     type: boolean
-                
+  /post:
+    get:
+      operationId: R301
+      summary: "R301: Get Posts"
+      description: "Get all posts. Access: USR, ADM"
+      tags:
+        - "M04: Posts"
+      responses:
+        "200":
+          description: "Show all posts. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user:
+                      type: string
+                    content:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    likes:
+                      type: integer
+                    comments:
+                      type: integer
+                    liked:
+                      type: boolean
+                    text :
+                      type: string
+    post:
+      operationId: R302
+      summary: "R302: Create Post"
+      description: "Create a new post. Access: USR, ADM"
+      tags:
+        - "M04: Posts"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+              required:
+                - content
+      responses:
+        "200":
+          description: "Create a new post. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+  /post/{id}:
+    get:
+      operationId: R303
+      summary: "R303: Get Post"
+      description: "Get a post. Access: USR, ADM"
+      tags:
+        - "M04: Posts"
+      parameters:
+        - name: id
+          in: path
+          description: "Post ID"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Show a post. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user:
+                    type: string
+                  content:
+                    type: string
+                  date:
+                    type: string
+                    format: date-time
+                  likes:
+                    type: integer
+                  comments:
+                    type: integer
+                  liked:
+                    type: boolean
+                  text :
+                    type: string
+    put:
+      operationId: R304
+      summary: "R304: Update Post"
+      description: "Update a post. Access: USR, ADM"
+      tags:
+        - "M04: Posts"
+      parameters:
+        - name: id
+          in: path
+          description: "Post ID"
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+              required:
+                - content
+      responses:
+        "200":
+          description: "Update a post. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+    delete:
+      operationId: R305
+      summary: "R305: Delete Post"
+      description: "Delete a post. Access: USR, ADM"
+      tags:
+        - "M04: Posts"
+      parameters:
+        - name: id
+          in: path
+          description: "Post ID"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Delete a post. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
