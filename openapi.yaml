@@ -73,7 +73,7 @@ paths:
       summary: "R103: Sign-out"
       description: "Sign-out the current authenticated user. Access: USR, ADM"
       tags:
-        - "M01: Authentication and Individual Profile"
+        - "M01: Authentication"
       responses:
         "302":
           description: "Redict after processing sign-out"
@@ -102,7 +102,7 @@ paths:
       summary: "R105: Register new user"
       description: "Processes the form information to register new user. Access: PUB"
       tags:
-        - "M01: Authentication and Individual Profile"
+        - "M01: Authentication"
 
       requestBody:
         required: true
