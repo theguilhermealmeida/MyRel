@@ -1,15 +1,8 @@
 openapi: 3.0.0
 info:
   version: '1.0'
-  title: CodeBook
-  description: Web Resources Specification (A7) for CodeBook
-
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: Production server
-    url: http://lbaw.fe.up.pt
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/codebook/lbaw2125/1.0
+  title: Lbaw Project
+  description: Web Resources Specification (A7) for Lbaw Project
     
 externalDocs:
   description: "Get more information here."
