@@ -10,10 +10,10 @@ externalDocs:
 
 tags:
   - name: "M01: Authentication"
-  - name: "M02: User Profile"
-  - name: "M03: Categories"
-  - name: "M04: Content Interaction"
-  - name: "M05: Static Pages"
+  - name: "M02: User"
+  - name: "M03: Post"
+  - name: "M04: Comment"
+  - name: "M05: Reaction"
 paths:
   /login:
     get:
@@ -148,3 +148,54 @@ paths:
                 302Error:
                   description: "Failed registration. Redirecting back to register form"
                   value: "/register"
+
+  /user
+    get:
+      operationId: R201
+      summary: "R201: User Profile"
+      description: "Show user profile. Access: USR, ADM"
+      tags:
+        - "M02: User"
+      responses:
+        "200":
+          description: "Show user profile page. Access: USR, ADM"
+    put:
+      operationId: R202
+      summary: "R202: Edit User Profile"
+      description: "Edit user profile. Access: USR, ADM"
+      tags:
+        - "M02: User"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                name:
+                  type: string
+    delete:
+      operationId: R203
+      summary: "R203: Delete User Profile"
+      description: "Delete user profile. Access: ADM"
+      tags:
+        - "M02: User"
+      responses:
+        "302":
+          description: "Redirect after processing user deletion"
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                302Success:
+                  description: "Sucessful deletion. Redirecting to home page"
+                  value: "/"
+                302Error:
+                  description: "Failed deletion. Redirecting back to user profile"
+                  value: "/user"
