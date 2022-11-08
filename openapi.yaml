@@ -639,3 +639,65 @@ paths:
                 properties:
                   success:
                     type: boolean
+
+  /feed: # get a feed for the user with a array of posts
+    get:
+      operationId: R601
+      summary: "R601: Get Feed"
+      description: "Get a feed. Access: USR, ADM"
+      tags:
+        - "M07: Feed"
+      responses:
+        "200":
+          description: "Show a feed. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user:
+                      type: string
+                    text:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    reactions:
+                      type: array
+
+  /search: # search for a user and return a array with found users
+    get:
+      operationId: R701
+      summary: "R701: Search"
+      description: "Search for a user. Access: USR, ADM"
+      tags:
+        - "M08: Search"
+      parameters:
+        - name: query
+          in: query
+          description: "Search query"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Show a search result. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    username:
+                      type: string
+                    name:
+                      type: string
+                    
+    
