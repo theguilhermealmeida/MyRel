@@ -11,9 +11,10 @@ externalDocs:
 tags:
   - name: "M01: Authentication"
   - name: "M02: User"
-  - name: "M03: Post"
-  - name: "M04: Comment"
-  - name: "M05: Reaction"
+  - name: "M03: User Notifications"
+  - name: "M04: Post"
+  - name: "M05: Comment"
+  - name: "M06: Reaction"
 paths:
   /login:
     get:
@@ -213,13 +214,27 @@ paths:
       summary: "R204: Get Notifications"
       description: "Get all notifications. Access: USR, ADM"
       tags:
-        - "M02: User"
+        - "M03: User Notifications"
       responses:
         "200":
           description: "Show all notifications. Access: USR, ADM"
           content:
             application/json:
               schema:
-                type: string
-                example: "You have 5 new notifications"
-
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    type:
+                      type: string
+                    content:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    read:
+                      type: boolean
+                    text :
+                      type: string
