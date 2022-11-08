@@ -208,7 +208,7 @@ paths:
   
 
 
-  /notifications: # use get notification to get all notifications as JSON
+  /notification: # use get notification to get all notifications as JSON
     get:
       operationId: R204
       summary: "R204: Get Notifications"
@@ -238,3 +238,35 @@ paths:
                       type: boolean
                     text :
                       type: string
+
+  /notification/{id}: # update the notification to set it as read
+    put:
+      operationId: R205
+      summary: "R205: Update Notification"
+      description: "Update notification to set it as read. Access: USR, ADM"
+      tags:
+        - "M03: User Notifications"
+      parameters:
+        - name: id
+          in: path
+          description: "Notification ID"
+          required: true
+          schema:
+            type: integer
+        - name: read
+          in: query
+          description: "If notification was read"
+          required: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: "Update notification. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                
