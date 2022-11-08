@@ -204,3 +204,22 @@ paths:
                 302Error:
                   description: "Failed deletion. Redirecting back to user profile"
                   value: "/user"
+  
+
+
+  /notifications: # use get notification to get all notifications as JSON
+    get:
+      operationId: R204
+      summary: "R204: Get Notifications"
+      description: "Get all notifications. Access: USR, ADM"
+      tags:
+        - "M02: User"
+      responses:
+        "200":
+          description: "Show all notifications. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "You have 5 new notifications"
+
