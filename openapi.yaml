@@ -6,32 +6,31 @@ info:
     
 externalDocs:
   description: "Get more information here."
-  url: https://git.fe.up.pt/lbaw/lbaw2122/lbaw2125/
+  url: https://git.fe.up.pt/lbaw/lbaw2223/lbaw2212
 
 tags:
-  - name: "M01: Authentication and Individual Profile"
-  - name: "M02: Individual Profile"
+  - name: "M01: Authentication"
+  - name: "M02: User Profile"
   - name: "M03: Categories"
   - name: "M04: Content Interaction"
   - name: "M05: Static Pages"
 paths:
-  # M01: Authentication and Individual Profile
   /login:
     get:
       operationId: R101
       summary: "R101: Login Form"
       description: "Provide login form. Access: PUB"
       tags:
-        - "M01: Authentication and Individual Profile"
+        - "M01: Authentication"
       responses:
         "200":
-          description: "Ok. Show [UI04 Sign-in](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2125/-/wikis/er#ui01homepage)"
+          description: "Return login page."
     post:
       operationId: R102
       summary: "R102: Login Action"
-      description: "Processes the login form submission. Access: PUB"
+      description: "Processes the login form data. Access: PUB"
       tags:
-        - "M01: Authentication and Individual Profile"
+        - "M01: Authentication"
       requestBody:
         required: true
         content:
@@ -39,14 +38,13 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                username:
                   type: string
-                  format: email
                 password:
                   type: string
                   format: password
               required:
-                - email
+                - username
                 - password
       responses:
         "302":
@@ -57,10 +55,17 @@ paths:
                 type: string
               examples:
                 302Success:
-                  description: "Successful authentication, redirecting to home page"
+                  description: "Login succeed. Will redirect to user feed."
                   value: "/"
-                302Error:
-                  description: "Failed to authenticate. Returning to login form"
+        "401":
+          description: "Redirect after processing the login credentials."
+          headers:
+            location:
+              schema:
+                type: string
+              examples:
+                401Error:
+                  description: "Unauthorized. Response will be processed in the login page to alert the user about the failure."
                   value: "/login"
   /logout:
     post:
@@ -87,10 +92,10 @@ paths:
       summary: "R104: Register Form"
       description: "Provide a new user registration form. Access: PUB"
       tags:
-        - "M01: Authentication and Individual Profile"
+        - "M01: Authentication"
       responses:
         "200":
-          description: "Ok. Show [UI05 Sign-up](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2125/-/wikis/er#ui05-sign-up)"
+          description: "Show Register Page to User. Access: PUB"
 
     post:
       operationId: R105
@@ -106,32 +111,28 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
                 username:
                   type: string
                 email:
                   type: string
                   format: email
-                phone:
+                name:
                   type: string
-                  format: phone
+                gender:
+                  type: string
                 password:
                   type: string
                   format: password
-                confirmationPassword:
+                description:
                   type: string
-                  format: password
-                termsService:
-                  type: boolean
+                photo:
+                  type: blob
               required:
-                - name
                 - username
                 - email
-                - phone
+                - name
+                - gender
                 - password
-                - confirmationPassword
-                - termsService
 
       responses:
         "302":
@@ -147,13 +148,3 @@ paths:
                 302Error:
                   description: "Failed registration. Redirecting back to register form"
                   value: "/register"
-  /user/me:
-    get:
-      operationId: R106
-      summary: "R106: View your profile"
-      description: "Show user's profile Access: USR"
-      tags:
-        - "M01: Authentication and Individual Profile"
-      responses:
-        "200":
-          description: "Ok. Show [UI02 Sign-in](https://git.fe.up.pt/lbaw/lbaw2122/lbaw2125/-/blob/main/ER.md#ui02profile)"
