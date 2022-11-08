@@ -12,7 +12,7 @@ tags:
   - name: "M01: Authentication"
   - name: "M02: User"
   - name: "M03: User Notifications"
-  - name: "M04: Post"
+  - name: "M04: Posts"
   - name: "M05: Comment"
   - name: "M06: Reaction"
 paths:
