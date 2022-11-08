@@ -174,13 +174,15 @@ paths:
               properties:
                 username:
                   type: string
-                email:
+                gender:
                   type: string
-                  format: email
-                name:
+                password:
                   type: string
-                
-
+                  format: password
+                description:
+                  type: string
+                photo:
+                  type: blob
 
     delete:
       operationId: R203
