@@ -576,3 +576,66 @@ paths:
                 properties:
                   success:
                     type: boolean
+
+  /reaction:
+    post: # react to specific post
+      operationId: R501
+      summary: "R501: Create Reaction"
+      description: "Create a new reaction. Access: USR, ADM"
+      tags:
+        - "M06: Reactions"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                post:
+                  type: integer
+                reaction:
+                  type: string
+              required:
+                - reaction
+                - post
+      responses:
+        "200":
+          description: "Create a new reaction. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+    
+    delete: # remove reaction from specific post
+      operationId: R502
+      summary: "R502: Delete Reaction"
+      description: "Delete a reaction. Access: USR, ADM"
+      tags:
+        - "M06: Reactions"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                post:
+                  type: integer
+                reaction:
+                  type: string
+              required:
+                - reaction
+                - post
+      responses:
+        "200":
+          description: "Delete a reaction. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
