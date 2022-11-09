@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Users(
     email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
     gender gender NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,  -- stored in sha1
     ban BOOLEAN NOT NULL DEFAULT FALSE,
     description VARCHAR(800),
     photo VARCHAR(255)
@@ -271,19 +271,4 @@ CREATE TRIGGER create_comment_reply_reaction_notification
 AFTER INSERT ON CommentReplyReaction
 FOR EACH ROW
 EXECUTE PROCEDURE create_comment_reply_reaction_notification();
-
-
---CREATE TRANSACTION WHEN USER IS DELETED - REMOVE ALL relationships
--- User deletion - -
-BEGIN TRANSACTION;
-
-SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
-
--- DELETE USER
-DELETE FROM Users WHERE id = $user_id;
-
--- DELETE ALL relationships
-DELETE FROM Relationship WHERE user1 = $user_id OR user2 = $user_id;
-
-END TRANSACTION;
 
