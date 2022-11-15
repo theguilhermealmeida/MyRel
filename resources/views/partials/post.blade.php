@@ -1,6 +1,6 @@
-<article class="card" data-id="{{ $post->id }}">
+<article class="post" data-id="{{ $post->id }}">
 <header>
-  <h2>{{ $post->id }}</a></h2>
+    <h2><a href="/posts/{{ $post->id }}">{{ $post->id }}</a></h2>
 </header>
-<span>{{ $post->text }}</span>
+<div>{{ $post->text }}</div>
 </article>

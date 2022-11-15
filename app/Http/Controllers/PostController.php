@@ -16,8 +16,21 @@ class PostController extends Controller
      */
     public function list()
     {
+        if (!Auth::check()) return redirect('/login');
         $posts = Auth::user()->posts()->orderBy('id')->get();
         return view('pages.posts', ['posts' => $posts]);
+    }
+
+    /**
+     * Shows the post for a given id.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+      $post = Post::find($id);
+      return view('pages.post', ['post' => $post]);
     }
 
     /**
@@ -51,16 +64,7 @@ class PostController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
