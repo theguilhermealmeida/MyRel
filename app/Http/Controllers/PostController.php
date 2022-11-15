@@ -29,8 +29,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-      $post = Post::find($id);
-      return view('pages.post', ['post' => $post]);
+        $post = Post::find($id);
+        $comments = Post::find($id)->comments()->orderBy('id')->get();
+    return view('pages.post', ['post' => $post,'comments' => $comments]);
     }
 
     /**

@@ -4,23 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Comment extends Model
 {
     // Don't add create and update timestamps in database.
   public $timestamps  = false;
 
   /**
-   * The user this post belongs to
+   * The user this comment belongs to
    */
   public function user() {
     return $this->belongsTo('App\Models\User');
   }
 
-  /**
-  * The comments this post has.
-  */
-  public function comments() {
-      return $this->hasMany('App\Models\Comment');
+    /**
+   * The post this comment belongs to
+   */
+  public function post() {
+    return $this->belongsTo('App\Models\Post');
   }
-  
+
+
 }

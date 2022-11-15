@@ -42,10 +42,27 @@ CREATE TABLE items (
   done BOOLEAN NOT NULL DEFAULT FALSE
 );
 
+CREATE TABLE comments(
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
+  post_id INTEGER REFERENCES posts ON DELETE CASCADE NOT NULL,
+  text VARCHAR(800) NOT NULL,
+  date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+);
+
+
+
 INSERT INTO users VALUES (
   DEFAULT,
   'John Doe',
   'admin@example.com',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Tiago',
+  'tiago@example.com',
   '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
 ); -- Password is 1234. Generated using Hash::make('1234')
 
@@ -59,4 +76,7 @@ INSERT INTO items VALUES (DEFAULT, 2, 'Crash the car');
 
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://pbs.twimg.com/profile_images/429285908953579520/InZKng9-_x96.jpeg','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'The 3 best ADVANCED techniques I learned while building in public last month were:,,1) How to use Chrome Inspect Console properly, especially the Network - Fetch/XHR - Responses feature.,,Understanding the requests from a site is life changing for web scraping.,,(1/3)','https://pbs.twimg.com/profile_images/1461710621397897223/XZciUUbZ_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'Halloween is coming','https://pbs.twimg.com/profile_images/1269253433703510016/B6XjoBkv_x96.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(2,'Halloween is coming','https://pbs.twimg.com/profile_images/1269253433703510016/B6XjoBkv_x96.jpg','Friends');
+
+INSERT INTO comments(user_id, post_id, text) VALUES(2, 1, 'Thank you for the information');
+INSERT INTO comments(user_id, post_id, text) VALUES(1, 3, 'I will try it');

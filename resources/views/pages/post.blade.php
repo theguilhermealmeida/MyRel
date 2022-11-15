@@ -10,5 +10,8 @@
 <div>{{ $post->text }}</div>
 <img src={{ $post->photo }} > 
 <div>{{ $post->date }}</div>
+<section id="comments">
+  @each('partials.comment', $comments, 'comment')
+</section>
 </article>
 @endsection
