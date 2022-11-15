@@ -36,4 +36,11 @@ class User extends Authenticatable
      public function cards() {
       return $this->hasMany('App\Models\Card');
     }
+
+    /**
+     * The posts this user owns.
+     */
+    public function posts() {
+        return $this->hasMany('App\Models\Post');
+      }
 }
