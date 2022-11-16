@@ -58,15 +58,6 @@ CREATE TABLE replies(
     date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
 );
 
-CREATE TABLE post_user(
-    id SERIAL PRIMARY KEY,
-    post_id INTEGER REFERENCES posts ON DELETE CASCADE NOT NULL,
-    user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
-    type reactions NOT NULL,
-    UNIQUE (post,userId)
-);
-
 INSERT INTO users VALUES (
   DEFAULT,
   'John Doe',
