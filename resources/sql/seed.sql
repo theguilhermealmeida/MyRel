@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS cards CASCADE;
 DROP TABLE IF EXISTS posts CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS replies CASCADE;
 
 CREATE TYPE relationship_type AS ENUM ('Close Friends', 'Friends', 'Family');
 CREATE TYPE relationship_state AS ENUM ('pending', 'accepted');
@@ -86,3 +88,6 @@ INSERT INTO posts(user_id, text, photo, visibility) VALUES(2,'Halloween is comin
 
 INSERT INTO comments(user_id, post_id, text) VALUES(2, 1, 'Thank you for the information');
 INSERT INTO comments(user_id, post_id, text) VALUES(1, 3, 'I will try it');
+
+INSERT INTO replies(user_id, comment_id, text) VALUES(1, 1, 'You are welcome :)');
+INSERT INTO replies(user_id, comment_id, text) VALUES(2, 2, 'Cheers to more good reads.');
