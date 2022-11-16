@@ -4,4 +4,7 @@
 </header>
 <div>{{ $comment->text }}</div>
 <div>{{ $comment->date }}</div>
+<section id="replies">
+  @each('partials.reply', $comment->replies()->get(), 'reply')
+</section>
 </div>
