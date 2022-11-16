@@ -1,6 +1,6 @@
 <div class="comment" >
 <header>
-    <h2>{{ $comment->user_id }}</h2>
+    <h2>{{ $comment->user()->get()[0]->name }}</h2>
 </header>
 <div>{{ $comment->text }}</div>
 <div>{{ $comment->date }}</div>

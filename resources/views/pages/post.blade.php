@@ -11,7 +11,7 @@
 <img src={{ $post->photo }} > 
 <div>{{ $post->date }}</div>
 <section id="comments">
-  @each('partials.comment', $comments, 'comment')
+  @each('partials.comment', $post->comments()->get(), 'comment')
 </section>
 </article>
 @endsection

@@ -50,7 +50,22 @@ CREATE TABLE comments(
   date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
 );
 
+CREATE TABLE replies(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
+    comment_id INTEGER REFERENCES comments ON DELETE CASCADE NOT NULL,
+    text VARCHAR(800) NOT NULL,
+    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+);
 
+CREATE TABLE post_user(
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER REFERENCES posts ON DELETE CASCADE NOT NULL,
+    user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
+    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+    type reactions NOT NULL,
+    UNIQUE (post,userId)
+);
 
 INSERT INTO users VALUES (
   DEFAULT,

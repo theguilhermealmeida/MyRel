@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getName() {
+      return $this->$name;
+    }
+
     /**
      * The cards this user owns.
      */
@@ -50,4 +54,19 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany('App\Models\Comment');
       }
+
+    /**
+     * The replies this user owns.
+     */
+    public function replies() {
+        return $this->hasMany('App\Models\Reply');
+      }
+      
+  //         /**
+  //    * The post_reactions that belong to the post.
+  //    */
+  //   public function post_reactions() {
+  //     return $this->belongsToMany('App\Models\Post')->withPivotTable('date', 'type');
+  // }
+    
 }
