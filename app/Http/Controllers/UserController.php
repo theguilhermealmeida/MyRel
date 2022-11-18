@@ -2,37 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
-class PostController extends Controller
-{   
-    /**
-     * Shows all posts.
-     *
-     * @return Response
-     */
-    public function list()
-    {
-        if (!Auth::check()) return redirect('/login');
-        $posts = Auth::user()->posts()->orderBy('id')->get();
-        return view('pages.posts', ['posts' => $posts]);
-    }
+class UserController extends Controller
+{
 
     /**
-     * Shows the post for a given id.
+     * Shows the user profile for a given id.
      *
      * @param  int  $id
      * @return Response
      */
     public function show($id)
     {
-        $post = Post::find($id);
+    
+    $user = User::find($id);
         
-    return view('pages.post', ['post' => $post]);
+    return view('pages.profile', ['user' => $user]);
     }
+
+
 
     /**
      * Display a listing of the resource.
@@ -66,14 +56,13 @@ class PostController extends Controller
     }
 
 
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(User $user)
     {
         //
     }
@@ -82,10 +71,10 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -93,10 +82,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(User $user)
     {
         //
     }
