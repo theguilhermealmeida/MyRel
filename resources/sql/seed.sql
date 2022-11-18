@@ -116,7 +116,6 @@ CREATE TABLE relationships(
     related_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     type relationship_type NOT NULL,
     state relationship_state NOT NULL DEFAULT 'pending',
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
     UNIQUE (user_id,related_id,type)
 );
 

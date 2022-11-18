@@ -61,12 +61,15 @@ class User extends Authenticatable
     public function replies() {
         return $this->hasMany('App\Models\Reply');
       }
-      
-  //         /**
-  //    * The post_reactions that belong to the post.
-  //    */
-  //   public function post_reactions() {
-  //     return $this->belongsToMany('App\Models\Post')->withPivotTable('date', 'type');
-  // }
-    
+
+    /**
+     * The relationships this user has.
+     */
+    public function relationships() {
+      return $this->belongsToMany(User::class, 'relationships', 'user_id', 'related_id')->withPivot('id','type', 'state');
+    }
+
+    public function relationships2() {
+      return $this->belongsToMany(User::class, 'relationships', 'related_id', 'user_id')->withPivot('id','type', 'state');
+    }
 }

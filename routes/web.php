@@ -13,13 +13,12 @@
 // Home
 Route::get('/', 'Auth\LoginController@home');
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
-
 //Posts
 Route::get('posts', 'PostController@list');
 Route::get('posts/{id}', 'PostController@show');
+
+//Users
+Route::get('user/{id}', 'UserController@show');
 
 // API
 Route::put('api/cards', 'CardController@create');
