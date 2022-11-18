@@ -1,21 +1,6 @@
-DROP SCHEMA IF EXISTS lbaw CASCADE;
-CREATE SCHEMA IF NOT EXISTS lbaw;
-SET search_path TO lbaw;
-
-DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS posts CASCADE;
-DROP TABLE IF EXISTS postreactions CASCADE;
-DROP TABLE IF EXISTS postreactionnotifications CASCADE;
-DROP TABLE IF EXISTS comments CASCADE;
-DROP TABLE IF EXISTS commentnotifications CASCADE;
-DROP TABLE IF EXISTS commentreactions CASCADE;
-DROP TABLE IF EXISTS commentreactionnotifications CASCADE;
-DROP TABLE IF EXISTS replies CASCADE;
-DROP TABLE IF EXISTS replynotifications CASCADE;
-DROP TABLE IF EXISTS replyreactions CASCADE;
-DROP TABLE IF EXISTS replyreactionnotifications CASCADE;
-DROP TABLE IF EXISTS relationships CASCADE;
-DROP TABLE IF EXISTS relationshipnotifications CASCADE;
+DROP SCHEMA IF EXISTS lbaw2112 CASCADE;
+CREATE SCHEMA IF NOT EXISTS lbaw2112;
+SET search_path TO lbaw2112;
 
 CREATE TYPE relationship_type AS ENUM ('Close Friends', 'Friends', 'Family');
 CREATE TYPE relationship_state AS ENUM ('pending', 'accepted');
@@ -24,10 +9,14 @@ CREATE TYPE reactions AS ENUM ('Like', 'Dislike', 'Sad', 'Angry', 'Amazed');
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  name VARCHAR NOT NULL,
-  email VARCHAR UNIQUE NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  gender gender NOT NULL,
+  description VARCHAR(800),
+  photo VARCHAR(255),
   password VARCHAR NOT NULL,
-  remember_token VARCHAR
+  remember_token VARCHAR,
+  ban BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE posts(
@@ -279,11 +268,134 @@ FOR EACH ROW
 WHEN (NEW.state = 'accepted')
 EXECUTE PROCEDURE create_relationship_accepted_notification();
 
+CREATE INDEX post_author ON posts USING hash (user_id);
+CREATE INDEX reactions_of_post ON postreactions USING hash (post_id);
+CREATE INDEX user_relationships ON relationships USING btree (user_id); CLUSTER relationships USING user_relationships;
+
+
+
+-- Add column to user to store computed ts_vectors.
+ALTER TABLE users
+ADD COLUMN tsvectors TSVECTOR;
+-- Create a function to automatically update ts_vectors.
+CREATE FUNCTION user_search_update() RETURNS TRIGGER AS $$
+BEGIN
+IF TG_OP = 'INSERT' THEN
+       NEW.tsvectors = (
+        setweight(to_tsvector('english', NEW.name), 'A') ||
+        setweight(to_tsvector('english', NEW.description), 'B')
+       );
+END IF;
+IF TG_OP = 'UPDATE' THEN
+        IF (NEW.name <> OLD.name OR NEW.description <> OLD.description) THEN
+          NEW.tsvectors = (
+            setweight(to_tsvector('english', NEW.name), 'A') ||
+            setweight(to_tsvector('english', NEW.description), 'B')
+          );
+        END IF;
+END IF;
+RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+-- Create a trigger before insert or update on work.
+CREATE TRIGGER user_search_update
+BEFORE INSERT OR UPDATE ON users
+FOR EACH ROW
+EXECUTE PROCEDURE user_search_update();
+-- Finally, create a GIN index for ts_vectors.
+CREATE INDEX search_idx_user ON users USING GIN (tsvectors);
+
+
+
+-- Add column to post to store computed ts_vectors.
+ALTER TABLE posts
+ADD COLUMN tsvectors TSVECTOR;
+-- Create a function to automatically update ts_vectors.
+CREATE FUNCTION post_search_update() RETURNS TRIGGER AS $$
+BEGIN
+IF TG_OP = 'INSERT' THEN
+       NEW.tsvectors = to_tsvector('english', NEW.text);
+END IF;
+IF TG_OP = 'UPDATE' THEN
+        IF NEW.text <> OLD.text THEN
+          NEW.tsvectors = to_tsvector('english', NEW.text);
+        END IF;
+END IF;
+RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+-- Create a trigger before insert or update on post.
+CREATE TRIGGER post_search_update
+BEFORE INSERT OR UPDATE ON posts
+FOR EACH ROW
+EXECUTE PROCEDURE post_search_update();
+-- Finally, create a GIN index for ts_vectors.
+CREATE INDEX search_idx_post ON posts USING GIN (tsvectors);
+
+
+
+
+-- Add column to comment_post to store computed ts_vectors.
+ALTER TABLE comments
+ADD COLUMN tsvectors TSVECTOR;
+-- Create a function to automatically update ts_vectors.
+CREATE FUNCTION comment_search_update() RETURNS TRIGGER AS $$
+BEGIN
+IF TG_OP = 'INSERT' THEN
+       NEW.tsvectors = to_tsvector('english', NEW.text);
+END IF;
+IF TG_OP = 'UPDATE' THEN
+        IF NEW.text <> OLD.text THEN
+          NEW.tsvectors = to_tsvector('english', NEW.text);
+        END IF;
+END IF;
+RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+-- Create a trigger before insert or update on comment_post.
+CREATE TRIGGER comment_search_update
+BEFORE INSERT OR UPDATE ON comments
+FOR EACH ROW
+EXECUTE PROCEDURE comment_search_update();
+-- Finally, create a GIN index for ts_vectors.
+CREATE INDEX search_idx_comment ON comments USING GIN (tsvectors);
+
+
+
+
+-- Add column to comment_reply to store computed ts_vectors.
+ALTER TABLE replies
+ADD COLUMN tsvectors TSVECTOR;
+-- Create a function to automatically update ts_vectors.
+CREATE FUNCTION reply_search_update() RETURNS TRIGGER AS $$
+BEGIN
+IF TG_OP = 'INSERT' THEN
+       NEW.tsvectors = to_tsvector('english', NEW.text);
+END IF;
+IF TG_OP = 'UPDATE' THEN
+        IF NEW.text <> OLD.text THEN
+          NEW.tsvectors = to_tsvector('english', NEW.text);
+        END IF;
+END IF;
+RETURN NEW;
+END $$
+LANGUAGE plpgsql;
+-- Create a trigger before insert or update on comment_reply.
+CREATE TRIGGER reply_search_update
+BEFORE INSERT OR UPDATE ON replies
+FOR EACH ROW
+EXECUTE PROCEDURE reply_search_update();
+-- Finally, create a GIN index for ts_vectors.
+CREATE INDEX search_idx_reply ON replies USING GIN (tsvectors);
+
 
 INSERT INTO users VALUES (
   DEFAULT,
   'John Doe',
   'admin@example.com',
+  'Male',
+  'Gosto de gatos',
+  'https://robohash.org/solutacumqueet.png?size=50x50&set=set1',
   '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
 ); -- Password is 1234. Generated using Hash::make('1234')
 
@@ -291,6 +403,9 @@ INSERT INTO users VALUES (
   DEFAULT,
   'Tiago',
   'tiago@example.com',
+  'Male',
+  'FC PORTO <3',
+  'https://robohash.org/sintbeataefugiat.png?size=50x50&set=set1',
   '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
 ); -- Password is 1234. Generated using Hash::make('1234')
 
