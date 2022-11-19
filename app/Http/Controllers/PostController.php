@@ -61,10 +61,18 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $post = new Post();
+
+        $post->user_id = Auth::user()->id;
+        $post->text = $request->input('text');
+        $post->visibility = $request->input('visibility');
+        $post->save();
+
+        return redirect('posts');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -87,7 +95,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        
     }
 
     /**
@@ -99,7 +107,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        
+        $post = Post::find($request->id);
+        $post->text = $request->input('text');
+        $post->visibility = $request->input('visibility');
+        $post->save();
+
+        return redirect('posts/'.$post->id);
     }
 
     /**
@@ -108,8 +122,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post)
     {
-        //
+        $post = Post::find($request->id);
+        $post->delete();
+        return redirect('posts');
     }
 }
