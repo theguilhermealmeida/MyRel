@@ -14,11 +14,14 @@
 Route::get('/', 'Auth\LoginController@home');
 
 //Posts
-Route::get('posts', 'PostController@list');
+Route::get('posts', 'PostController@feed');
 Route::get('posts/{id}', 'PostController@show');
 
 //Users
 Route::get('user/{id}', 'UserController@show');
+
+
+Route::put('api/posts', 'PostController@create');
 
 // API
 Route::put('api/cards', 'CardController@create');

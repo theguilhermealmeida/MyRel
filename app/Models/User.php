@@ -72,4 +72,11 @@ class User extends Authenticatable
     public function relationships2() {
       return $this->belongsToMany(User::class, 'relationships', 'related_id', 'user_id')->withPivot('id','type', 'state');
     }
+
+    /**
+     * The postreactions this user has.
+     */
+    public function postreactions() {
+      return $this->hasMany('App\Models\Postreaction');
+    }
 }

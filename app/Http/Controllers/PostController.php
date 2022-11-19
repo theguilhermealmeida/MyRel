@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {   
     /**
-     * Shows all posts.
+     * Shows all the user posts.
      *
      * @return Response
      */
@@ -18,6 +18,18 @@ class PostController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
         $posts = Auth::user()->posts()->orderBy('id')->get();
+        return view('pages.posts', ['posts' => $posts]);
+    }
+
+        /**
+     * Shows all relations posts.
+     *
+     * @return Response
+     */
+    public function feed()
+    {
+        if (!Auth::check()) return redirect('/login');
+        $posts = Post::all();
         return view('pages.posts', ['posts' => $posts]);
     }
 
