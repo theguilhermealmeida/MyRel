@@ -15,8 +15,8 @@ CREATE TABLE users (
   description VARCHAR(800),
   photo VARCHAR(255),
   password VARCHAR NOT NULL,
-  remember_token VARCHAR,
-  ban BOOLEAN NOT NULL DEFAULT FALSE
+  ban BOOLEAN NOT NULL DEFAULT FALSE,
+  remember_token VARCHAR
 );
 
 CREATE TABLE posts(
@@ -407,6 +407,314 @@ INSERT INTO users VALUES (
   'https://robohash.org/sintbeataefugiat.png?size=50x50&set=set1',
   '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
 ); -- Password is 1234. Generated using Hash::make('1234')
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Rockie Ablitt',
+  'rablitt2@rambler.ru',
+  'Male',
+  'empower global e-commerce',
+  'https://robohash.org/architectodoloremnon.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Wesley Pinckstone',
+  'wpinckstone3@ox.ac.uk',
+  'Female',
+  'repurpose enterprise functionalities',
+  'https://robohash.org/nisipraesentiumqui.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Marsh Monsey',
+  'mmonsey4@friendfeed.com',
+  'Male',
+  'synergize distributed niches',
+  'https://robohash.org/sedassumendadebitis.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Brewster Houchin',
+  'bhouchin5@uol.com.br',
+  'Female',
+  'maximize visionary schemas',
+  'https://robohash.org/etquiid.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Augie Roostan',
+  'aroostan6@columbia.edu',
+  'Female',
+  'redefine extensible supply-chains',
+  'https://robohash.org/quiaetinventore.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Sonny Fawkes',
+  'sfawkes7@gnu.org',
+  'Male',
+  'strategize value-added partnerships',
+  'https://robohash.org/doloremexvoluptatem.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Josefina Simpkiss',
+  'jsimpkiss8@networkadvertising.org',
+  'Male',
+  'enable impactful experiences',
+  'https://robohash.org/pariaturofficiaquia.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Hilary Dulwitch',
+  'hdulwitch9@slideshare.net',
+  'Male',
+  'utilize front-end systems',
+  'https://robohash.org/aliasvoluptateseveniet.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Shanan Venturoli',
+  'sventurolia@guardian.co.uk',
+  'Female',
+  'mesh impactful web services',
+  'https://robohash.org/perferendisremesse.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Norbert Koubek',
+  'nkoubekb@vk.com',
+  'Male',
+  'optimize 24/7 users',
+  'https://robohash.org/corporisidiure.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Alla Stoppe',
+  'astoppec@blog.com',
+  'Female',
+  'integrate visionary solutions',
+  'https://robohash.org/optiovelitvoluptatum.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Silvan Bock',
+  'sbockd@creativecommons.org',
+  'Male',
+  'disintermediate e-business interfaces',
+  'https://robohash.org/temporaplaceatnihil.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Tabbatha Willarton',
+  'twillartone@pen.io',
+  'Female',
+  'cultivate open-source paradigms',
+  'https://robohash.org/voluptasnequenisi.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Alaster Bollam',
+  'abollamf@gizmodo.com',
+  'Female',
+  'engage sticky vortals',
+  'https://robohash.org/dolorvoluptatibusesse.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Hamil Pringell',
+  'hpringellg@smh.com.au',
+  'Male',
+  'harness bleeding-edge markets',
+  'https://robohash.org/iustoesseconsequuntur.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Garrek Brendeke',
+  'gbrendekeh@guardian.co.uk',
+  'Male',
+  'evolve seamless architectures',
+  'https://robohash.org/idsuntipsa.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Kizzie Gailor',
+  'kgailori@oakley.com',
+  'Male',
+  'unleash cross-media infomediaries',
+  'https://robohash.org/estmaximeoptio.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Ruy ODowne',
+  'rodownej@constantcontact.com',
+  'Male',
+  'reinvent impactful functionalities',
+  'https://robohash.org/minimamolestiaelaudantium.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Celina Godon',
+  'cgodonk@sciencedirect.com',
+  'Female',
+  'redefine dot-com web-readiness',
+  'https://robohash.org/maioreslaudantiumdignissimos.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Rona Quittonden',
+  'rquittondenl@etsy.com',
+  'Female',
+  'generate extensible relationships',
+  'https://robohash.org/totamvitaeaut.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Cathy Ludron',
+  'cludronm@elegantthemes.com',
+  'Male',
+  'synergize world-class eyeballs',
+  'https://robohash.org/distinctioconsequaturtempora.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Andrej_Scoggans',
+  'ascoggansn@discuz.net',
+  'Male',
+  'deploy robust infomediaries',
+  'https://robohash.org/abeaquevoluptas.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Trixy Broughton',
+  'tbroughtono@merriam-webster.com',
+  'Female',
+  'leverage cutting-edge platforms',
+  'https://robohash.org/quiadbeatae.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Shalna Calbert',
+  'scalbertp@pen.io',
+  'Female',
+  'target leading-edge bandwidth',
+  'https://robohash.org/autfugaiusto.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Orin Dearle-Palser',
+  'odearlepalserq@rediff.com',
+  'Female',
+  'seize open-source e-tailers',
+  'https://robohash.org/dignissimosoptioofficia.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Brittaney Emblin',
+  'bemblinr@bizjournals.com',
+  'Male',
+  'strategize visionary e-markets',
+  'https://robohash.org/natusplaceatmolestiae.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+  TRUE
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Adina Phebey',
+  'aphebeys@umn.edu',
+  'Female',
+  'e-enable intuitive relationships',
+  'https://robohash.org/etquiet.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+  TRUE
+); -- Password is 1234. Generated using Hash::make('1234')
+
+
+INSERT INTO users VALUES (
+  DEFAULT,
+  'Darci Aslum',
+  'daslumt@dion.ne.jp',
+  'Male',
+  'transition 24/365 schemas',
+  'https://robohash.org/aperiamnumquammaiores.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+  TRUE
+); -- Password is 1234. Generated using Hash::make('1234')
+
 
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://pbs.twimg.com/profile_images/429285908953579520/InZKng9-_x96.jpeg','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'The 3 best ADVANCED techniques I learned while building in public last month were:,,1) How to use Chrome Inspect Console properly, especially the Network - Fetch/XHR - Responses feature.,,Understanding the requests from a site is life changing for web scraping.,,(1/3)','https://pbs.twimg.com/profile_images/1461710621397897223/XZciUUbZ_x96.jpg','Friends');
