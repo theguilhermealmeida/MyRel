@@ -23,11 +23,11 @@ class Post extends Model
       return $this->hasMany('App\Models\Comment');
   }
 
-      /**
-     * The post_reactions that belong to the post.
+    /**
+     * The postreactions that belong to the post.
      */
-    public function post_reactions() {
-      return $this->belongsToMany('App\Models\User')->withPivotTable('date', 'type');
+    public function reactions() {
+      return $this->hasMany('App\Models\Postreaction');
   }
   
 }

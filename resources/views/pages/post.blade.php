@@ -10,6 +10,10 @@
 <div style="border-style: solid;color: Blue" >{{ $post->text }}</div>
 <img src={{ $post->photo }} > 
 <div>{{ $post->date }}</div>
+<section id="reactions" style="border-style: solid;color: Blue">
+  <h2 style="color: Green">Reactions</h2>
+  @each('partials.reaction', $post->reactions()->get(), 'reaction')
+</section>
 <section id="comments" style="border-style: solid;color: Purple">
   <h2 style="color: Blue">COMMENTS</h2>
   @each('partials.comment', $post->comments()->get(), 'comment')
