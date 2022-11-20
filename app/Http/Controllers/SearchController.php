@@ -18,12 +18,9 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {   
-        $posts = Post::query();
-        $posts = $posts->where('text','LIKE','%'.$request->search."%")->get();
-        $comments = Comment::query();
-        $comments = $comments->where('text','LIKE','%'.$request->search."%")->get();
-        $users = User::query();
-        $users = $users->where('name','LIKE','%'.$request->search."%")->get();
+        $posts = Post::search($request->search)->simplePaginate(5);
+        $comments = Comment::search($request->search)->simplePaginate(5);
+        $users = User::search($request->search)->simplePaginate(5);
         return view('pages.search', ['posts' => $posts,'search'=>$request->search,'comments'=>$comments,'users'=>$users]);
     }
 

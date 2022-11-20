@@ -79,4 +79,12 @@ class User extends Authenticatable
     public function postreactions() {
       return $this->hasMany('App\Models\Postreaction');
     }
+
+    public function scopeSearch($query, $search)
+    {
+      if(!$search){
+        return $query;
+      }
+      return $query->whereRaw('tsvectors @@ plainto_tsquery(\'english\',?)',[$search])->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
+    }
 }
