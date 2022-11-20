@@ -74,9 +74,16 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
-        //
+        $user = User::find($request->id);
+        $user->name = $request->input('name');
+        $user->gender = $request->input('gender');
+        $user->description = $request->input('description');
+
+        $user->save();
+        
+        return redirect('user/'. $request->id);
     }
 
     /**
@@ -85,8 +92,24 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function ban(Request $request)
     {
-        //
+        $user = User::find($request->id);
+        $user->ban = 'True';
+        $user->save();
+        return redirect('logout');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->delete();
+        return redirect('posts');
     }
 }

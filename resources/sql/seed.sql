@@ -11,7 +11,7 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
-  gender gender NOT NULL,
+  gender gender NULL,
   description VARCHAR(800),
   photo VARCHAR(255),
   password VARCHAR NOT NULL,

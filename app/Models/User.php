@@ -31,7 +31,10 @@ class User extends Authenticatable
     ];
 
     public function getName() {
-      return $this->$name;
+      if ($this->ban) {
+      return "unkown account";
+      }
+      else return $this->name;
     }
 
     /**
