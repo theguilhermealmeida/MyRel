@@ -20,6 +20,8 @@ Route::get('posts/{id}', 'PostController@show');
 //Users
 Route::get('user/{id}', 'UserController@show');
 
+//Search
+Route::get('search', 'SearchController@search');
 
 Route::put('api/posts', 'PostController@create');
 

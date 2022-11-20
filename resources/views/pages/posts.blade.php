@@ -4,6 +4,16 @@
 
 @section('content')
 
+<section id="search">
+    <?php
+      echo Form::open(array('url' => '/search', 'method' => 'get'));
+      echo "Search:";
+      echo Form::text('search');
+      echo Form::button('Search', array('type' => 'submit'));
+      echo Form::close();
+    ?>
+</section>
+
 <section id="new_post">
   <article style="border-style: solid;color: Tomato">
     <header>
