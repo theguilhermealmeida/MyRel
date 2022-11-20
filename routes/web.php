@@ -33,7 +33,9 @@ Route::post('api/item/{id}', 'ItemController@update');
 Route::delete('api/item/{id}', 'ItemController@delete');
 Route::put('api/posts', 'PostController@create');
 Route::post('api/posts/{id}', 'PostController@update');
+Route::post('api/user/{id}', 'UserController@update');
 Route::delete('api/posts/{id}', 'PostController@destroy');
+Route::delete('api/user/{id}', 'UserController@ban');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
