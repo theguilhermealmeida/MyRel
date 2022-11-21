@@ -3,12 +3,24 @@
 @section('title', $post->name)
 
 @section('content')
-    <article class="post" data-id="{{ $post->id }}" style="border-style: solid;color: Tomato">
-        <header>
-            <h2 onclick="location.href='/user/{{ $post->user()->get()[0]->id }}';" style="cursor:pointer;">
-                {{ $post->user()->get()[0]->name }}</a><img src={{ $post->user()->get()[0]->photo }}></h2>
-        </header>
-        <div style="border-style: solid;color: Blue">{{ $post->text }}</div>
+    <article class="post" data-id="{{ $post->id }}" >
+
+    <div class="post card" >
+          <div class="post-header">
+              <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
+              <div class="post-header-info">
+        
+                  <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
+                  <div>{{ $post->date }}</div>
+              </div>
+          </div>
+          <a class="post-body" href="/posts/{{ $post->id }}">
+              <p>{{ $post->text }}</p>
+              <img src={{ $post->photo }}>
+
+          </a>
+
+      </div>
 
         @can('update', $post)
             <button onclick="toggleEditPostPopUp()">Edit post</button>
@@ -36,14 +48,15 @@
             ?>
         @endcan
 
-        <img src={{ $post->photo }}>
-        <div>{{ $post->date }}</div>
-        <section id="reactions" style="border-style: solid;color: Blue">
-            <h2 style="color: Green">Reactions</h2>
+
+
+
+        <section id="reactions" style="margin-top:30px;">
+            <h2>Reactions</h2>
             @each('partials.reaction', $post->reactions()->get(), 'reaction')
         </section>
-        <section id="comments" style="border-style: solid;color: Purple">
-            <h2 style="color: Blue">COMMENTS</h2>
+        <section id="comments" >
+            <h2>COMMENTS</h2>
             @each('partials.comment', $post->comments()->get(), 'comment')
         </section>
     </article>
