@@ -44,9 +44,14 @@
             <section id="relationships">
                 <h2 style="font-size:19px; font-weight:bold;margin-top:30px;">RELATIONSHIPS</h2>
                 <hr>
-
-                    @each('partials.relationship', $user->relationships()->get(), 'relationship')
-                    @each('partials.relationship', $user->relationships2()->get(), 'relationship')
+                <?php
+                    $relationship = $user->relationships()->get();
+                    $relationship = $relationship->merge($user->relationships2()->get());
+                    $relationship = $relationship->sortBy('id');
+                ?>
+                    @each('partials.relationship', $relationship, 'relationship')
+                    <!--@each('partials.relationship', $user->relationships()->get(), 'relationship')
+                    @each('partials.relationship', $user->relationships2()->get(), 'relationship')-->
             </section>
     </article>
 @else
