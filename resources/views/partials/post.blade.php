@@ -3,7 +3,7 @@
               <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
               <div class="post-header-info">
                   <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
-                  <p>1 hour ago</p>
+                  <p>{{ $post->date }}</p>
               </div>
           </div>
           <a class="post-body" href="/posts/{{ $post->id }}">
@@ -42,3 +42,4 @@
               </div>
           </div>
       </div>
+

@@ -123,7 +123,7 @@
                                         <span>Family</span>
                                     </a>
                                     <hr style="margin:5px 0px; width: 80%;">
-                                    <a class="left-menu-item">
+                                    <a class="left-menu-item" href="/user/{{Auth::user()->id}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <circle cx="12" cy="12" r="9"></circle>
