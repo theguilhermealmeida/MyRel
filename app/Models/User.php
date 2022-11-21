@@ -83,6 +83,21 @@ class User extends Authenticatable
       return $this->hasMany('App\Models\Postreaction');
     }
 
+    /**
+     * The commentreactions this user has.
+     */
+    public function commentreactions() {
+      return $this->hasMany('App\Models\Commentreaction');
+    }
+
+    /**
+     * The replyreactions this user has.
+     */
+    public function replyreactions() {
+      return $this->hasMany('App\Models\Replyreaction');
+    }
+
+
     public function scopeSearch($query, $search)
     {
       if(!$search){

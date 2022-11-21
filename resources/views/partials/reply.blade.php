@@ -14,6 +14,31 @@
               <p>{{ $reply->text }}</p>
           </a>
 
+          <div class="post-footer">
+              <div class="reaction-holder">
+                  <span class="reaction-label">
+                      <span>👍🏻</span>
+                      <span>{{$reply->reactions()->where('type','Like')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>👎🏻</span>
+                      <span>{{$reply->reactions()->where('type','Dislike')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>😿</span>
+                      <span>{{$reply->reactions()->where('type','Sad')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>😡</span>
+                      <span>{{$reply->reactions()->where('type','Angry')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>😍</span>
+                      <span>{{$reply->reactions()->where('type','Amazed')->count()}}</span>
+                  </span>
+              </div>
+          </div>
+
 </div>
 
 <hr style="margin:0;">

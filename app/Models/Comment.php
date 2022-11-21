@@ -30,6 +30,13 @@ class Comment extends Model
     return $this->hasMany('App\Models\Reply');
 }
 
+    /**
+     * The commentreactions that belong to the comment.
+     */
+    public function reactions() {
+      return $this->hasMany('App\Models\Commentreaction');
+  }
+
   public function scopeSearch($query, $search)
   {
     if(!$search){
