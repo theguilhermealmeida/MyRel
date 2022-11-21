@@ -25,6 +25,9 @@ Route::get('search', 'SearchController@search');
 
 Route::put('api/posts', 'PostController@create');
 
+//Admin
+Route::get('admin', 'AdminController@admin');
+
 // API
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
