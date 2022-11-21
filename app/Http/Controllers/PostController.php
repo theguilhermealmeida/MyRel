@@ -34,12 +34,14 @@ class PostController extends Controller
         }
         else{
             $relations = Auth::user()->relationships()->get();
+            $relations = $relations->merge(Auth::user()->relationships2()->get());
             $posts = new \Illuminate\Database\Eloquent\Collection;
             foreach ($relations as $relation) {
+                echo $relation->id;
                 $posts= $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility',$relation->pivot->type));
             }
         }   
-        return view('pages.posts', ['posts' => $posts]);
+        return view('pages.posts', ['posts' => $posts->sortBy('id')]);
     }
 
     /**
