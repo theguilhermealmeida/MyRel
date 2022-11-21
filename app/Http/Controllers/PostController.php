@@ -28,8 +28,17 @@ class PostController extends Controller
      */
     public function feed()
     {
-        if (!Auth::check()) return redirect('/login');
-        $posts = Post::all();
+        if (!Auth::check()){
+            //$posts = Post::where('visibility',NULL)->get(); // can only be done after changing way of visibility
+            return redirect('/login');
+        }
+        else{
+            $relations = Auth::user()->relationships()->get();
+            $posts = new \Illuminate\Database\Eloquent\Collection;
+            foreach ($relations as $relation) {
+                $posts= $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility',$relation->pivot->type));
+            }
+        }   
         return view('pages.posts', ['posts' => $posts]);
     }
 
