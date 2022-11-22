@@ -1,6 +1,6 @@
-DROP SCHEMA IF EXISTS lbaw2112 CASCADE;
-CREATE SCHEMA IF NOT EXISTS lbaw2112;
-SET search_path TO lbaw2112;
+DROP SCHEMA IF EXISTS lbaw2212 CASCADE;
+CREATE SCHEMA IF NOT EXISTS lbaw2212;
+SET search_path TO lbaw2212;
 
 CREATE TYPE relationship_type AS ENUM ('Close Friends', 'Friends', 'Family');
 CREATE TYPE relationship_state AS ENUM ('pending', 'accepted');

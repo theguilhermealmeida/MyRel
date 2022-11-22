@@ -41,13 +41,13 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                email:
                   type: string
                 password:
                   type: string
                   format: password
               required:
-                - name
+                - email
                 - password
       responses:
         "302":
@@ -59,7 +59,7 @@ paths:
               examples:
                 302Success:
                   description: "Login succeed. Will redirect to user feed."
-                  value: "/"
+                  value: "/posts"
         "401":
           description: "Redirect after processing the login credentials."
           headers:
@@ -73,22 +73,21 @@ paths:
   /logout:
     post:
       operationId: R103
-      summary: "R103: Sign-out"
-      description: "Sign-out the current authenticated user. Access: USR, ADM"
+      summary: "R103: Logout"
+      description: "Logout the current authenticated user. Access: USR, ADM"
       tags:
         - "M01: Authentication"
       responses:
         "302":
-          description: "Redict after processing sign-out"
+          description: "Redict after processing logout"
           headers:
             location:
               schema:
                 type: string
               examples:
                 302Success:
-                  description: "Sign-out successful. Redirecting to home page"
-                  value: "/"
-
+                  description: "Logout successful. Redirecting to home page"
+                  value: "/posts"
   /register:
     get:
       operationId: R104
@@ -119,8 +118,6 @@ paths:
                 email:
                   type: string
                   format: email
-                name:
-                  type: string
                 gender:
                   type: string
                 password:
@@ -128,14 +125,12 @@ paths:
                   format: password
                 description:
                   type: string
-                photo:
-                  type: blob
               required:
                 - name
                 - email
-                - name
                 - gender
                 - password
+                - description
 
       responses:
         "302":
@@ -147,27 +142,68 @@ paths:
               examples:
                 302Success:
                   description: "Sucessful registration. Redirecting to home page"
-                  value: "/"
+                  value: "/posts"
                 302Error:
                   description: "Failed registration. Redirecting back to register form"
                   value: "/register"
 
-  /user:
+  /user/{id}:
     get:
       operationId: R201
       summary: "R201: User Profile"
-      description: "Show user profile. Access: USR, ADM"
+      description: "Show user profile. Access: PUB"
       tags:
         - "M02: User"
+      parameters:
+        - name: id
+          in: path
+          description: "User ID"
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
-          description: "Show user profile page. Access: USR, ADM"
-    put:
+          description: "Show user profile page. Access: PUB"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    gender:
+                      type: string
+                    description:
+                      type: string
+                    photo:
+                      type: string
+                      format: binary
+                    ban:
+                      type: string
+    
+  /api/user/{id}:
+    post:
       operationId: R202
       summary: "R202: Edit User Profile"
       description: "Edit user profile. Access: USR, ADM"
       tags:
         - "M02: User"
+      parameters:
+        - name: id
+          in: path
+          description: "User ID"
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
@@ -186,13 +222,29 @@ paths:
                   type: string
                 photo:
                   type: blob
-
+      responses:
+        "200":
+          description: "Update a user. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
     delete:
       operationId: R203
       summary: "R203: Delete User Profile"
       description: "Delete user profile. Access: ADM"
       tags:
         - "M02: User"
+      parameters:
+        - name: id
+          in: path
+          description: "User ID"
+          required: true
+          schema:
+            type: integer
       responses:
         "302":
           description: "Redirect after processing user deletion"
@@ -206,11 +258,11 @@ paths:
                   value: "/"
                 302Error:
                   description: "Failed deletion. Redirecting back to user profile"
-                  value: "/user"
+                  value: "/user/{id}"
   
 
 
-  /notification: # use get notification to get all notifications as JSON
+  /notifications: # use get notification to get all notifications as JSON
     get:
       operationId: R204
       summary: "R204: Get Notifications"
@@ -229,9 +281,9 @@ paths:
                   properties:
                     id:
                       type: integer
+                    related_id :
+                      type: integer
                     type:
-                      type: string
-                    content:
                       type: string
                     date:
                       type: string
@@ -241,8 +293,8 @@ paths:
                     text :
                       type: string
 
-  /notification/{id}: # update the notification to set it as read
-    put:
+  api/notifications/{id}: # update the notification to set it as read
+    post:
       operationId: R205
       summary: "R205: Update Notification"
       description: "Update notification to set it as read. Access: USR, ADM"
@@ -271,16 +323,16 @@ paths:
                 properties:
                   success:
                     type: boolean
-  /post:
+  /posts:
     get:
       operationId: R301
       summary: "R301: Get Posts"
-      description: "Get all posts. Access: USR, ADM"
+      description: "Get the feed. Access: PUB"
       tags:
         - "M04: Posts"
       responses:
         "200":
-          description: "Show all posts. Access: USR, ADM"
+          description: "Show the posts that you have permission. Access: PUB"
           content:
             application/json:
               schema:
@@ -290,22 +342,23 @@ paths:
                   properties:
                     id:
                       type: integer
-                    user:
-                      type: string
-                    content:
+                    user_id:
+                      type: integer
+                    text:
                       type: string
                     date:
                       type: string
                       format: date-time
-                    comments:
-                      type: integer
-                    reactions:
-                      type: array
-                    text :
+                    photo:
                       type: string
-    post:
+                      format: binary
+                    visibility :
+                      type: string
+
+  /api/posts:
+    put:
       operationId: R302
-      summary: "R302: Create Post"
+      summary: "R302: Create a Post"
       description: "Create a new post. Access: USR, ADM"
       tags:
         - "M04: Posts"
@@ -316,10 +369,16 @@ paths:
             schema:
               type: object
               properties:
-                content:
+                text:
                   type: string
+                visibility:
+                  type: string
+                photo:
+                  type: string
+                  format: binary
               required:
-                - content
+                - text
+                - visibility
       responses:
         "200":
           description: "Create a new post. Access: USR, ADM"
@@ -330,11 +389,12 @@ paths:
                 properties:
                   success:
                     type: boolean
-  /post/{id}:
+
+  /posts/{id}:
     get:
       operationId: R303
       summary: "R303: Get Post"
-      description: "Get a post. Access: USR, ADM"
+      description: "Get a specific post. Access: PUB"
       tags:
         - "M04: Posts"
       parameters:
@@ -346,28 +406,31 @@ paths:
             type: integer
       responses:
         "200":
-          description: "Show a post. Access: USR, ADM"
+          description: "Show a post. Access: PUB"
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  user:
-                    type: string
-                  content:
-                    type: string
-                  date:
-                    type: string
-                    format: date-time
-                  comments:
-                    type: integer
-                  reactions:
-                    type: array
-                  text :
-                    type: string
-    put:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    text:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+                    photo:
+                      type: string
+                      format: binary
+                    visibility :
+                      type: string
+    
+  /api/posts/{id}:
+    post:
       operationId: R304
       summary: "R304: Update Post"
       description: "Update a post. Access: USR, ADM"
@@ -387,10 +450,16 @@ paths:
             schema:
               type: object
               properties:
-                content:
+                text:
                   type: string
+                visibility:
+                  type: string
+                photo:
+                  type: string
+                  format: binary
               required:
-                - content
+                - text
+                - visibility
       responses:
         "200":
           description: "Update a post. Access: USR, ADM"
@@ -415,45 +484,22 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
-          description: "Delete a post. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after processing post deletion"
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples:
+                302Success:
+                  description: "Sucessful deletion. Redirecting to home page"
+                  value: "/posts"
+                302Error:
+                  description: "Failed deletion. Redirecting back to post"
+                  value: "/posts/{id}"
 
-  /comment:
-    get:
-      operationId: R401
-      summary: "R401: Get Comments"
-      description: "Get all comments. Access: USR, ADM"
-      tags:
-        - "M05: Comments"
-      responses:
-        "200":
-          description: "Show all comments. Access: USR, ADM"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    user:
-                      type: string
-                    text:
-                      type: string
-                    date:
-                      type: string
-                      format: date-time
-                    reactions:
-                      type: array
-    post:
+  /api/comments:
+    put:
       operationId: R402
       summary: "R402: Create Comment"
       description: "Create a new comment. Access: USR, ADM"
@@ -466,13 +512,19 @@ paths:
             schema:
               type: object
               properties:
-                text:
-                  type: string
+                id:
+                  type: integer
+                user:
+                  type: integer
                 post:
                   type: integer
                 text:
                   type: string
+                date: 
+                  type: string
+                  format: date-time
               required:
+                - user
                 - text
                 - post
       responses:
@@ -486,40 +538,8 @@ paths:
                   success:
                     type: boolean
   
-  /comment/{id}:
-    get:
-      operationId: R403
-      summary: "R403: Get Comment"
-      description: "Get a comment. Access: USR, ADM"
-      tags:
-        - "M05: Comments"
-      parameters:
-        - name: id
-          in: path
-          description: "Comment ID"
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: "Show a comment. Access: USR, ADM"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  user:
-                    type: string
-                  text:
-                    type: string
-                  date:
-                    type: string
-                    format: date-time
-                  reactions:
-                    type: array
-    put:
+  api/comments/{id}:
+    post:
       operationId: R404
       summary: "R404: Update Comment"
       description: "Update a comment. Access: USR, ADM"
@@ -577,13 +597,13 @@ paths:
                   success:
                     type: boolean
 
-  /reaction:
-    post: # react to specific post
-      operationId: R501
-      summary: "R501: Create Reaction"
-      description: "Create a new reaction. Access: USR, ADM"
+  /api/replies:
+    put:
+      operationId: R402
+      summary: "R402: Create Reply"
+      description: "Create a new reply. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M05: Comments"
       requestBody:
         required: true
         content:
@@ -591,16 +611,24 @@ paths:
             schema:
               type: object
               properties:
-                post:
+                id:
                   type: integer
-                reaction:
+                user:
+                  type: integer
+                comment:
+                  type: integer
+                text:
                   type: string
+                date: 
+                  type: string
+                  format: date-time
               required:
-                - reaction
-                - post
+                - user
+                - text
+                - comment
       responses:
         "200":
-          description: "Create a new reaction. Access: USR, ADM"
+          description: "Create a new reply. Access: USR, ADM"
           content:
             application/json:
               schema:
@@ -608,11 +636,71 @@ paths:
                 properties:
                   success:
                     type: boolean
-    
-    delete: # remove reaction from specific post
-      operationId: R502
-      summary: "R502: Delete Reaction"
-      description: "Delete a reaction. Access: USR, ADM"
+  
+  api/replies/{id}:
+    post:
+      operationId: R404
+      summary: "R404: Update Reply"
+      description: "Update a reply. Access: USR, ADM"
+      tags:
+        - "M05: Comments"
+      parameters:
+        - name: id
+          in: path
+          description: "Reply ID"
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+              required:
+                - text
+      responses:
+        "200":
+          description: "Update a reply. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+    delete:
+      operationId: R405
+      summary: "R405: Delete Reply"
+      description: "Delete a reply. Access: USR, ADM"
+      tags:
+        - "M05: Comments"
+      parameters:
+        - name: id
+          in: path
+          description: "Reply ID"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Delete a reply. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+  /api/postreactions:
+    put:
+      operationId: R501
+      summary: "R501: Create a PostReaction"
+      description: "Create a new postreaction. Access: USR, ADM"
       tags:
         - "M06: Reactions"
       requestBody:
@@ -622,6 +710,10 @@ paths:
             schema:
               type: object
               properties:
+                id:
+                  type: integer
+                user:
+                  type: integer
                 post:
                   type: integer
                 reaction:
@@ -629,6 +721,25 @@ paths:
               required:
                 - reaction
                 - post
+                - user
+      responses:
+        "200":
+          description: "Create a new postreaction. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+  /api/postreactions/{id}:
+    delete:
+      operationId: R502
+      summary: "R502: Delete PostReaction"
+      description: "Delete a postreaction. Access: USR, ADM"
+      tags:
+        - "M06: Reactions"
       responses:
         "200":
           description: "Delete a reaction. Access: USR, ADM"
@@ -640,42 +751,13 @@ paths:
                   success:
                     type: boolean
 
-  /feed: # get a feed for the user with a array of posts
-    get:
-      operationId: R601
-      summary: "R601: Get Feed"
-      description: "Get a feed. Access: USR, ADM"
+  /api/commentreactions:
+    put:
+      operationId: R501
+      summary: "R501: Create a CommentReaction"
+      description: "Create a new commentreaction. Access: USR, ADM"
       tags:
-        - "M07: Feed"
-      responses:
-        "200":
-          description: "Show a feed. Access: USR, ADM"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    user:
-                      type: string
-                    text:
-                      type: string
-                    date:
-                      type: string
-                      format: date-time
-                    reactions:
-                      type: array
-
-  /search: # search for a user and return a array with found users
-    post:
-      operationId: R701
-      summary: "R701: Search"
-      description: "Search for a user. Access: USR, ADM"
-      tags:
-        - "M08: Search"
+        - "M06: Reactions"
       requestBody:
         required: true
         content:
@@ -683,24 +765,173 @@ paths:
             schema:
               type: object
               properties:
-                search:
+                id:
+                  type: integer
+                user:
+                  type: integer
+                comment:
+                  type: integer
+                reaction:
                   type: string
               required:
-                - search
+                - reaction
+                - comment
+                - user
       responses:
         "200":
-          description: "Search for a user. Access: USR, ADM"
+          description: "Create a new commentreaction. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+  /api/commentreactions/{id}:
+    delete:
+      operationId: R502
+      summary: "R502: Delete CommentReaction"
+      description: "Delete a commentreaction. Access: USR, ADM"
+      tags:
+        - "M06: Reactions"
+      responses:
+        "200":
+          description: "Delete a reaction. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+  
+  /api/replyreactions:
+    put:
+      operationId: R501
+      summary: "R501: Create a ReplyReaction"
+      description: "Create a new replyreaction. Access: USR, ADM"
+      tags:
+        - "M06: Reactions"
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                user:
+                  type: integer
+                reply:
+                  type: integer
+                reaction:
+                  type: string
+              required:
+                - reaction
+                - reply
+                - user
+      responses:
+        "200":
+          description: "Create a new replyreaction. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+  /api/replyreactions/{id}:
+    delete:
+      operationId: R502
+      summary: "R502: Delete ReplyReaction"
+      description: "Delete a replyreaction. Access: USR, ADM"
+      tags:
+        - "M06: Reactions"
+      responses:
+        "200":
+          description: "Delete a reaction. Access: USR, ADM"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+
+  /search: # search for a user and return a array with found users
+    get:
+      operationId: R701
+      summary: "R701: Search"
+      description: "Search for a user. Access: PUB"
+      tags:
+        - "M08: Search"
+      parameters:
+        - name: search
+          in: query
+          description: "Search string"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Search for a user, a post or a comment. Access: PUB"
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
+                  type: array
                   properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    name:
-                      type: string
+                    users:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          photo:
+                            type: string
+                            format: binary
+                          description:
+                            type: string
+                    posts:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user:
+                            type: integer
+                          photo:
+                            type: string
+                            format: binary
+                          date:
+                            type: string
+                            format: date-time
+                          text:
+                            type: string
+                          visibility:
+                            type: string
+                    comments:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user:
+                            type: integer
+                          post:
+                            type: integer
+                          text:
+                            type: string
+                          date:
+                            type: string
+                            format: date-time
                   
