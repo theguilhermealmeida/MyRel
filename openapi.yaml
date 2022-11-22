@@ -255,7 +255,7 @@ paths:
         "302":
           description: "Redirect after processing user deletion"
           headers:
-            location:
+            Location:
               schema:
                 type: string
               examples:
