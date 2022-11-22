@@ -1,8 +1,12 @@
 openapi: 3.0.0
 info:
   version: '1.0'
-  title: Lbaw Project
+  title: Lbaw Project - MyRel
   description: Web Resources Specification (A7) for Lbaw Project
+
+servers:
+  - url: http://lbaw2212.lbaw.fe.up.pt
+   description: Production server
     
 externalDocs:
   description: "Get more information here."
@@ -14,9 +18,11 @@ tags:
   - name: "M03: User Notifications"
   - name: "M04: Posts"
   - name: "M05: Comments"
-  - name: "M06: Reactions"
-  - name: "M07: Feed"
-  - name: "M08: Search"
+  - name: "M06: Replies"
+  - name: "M07: Reactions"
+  - name: "M08: Help"
+  - name: "M09: Search"
+  - name: "M10: Administration"
 paths:
   /login:
     get:
@@ -221,21 +227,20 @@ paths:
                 description:
                   type: string
                 photo:
-                  type: blob
+                  type: string
+                  format: binary
       responses:
-        "200":
-          description: "Update a user. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing the user profile."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/user/{id}"
     delete:
       operationId: R203
       summary: "R203: Delete User Profile"
-      description: "Delete user profile. Access: ADM"
+      description: "Delete user profile. Access: USR,ADM"
       tags:
         - "M02: User"
       parameters:
@@ -249,10 +254,10 @@ paths:
         "302":
           description: "Redirect after processing user deletion"
           headers:
-            location:
+            Location:
               schema:
                 type: string
-              examples:
+              examples: 
                 302Success:
                   description: "Sucessful deletion. Redirecting to home page"
                   value: "/"
@@ -264,8 +269,8 @@ paths:
 
   /notifications: # use get notification to get all notifications as JSON
     get:
-      operationId: R204
-      summary: "R204: Get Notifications"
+      operationId: R301
+      summary: "R301: Get Notifications"
       description: "Get all notifications. Access: USR, ADM"
       tags:
         - "M03: User Notifications"
@@ -293,10 +298,10 @@ paths:
                     text :
                       type: string
 
-  api/notifications/{id}: # update the notification to set it as read
+  /api/notifications/{id}: # update the notification to set it as read
     post:
-      operationId: R205
-      summary: "R205: Update Notification"
+      operationId: R302
+      summary: "R302: Update Notification"
       description: "Update notification to set it as read. Access: USR, ADM"
       tags:
         - "M03: User Notifications"
@@ -314,19 +319,18 @@ paths:
           schema:
             type: boolean
       responses:
-        "200":
-          description: "Update notification. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing notification."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/notifications"
+
   /posts:
     get:
-      operationId: R301
-      summary: "R301: Get Posts"
+      operationId: R401
+      summary: "R401: Get Posts"
       description: "Get the feed. Access: PUB"
       tags:
         - "M04: Posts"
@@ -357,8 +361,8 @@ paths:
 
   /api/posts:
     put:
-      operationId: R302
-      summary: "R302: Create a Post"
+      operationId: R402
+      summary: "R402: Create a Post"
       description: "Create a new post. Access: USR, ADM"
       tags:
         - "M04: Posts"
@@ -380,20 +384,18 @@ paths:
                 - text
                 - visibility
       responses:
-        "200":
-          description: "Create a new post. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating new post."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/posts"
 
   /posts/{id}:
     get:
-      operationId: R303
-      summary: "R303: Get Post"
+      operationId: R403
+      summary: "R403: Get Post"
       description: "Get a specific post. Access: PUB"
       tags:
         - "M04: Posts"
@@ -431,9 +433,9 @@ paths:
     
   /api/posts/{id}:
     post:
-      operationId: R304
-      summary: "R304: Update Post"
-      description: "Update a post. Access: USR, ADM"
+      operationId: R404
+      summary: "R404: Update Post"
+      description: "Update a post. Access: PTO, ADM"
       tags:
         - "M04: Posts"
       parameters:
@@ -461,19 +463,18 @@ paths:
                 - text
                 - visibility
       responses:
-        "200":
-          description: "Update a post. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing the post."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{id}"
+            
     delete:
-      operationId: R305
-      summary: "R305: Delete Post"
-      description: "Delete a post. Access: USR, ADM"
+      operationId: R405
+      summary: "R405: Delete Post"
+      description: "Delete a post. Access: PTO, ADM"
       tags:
         - "M04: Posts"
       parameters:
@@ -500,8 +501,8 @@ paths:
 
   /api/comments:
     put:
-      operationId: R402
-      summary: "R402: Create Comment"
+      operationId: R501
+      summary: "R501: Create Comment"
       description: "Create a new comment. Access: USR, ADM"
       tags:
         - "M05: Comments"
@@ -528,21 +529,19 @@ paths:
                 - text
                 - post
       responses:
-        "200":
-          description: "Create a new comment. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating new comment."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
   
-  api/comments/{id}:
+  /api/comments/{id}:
     post:
-      operationId: R404
-      summary: "R404: Update Comment"
-      description: "Update a comment. Access: USR, ADM"
+      operationId: R502
+      summary: "R502: Update Comment"
+      description: "Update a comment. Access: CMO, ADM"
       tags:
         - "M05: Comments"
       parameters:
@@ -564,19 +563,17 @@ paths:
               required:
                 - text
       responses:
-        "200":
-          description: "Update a comment. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing a comment."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
     delete:
-      operationId: R405
-      summary: "R405: Delete Comment"
-      description: "Delete a comment. Access: USR, ADM"
+      operationId: R503
+      summary: "R503: Delete Comment"
+      description: "Delete a comment. Access: CMO, ADM"
       tags:
         - "M05: Comments"
       parameters:
@@ -587,23 +584,21 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
-          description: "Delete a comment. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a comment."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/replies:
     put:
-      operationId: R402
-      summary: "R402: Create Reply"
+      operationId: R601
+      summary: "R601: Create Reply"
       description: "Create a new reply. Access: USR, ADM"
       tags:
-        - "M05: Comments"
+        - "M06: Replies"
       requestBody:
         required: true
         content:
@@ -627,23 +622,21 @@ paths:
                 - text
                 - comment
       responses:
-        "200":
-          description: "Create a new reply. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reply."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
   
-  api/replies/{id}:
+  /api/replies/{id}:
     post:
-      operationId: R404
-      summary: "R404: Update Reply"
-      description: "Update a reply. Access: USR, ADM"
+      operationId: R602
+      summary: "R602: Update Reply"
+      description: "Update a reply. Access: RPO, ADM"
       tags:
-        - "M05: Comments"
+        - "M06: Replies"
       parameters:
         - name: id
           in: path
@@ -663,21 +656,19 @@ paths:
               required:
                 - text
       responses:
-        "200":
-          description: "Update a reply. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after updating a reply."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
     delete:
-      operationId: R405
-      summary: "R405: Delete Reply"
-      description: "Delete a reply. Access: USR, ADM"
+      operationId: R603
+      summary: "R603: Delete Reply"
+      description: "Delete a reply. Access: RPO, ADM"
       tags:
-        - "M05: Comments"
+        - "M06: Replies"
       parameters:
         - name: id
           in: path
@@ -686,23 +677,21 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
-          description: "Delete a reply. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a reply."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/postreactions:
     put:
-      operationId: R501
-      summary: "R501: Create a PostReaction"
+      operationId: R701
+      summary: "R701: Create a PostReaction"
       description: "Create a new postreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       requestBody:
         required: true
         content:
@@ -723,41 +712,37 @@ paths:
                 - post
                 - user
       responses:
-        "200":
-          description: "Create a new postreaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/postreactions/{id}:
     delete:
-      operationId: R502
-      summary: "R502: Delete PostReaction"
-      description: "Delete a postreaction. Access: USR, ADM"
+      operationId: R702
+      summary: "R702: Delete PostReaction"
+      description: "Delete a postreaction. Access: RCO, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       responses:
-        "200":
-          description: "Delete a reaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/commentreactions:
     put:
-      operationId: R501
-      summary: "R501: Create a CommentReaction"
+      operationId: R703
+      summary: "R703: Create a CommentReaction"
       description: "Create a new commentreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       requestBody:
         required: true
         content:
@@ -778,41 +763,37 @@ paths:
                 - comment
                 - user
       responses:
-        "200":
-          description: "Create a new commentreaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/commentreactions/{id}:
     delete:
-      operationId: R502
-      summary: "R502: Delete CommentReaction"
-      description: "Delete a commentreaction. Access: USR, ADM"
+      operationId: R704
+      summary: "R704: Delete CommentReaction"
+      description: "Delete a commentreaction. Access: RCO, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       responses:
-        "200":
-          description: "Delete a reaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
   
   /api/replyreactions:
     put:
-      operationId: R501
-      summary: "R501: Create a ReplyReaction"
+      operationId: R705
+      summary: "R705: Create a ReplyReaction"
       description: "Create a new replyreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       requestBody:
         required: true
         content:
@@ -833,41 +814,59 @@ paths:
                 - reply
                 - user
       responses:
-        "200":
-          description: "Create a new replyreaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/replyreactions/{id}:
     delete:
-      operationId: R502
-      summary: "R502: Delete ReplyReaction"
-      description: "Delete a replyreaction. Access: USR, ADM"
+      operationId: R706
+      summary: "R706: Delete ReplyReaction"
+      description: "Delete a replyreaction. Access: RCO, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
+      responses:
+        "302":
+          description: "Redirect after deleting a reaction."
+          headers:
+            location:
+              schema:
+                type: string
+              examples: "/post/{postid}"
+
+  /aboutus:
+    get:
+      operationId: R801
+      summary: "R801: About Us"
+      description: "Provide about us page. Access: PUB"
+      tags:
+        - "M08: Help"
       responses:
         "200":
-          description: "Delete a reaction. Access: USR, ADM"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+          description: "Return about us page."
+        
+  /contacts:
+    get:
+      operationId: R802
+      summary: "R802: Contacts"
+      description: "Provide contacts page. Access: PUB"
+      tags:
+        - "M08: Help"
+      responses:
+        "200":
+          description: "Return contacts page."
 
   /search: # search for a user and return a array with found users
     get:
-      operationId: R701
-      summary: "R701: Search"
-      description: "Search for a user. Access: PUB"
+      operationId: R901
+      summary: "R901: Search"
+      description: "Search for a user, a post or a comment. Access: PUB"
       tags:
-        - "M08: Search"
+        - "M09: Search"
       parameters:
         - name: search
           in: query
@@ -877,61 +876,16 @@ paths:
             type: string
       responses:
         "200":
-          description: "Search for a user, a post or a comment. Access: PUB"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: array
-                  properties:
-                    users:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          name:
-                            type: string
-                          photo:
-                            type: string
-                            format: binary
-                          description:
-                            type: string
-                    posts:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          user:
-                            type: integer
-                          photo:
-                            type: string
-                            format: binary
-                          date:
-                            type: string
-                            format: date-time
-                          text:
-                            type: string
-                          visibility:
-                            type: string
-                    comments:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          user:
-                            type: integer
-                          post:
-                            type: integer
-                          text:
-                            type: string
-                          date:
-                            type: string
-                            format: date-time
+          description: "Return search results. Access: PUB"
+
+  /admin:
+    get:
+      operationId: R1001
+      summary: "R1001: Admin page"
+      description: "Get the administration page. Access: ADM"
+      tags:
+        - "M10: Administration"
+      responses:
+        "200":
+          description: "Return admin control page. Access: ADM"
                   
