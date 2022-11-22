@@ -227,17 +227,16 @@ paths:
                 description:
                   type: string
                 photo:
-                  type: blob
+                  type: string
+                  format: binary
       responses:
-        "200":
-          description: "Update a user. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing the user profile."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/user/{id}"
     delete:
       operationId: R203
       summary: "R203: Delete User Profile"
@@ -320,15 +319,13 @@ paths:
           schema:
             type: boolean
       responses:
-        "200":
-          description: "Update notification. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing notification."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/notifications"
 
   /posts:
     get:
@@ -387,15 +384,13 @@ paths:
                 - text
                 - visibility
       responses:
-        "200":
-          description: "Create a new post. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating new post."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/posts"
 
   /posts/{id}:
     get:
@@ -468,15 +463,14 @@ paths:
                 - text
                 - visibility
       responses:
-        "200":
-          description: "Update a post. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing the post."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{id}"
+            
     delete:
       operationId: R405
       summary: "R405: Delete Post"
@@ -535,15 +529,13 @@ paths:
                 - text
                 - post
       responses:
-        "200":
-          description: "Create a new comment. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating new comment."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
   
   api/comments/{id}:
     post:
@@ -571,15 +563,13 @@ paths:
               required:
                 - text
       responses:
-        "200":
-          description: "Update a comment. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after editing a comment."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
     delete:
       operationId: R503
       summary: "R503: Delete Comment"
@@ -594,15 +584,13 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
-          description: "Delete a comment. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a comment."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/replies:
     put:
@@ -634,15 +622,13 @@ paths:
                 - text
                 - comment
       responses:
-        "200":
-          description: "Create a new reply. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reply."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
   
   api/replies/{id}:
     post:
@@ -670,15 +656,13 @@ paths:
               required:
                 - text
       responses:
-        "200":
-          description: "Update a reply. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after updating a reply."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
     delete:
       operationId: R603
       summary: "R603: Delete Reply"
@@ -693,15 +677,13 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
-          description: "Delete a reply. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a reply."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/postreactions:
     put:
@@ -730,15 +712,13 @@ paths:
                 - post
                 - user
       responses:
-        "200":
-          description: "Create a new postreaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/postreactions/{id}:
     delete:
@@ -748,15 +728,13 @@ paths:
       tags:
         - "M07: Reactions"
       responses:
-        "200":
-          description: "Delete a reaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/commentreactions:
     put:
@@ -785,15 +763,13 @@ paths:
                 - comment
                 - user
       responses:
-        "200":
-          description: "Create a new commentreaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/commentreactions/{id}:
     delete:
@@ -803,15 +779,13 @@ paths:
       tags:
         - "M07: Reactions"
       responses:
-        "200":
-          description: "Delete a reaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
   
   /api/replyreactions:
     put:
@@ -840,15 +814,13 @@ paths:
                 - reply
                 - user
       responses:
-        "200":
-          description: "Create a new replyreaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after creating a new reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /api/replyreactions/{id}:
     delete:
@@ -858,15 +830,13 @@ paths:
       tags:
         - "M07: Reactions"
       responses:
-        "200":
-          description: "Delete a reaction. Access: USR, ADM"
-          content:
-            application/json:
+        "302":
+          description: "Redirect after deleting a reaction."
+          headers:
+            location:
               schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
+                type: string
+              examples: "/post/{postid}"
 
   /aboutus:
     get:
