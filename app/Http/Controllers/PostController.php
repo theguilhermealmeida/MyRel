@@ -139,9 +139,14 @@ class PostController extends Controller
     public function update(Request $request)
     {
         
+        if ($request->input('visibility') == 'Strangers') {
+            $post->visibility = NULL; 
+        }
+        else {
+            $post->visibility = $request->input('visibility');
+        }
         $post = Post::find($request->id);
         $post->text = $request->input('text');
-        $post->visibility = $request->input('visibility');
         $post->save();
 
         return redirect('posts/'.$post->id);
