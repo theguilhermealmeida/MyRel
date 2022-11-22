@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -15,12 +16,23 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function isAdmin(User $user)
+    public function beAdmin(User $user)
     {
         return $user->id == 0;
     }
-    
 
+    /**
+     * Determine whether the user is the logedin user. 
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function beOwner(User $user)
+    {
+        return $user->id == Auth::user()->id;
+    }
+
+    
     /**
      * Determine whether the user can view any models.
      *

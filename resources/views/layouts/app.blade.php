@@ -49,7 +49,7 @@
                         </div>
                     </div>
 
-                    @can('isAdmin', Auth::getUser())
+                    @can('beAdmin', Auth::user())
                     <div>
                         <a class='btn btn-primary btn-margin' href="admin">
                             <span>Admin</span>
@@ -57,6 +57,7 @@
                     </div>
                         
                     @endcan
+                        
 
 
                     <div class="dropdown">
