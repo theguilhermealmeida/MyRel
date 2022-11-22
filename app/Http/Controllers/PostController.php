@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,29 @@ class PostController extends Controller
         return view('pages.posts', ['posts' => $posts]);
     }
 
+    
+    /**
+     * Gives a list of posts allowed to be seen by a user with given id
+     * 
+     * @param int $id
+     * @return Collection
+     */
+    public function allowed_posts($user_id)
+    {   
+        $relations = User::find($user_id)->relationships()->get();
+        $relations = $relations->merge(User::find($user_id)->relationships2()->get());
+        $posts = new \Illuminate\Database\Eloquent\Collection;
+        foreach ($relations as $relation) {
+            if($relation->pivot->type == 'Family'){
+                $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('family',TRUE));
+            }else{
+                $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility',$relation->pivot->type));
+            }
+        }
+        return $posts;
+    }
+
+
         /**
      * Shows all relations posts.
      *
@@ -29,20 +53,16 @@ class PostController extends Controller
     public function feed()
     {
         if (!Auth::check()){
-            //$posts = Post::where('visibility',NULL)->get(); // can only be done after changing way of visibility
-            return redirect('/login');
+            $posts = Post::where('visibility',NULL)->get();
         }
         else{
-            $relations = Auth::user()->relationships()->get();
-            $relations = $relations->merge(Auth::user()->relationships2()->get());
-            $posts = new \Illuminate\Database\Eloquent\Collection;
-            foreach ($relations as $relation) {
-                echo $relation->id;
-                $posts= $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility',$relation->pivot->type));
-            }
+            $posts = $this->allowed_posts(Auth::user()->id);
         }   
         return view('pages.posts', ['posts' => $posts->sortBy('id')]);
     }
+    
+    
+    
 
     /**
      * Shows the post for a given id.

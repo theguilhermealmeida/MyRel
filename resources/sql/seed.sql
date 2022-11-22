@@ -25,7 +25,8 @@ CREATE TABLE posts(
   date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
   text VARCHAR(800),
   photo VARCHAR(800),
-  visibility relationship_type NOT NULL
+  visibility relationship_type,
+  family BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE postreactions(
@@ -718,7 +719,7 @@ INSERT INTO users VALUES (
 
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://pbs.twimg.com/profile_images/429285908953579520/InZKng9-_x96.jpeg','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'The 3 best ADVANCED techniques I learned while building in public last month were:,,1) How to use Chrome Inspect Console properly, especially the Network - Fetch/XHR - Responses feature.,,Understanding the requests from a site is life changing for web scraping.,,(1/3)','https://pbs.twimg.com/profile_images/1461710621397897223/XZciUUbZ_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(18,'Halloween is coming','https://pbs.twimg.com/profile_images/1269253433703510016/B6XjoBkv_x96.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(18,'Halloween is coming','https://pbs.twimg.com/profile_images/1269253433703510016/B6XjoBkv_x96.jpg',NULL);
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(6,'October traffic has been in the red so far.,,Heres how I plan to make it green: Create helpful and relevant posts in communities (Reddit, Facebook, IH),, Run an engineering as marketing campaign. Experiment with content marketing. As usual, will share everything here ','https://pbs.twimg.com/profile_images/1535551343036964865/13nIczOn_x96.jpg','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Puppy thinks hes a bunny.. ','https://pbs.twimg.com/profile_images/1130022182971760640/FlbICzEn_x96.jpg','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'The Psychology of Manipulation You Should Know Before Its Too Late...','https://pbs.twimg.com/profile_images/1431998771349626882/614uNv3Y_x96.jpg','Friends');

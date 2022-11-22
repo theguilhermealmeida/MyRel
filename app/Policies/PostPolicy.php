@@ -38,7 +38,7 @@ class PostPolicy
 
     public function delete(User $user, Post $post)
     {
-      // Only a card owner can delete it
+      // Only a post owner can delete it
       return $user->id == $post->user_id;
     }
 }
