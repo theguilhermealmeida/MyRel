@@ -14,9 +14,11 @@ tags:
   - name: "M03: User Notifications"
   - name: "M04: Posts"
   - name: "M05: Comments"
-  - name: "M06: Reactions"
-  - name: "M07: Feed"
-  - name: "M08: Search"
+  - name: "M06: Replies"
+  - name: "M07: Reactions"
+  - name: "M08: Help"
+  - name: "M09: Search"
+  - name: "M10: Administration"
 paths:
   /login:
     get:
@@ -264,8 +266,8 @@ paths:
 
   /notifications: # use get notification to get all notifications as JSON
     get:
-      operationId: R204
-      summary: "R204: Get Notifications"
+      operationId: R301
+      summary: "R301: Get Notifications"
       description: "Get all notifications. Access: USR, ADM"
       tags:
         - "M03: User Notifications"
@@ -295,8 +297,8 @@ paths:
 
   api/notifications/{id}: # update the notification to set it as read
     post:
-      operationId: R205
-      summary: "R205: Update Notification"
+      operationId: R302
+      summary: "R302: Update Notification"
       description: "Update notification to set it as read. Access: USR, ADM"
       tags:
         - "M03: User Notifications"
@@ -323,10 +325,11 @@ paths:
                 properties:
                   success:
                     type: boolean
+
   /posts:
     get:
-      operationId: R301
-      summary: "R301: Get Posts"
+      operationId: R401
+      summary: "R401: Get Posts"
       description: "Get the feed. Access: PUB"
       tags:
         - "M04: Posts"
@@ -357,8 +360,8 @@ paths:
 
   /api/posts:
     put:
-      operationId: R302
-      summary: "R302: Create a Post"
+      operationId: R402
+      summary: "R402: Create a Post"
       description: "Create a new post. Access: USR, ADM"
       tags:
         - "M04: Posts"
@@ -392,8 +395,8 @@ paths:
 
   /posts/{id}:
     get:
-      operationId: R303
-      summary: "R303: Get Post"
+      operationId: R403
+      summary: "R403: Get Post"
       description: "Get a specific post. Access: PUB"
       tags:
         - "M04: Posts"
@@ -431,8 +434,8 @@ paths:
     
   /api/posts/{id}:
     post:
-      operationId: R304
-      summary: "R304: Update Post"
+      operationId: R404
+      summary: "R404: Update Post"
       description: "Update a post. Access: USR, ADM"
       tags:
         - "M04: Posts"
@@ -471,8 +474,8 @@ paths:
                   success:
                     type: boolean
     delete:
-      operationId: R305
-      summary: "R305: Delete Post"
+      operationId: R405
+      summary: "R405: Delete Post"
       description: "Delete a post. Access: USR, ADM"
       tags:
         - "M04: Posts"
@@ -500,8 +503,8 @@ paths:
 
   /api/comments:
     put:
-      operationId: R402
-      summary: "R402: Create Comment"
+      operationId: R501
+      summary: "R501: Create Comment"
       description: "Create a new comment. Access: USR, ADM"
       tags:
         - "M05: Comments"
@@ -540,8 +543,8 @@ paths:
   
   api/comments/{id}:
     post:
-      operationId: R404
-      summary: "R404: Update Comment"
+      operationId: R502
+      summary: "R502: Update Comment"
       description: "Update a comment. Access: USR, ADM"
       tags:
         - "M05: Comments"
@@ -574,8 +577,8 @@ paths:
                   success:
                     type: boolean
     delete:
-      operationId: R405
-      summary: "R405: Delete Comment"
+      operationId: R503
+      summary: "R503: Delete Comment"
       description: "Delete a comment. Access: USR, ADM"
       tags:
         - "M05: Comments"
@@ -599,11 +602,11 @@ paths:
 
   /api/replies:
     put:
-      operationId: R402
-      summary: "R402: Create Reply"
+      operationId: R601
+      summary: "R601: Create Reply"
       description: "Create a new reply. Access: USR, ADM"
       tags:
-        - "M05: Comments"
+        - "M06: Replies"
       requestBody:
         required: true
         content:
@@ -639,11 +642,11 @@ paths:
   
   api/replies/{id}:
     post:
-      operationId: R404
-      summary: "R404: Update Reply"
+      operationId: R602
+      summary: "R602: Update Reply"
       description: "Update a reply. Access: USR, ADM"
       tags:
-        - "M05: Comments"
+        - "M06: Replies"
       parameters:
         - name: id
           in: path
@@ -673,11 +676,11 @@ paths:
                   success:
                     type: boolean
     delete:
-      operationId: R405
-      summary: "R405: Delete Reply"
+      operationId: R603
+      summary: "R603: Delete Reply"
       description: "Delete a reply. Access: USR, ADM"
       tags:
-        - "M05: Comments"
+        - "M06: Replies"
       parameters:
         - name: id
           in: path
@@ -698,11 +701,11 @@ paths:
 
   /api/postreactions:
     put:
-      operationId: R501
-      summary: "R501: Create a PostReaction"
+      operationId: R701
+      summary: "R701: Create a PostReaction"
       description: "Create a new postreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       requestBody:
         required: true
         content:
@@ -735,11 +738,11 @@ paths:
 
   /api/postreactions/{id}:
     delete:
-      operationId: R502
-      summary: "R502: Delete PostReaction"
+      operationId: R702
+      summary: "R702: Delete PostReaction"
       description: "Delete a postreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       responses:
         "200":
           description: "Delete a reaction. Access: USR, ADM"
@@ -753,11 +756,11 @@ paths:
 
   /api/commentreactions:
     put:
-      operationId: R501
-      summary: "R501: Create a CommentReaction"
+      operationId: R703
+      summary: "R703: Create a CommentReaction"
       description: "Create a new commentreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       requestBody:
         required: true
         content:
@@ -790,11 +793,11 @@ paths:
 
   /api/commentreactions/{id}:
     delete:
-      operationId: R502
-      summary: "R502: Delete CommentReaction"
+      operationId: R704
+      summary: "R704: Delete CommentReaction"
       description: "Delete a commentreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       responses:
         "200":
           description: "Delete a reaction. Access: USR, ADM"
@@ -808,11 +811,11 @@ paths:
   
   /api/replyreactions:
     put:
-      operationId: R501
-      summary: "R501: Create a ReplyReaction"
+      operationId: R705
+      summary: "R705: Create a ReplyReaction"
       description: "Create a new replyreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       requestBody:
         required: true
         content:
@@ -845,11 +848,11 @@ paths:
 
   /api/replyreactions/{id}:
     delete:
-      operationId: R502
-      summary: "R502: Delete ReplyReaction"
+      operationId: R706
+      summary: "R706: Delete ReplyReaction"
       description: "Delete a replyreaction. Access: USR, ADM"
       tags:
-        - "M06: Reactions"
+        - "M07: Reactions"
       responses:
         "200":
           description: "Delete a reaction. Access: USR, ADM"
@@ -861,13 +864,35 @@ paths:
                   success:
                     type: boolean
 
+  /aboutus:
+    get:
+      operationId: R801
+      summary: "R801: About Us"
+      description: "Provide about us page. Access: PUB"
+      tags:
+        - "M08: Help"
+      responses:
+        "200":
+          description: "Return about us page."
+        
+  /contacts:
+    get:
+      operationId: R802
+      summary: "R802: Contacts"
+      description: "Provide contacts page. Access: PUB"
+      tags:
+        - "M08: Help"
+      responses:
+        "200":
+          description: "Return contacts page."
+
   /search: # search for a user and return a array with found users
     get:
-      operationId: R701
-      summary: "R701: Search"
+      operationId: R901
+      summary: "R901: Search"
       description: "Search for a user. Access: PUB"
       tags:
-        - "M08: Search"
+        - "M09: Search"
       parameters:
         - name: search
           in: query
@@ -878,6 +903,73 @@ paths:
       responses:
         "200":
           description: "Search for a user, a post or a comment. Access: PUB"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: array
+                  properties:
+                    users:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          photo:
+                            type: string
+                            format: binary
+                          description:
+                            type: string
+                    posts:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user:
+                            type: integer
+                          photo:
+                            type: string
+                            format: binary
+                          date:
+                            type: string
+                            format: date-time
+                          text:
+                            type: string
+                          visibility:
+                            type: string
+                    comments:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          user:
+                            type: integer
+                          post:
+                            type: integer
+                          text:
+                            type: string
+                          date:
+                            type: string
+                            format: date-time
+
+  /admin:
+    get:
+      operationId: R1001
+      summary: "R1001: Admin page"
+      description: "Get the administration page. Access: ADM"
+      tags:
+        - "M10: Administration"
+      responses:
+        "200":
+          description: "Get the admin control page. Access: ADM"
           content:
             application/json:
               schema:
