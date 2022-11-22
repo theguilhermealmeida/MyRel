@@ -908,57 +908,10 @@ paths:
               schema:
                 type: array
                 items:
-                  type: array
+                  type: object
                   properties:
                     users:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          name:
-                            type: string
-                          photo:
-                            type: string
-                            format: binary
-                          description:
-                            type: string
-                    posts:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          user:
-                            type: integer
-                          photo:
-                            type: string
-                            format: binary
-                          date:
-                            type: string
-                            format: date-time
-                          text:
-                            type: string
-                          visibility:
-                            type: string
-                    comments:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          user:
-                            type: integer
-                          post:
-                            type: integer
-                          text:
-                            type: string
-                          date:
-                            type: string
-                            format: date-time
+                      type : array
 
   /admin:
     get:
