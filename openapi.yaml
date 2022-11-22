@@ -1,8 +1,12 @@
 openapi: 3.0.0
 info:
   version: '1.0'
-  title: Lbaw Project
+  title: Lbaw Project - MyRel
   description: Web Resources Specification (A7) for Lbaw Project
+
+servers:
+  - url: http://lbaw2212.lbaw.fe.up.pt/.
+   description: Production server
     
 externalDocs:
   description: "Get more information here."
