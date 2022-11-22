@@ -28,7 +28,7 @@ paths:
     get:
       operationId: R101
       summary: "R101: Login Form"
-      description: "Provide login form. Access: PUB"
+      description: "Provide login form(UI12). Access: PUB"
       tags:
         - "M01: Authentication"
       responses:
@@ -94,11 +94,14 @@ paths:
                 302Success:
                   description: "Logout successful. Redirecting to home page"
                   value: "/posts"
+                302Fail:
+                  description: "Logout not successful. Redirecting to home page"
+                  value: "${previousPageUrl}"
   /register:
     get:
       operationId: R104
       summary: "R104: Register Form"
-      description: "Provide a new user registration form. Access: PUB"
+      description: "Provide a new user registration form(UI13). Access: PUB"
       tags:
         - "M01: Authentication"
       responses:
@@ -157,7 +160,7 @@ paths:
     get:
       operationId: R201
       summary: "R201: User Profile"
-      description: "Show user profile. Access: PUB"
+      description: "Show user profile(UI6). Access: PUB"
       tags:
         - "M02: User"
       parameters:
@@ -236,7 +239,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/user/{id}"
+              examples:
+                302Success:
+                  description: "Sucessful edit user. Redirecting to user page"
+                  value: "/user/{id}"
+                302Error:
+                  description: "Failed edit user. Redirecting back to user page"
+                  value: "/user/{id}"
     delete:
       operationId: R203
       summary: "R203: Delete User Profile"
@@ -271,7 +280,7 @@ paths:
     get:
       operationId: R301
       summary: "R301: Get Notifications"
-      description: "Get all notifications. Access: USR, ADM"
+      description: "Get all notifications(UI9). Access: USR, ADM"
       tags:
         - "M03: User Notifications"
       responses:
@@ -325,13 +334,19 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/notifications"
+              examples:
+                302Success:
+                  description: "Sucessful edit notification. Redirecting to notifications"
+                  value: "/notifications"
+                302Error:
+                  description: "Failed edit notification. Redirecting back to notifications"
+                  value: "/notifications"
 
   /posts:
     get:
       operationId: R401
       summary: "R401: Get Posts"
-      description: "Get the feed. Access: PUB"
+      description: "Get the feed(UI2). Access: PUB"
       tags:
         - "M04: Posts"
       responses:
@@ -390,13 +405,19 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/posts"
+              examples:
+                302Success:
+                  description: "Successful create post. Redirecting to post page"
+                  value: "/post/{id}"
+                302Error:
+                  description: "Unsuccessful create post. Redirecting back to posts page"
+                  value: "/posts"
 
   /posts/{id}:
     get:
       operationId: R403
       summary: "R403: Get Post"
-      description: "Get a specific post. Access: PUB"
+      description: "Get a specific post(UI2). Access: PUB"
       tags:
         - "M04: Posts"
       parameters:
@@ -469,8 +490,14 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{id}"
-            
+              examples:
+                302Success:
+                  description: "Sucessful edit post. Redirecting to post page"
+                  value: "/posts/{id}"
+                302Error:
+                  description: "Unsucessful edit post. Redirecting to post page"
+                  value: "/posts/{id}"
+
     delete:
       operationId: R405
       summary: "R405: Delete Post"
@@ -535,8 +562,14 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
-  
+              examples:
+                302Success:
+                  description: "Sucessful create comment. Redirecting to post page"
+                  value: "/posts/{id}"
+                302Error:
+                  description: "Failed create comment. Redirecting back to post page"
+                  value: "/posts/{id}"
+                
   /api/comments/{id}:
     post:
       operationId: R502
@@ -569,7 +602,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful edit comment. Redirecting to post page"
+                  value: "/posts/{id}"
+                302Error:
+                  description: "Failed edit comment. Redirecting back to post page"
+                  value: "/posts/{id}"
     delete:
       operationId: R503
       summary: "R503: Delete Comment"
@@ -590,7 +629,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples: 
+                302Success:
+                  description: "Sucessful deletion. Redirecting to post page"
+                  value: "/posts/{id}"
+                302Error:
+                  description: "Failed deletion. Redirecting back to post page"
+                  value: "/posts/{id}"
 
   /api/replies:
     put:
@@ -628,7 +673,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples: 
+                302Success:
+                  description: "Sucessful create reply. Redirecting to post page"
+                  value: "/posts/{id}"
+                302Error:
+                  description: "Failed create reply. Redirecting back to post"
+                  value: "/posts/{id}"
   
   /api/replies/{id}:
     post:
@@ -662,7 +713,14 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful update reply. Redirecting to post page"
+                  value: "/posts/{id}"
+                302Error:
+                  description: "Failed update reply. Redirecting back to post"
+                  value: "/posts/{id}"
+
     delete:
       operationId: R603
       summary: "R603: Delete Reply"
@@ -683,7 +741,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful delete reply. Redirecting to post page"
+                  value: "/posts/{id}"
+                302Error:
+                  description: "Failed delete reply. Redirecting back to post"
+                  value: "/posts/{id}"
 
   /api/postreactions:
     put:
@@ -718,7 +782,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful create reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}"
+                302Error:
+                  description: "Failed create reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}"             
 
   /api/postreactions/{id}:
     delete:
@@ -734,7 +804,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful delete reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}"
+                302Error:
+                  description: "Failed delete reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}" 
 
   /api/commentreactions:
     put:
@@ -769,7 +845,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful create reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}"
+                302Error:
+                  description: "Failed create reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}" 
 
   /api/commentreactions/{id}:
     delete:
@@ -785,7 +867,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful delete reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}"
+                302Error:
+                  description: "Failed delete reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}" 
   
   /api/replyreactions:
     put:
@@ -820,7 +908,13 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful create reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}"
+                302Error:
+                  description: "Failed create reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}" 
 
   /api/replyreactions/{id}:
     delete:
@@ -836,13 +930,19 @@ paths:
             location:
               schema:
                 type: string
-              examples: "/post/{postid}"
+              examples:
+                302Success:
+                  description: "Sucessful delete reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}"
+                302Error:
+                  description: "Failed delete reaction. Redirecting to previous page"
+                  value: "${previousPageUrl}" 
 
   /aboutus:
     get:
       operationId: R801
       summary: "R801: About Us"
-      description: "Provide about us page. Access: PUB"
+      description: "Provide about us page(UI11). Access: PUB"
       tags:
         - "M08: Help"
       responses:
@@ -853,7 +953,7 @@ paths:
     get:
       operationId: R802
       summary: "R802: Contacts"
-      description: "Provide contacts page. Access: PUB"
+      description: "Provide contacts page(UI10). Access: PUB"
       tags:
         - "M08: Help"
       responses:
@@ -864,7 +964,7 @@ paths:
     get:
       operationId: R901
       summary: "R901: Search"
-      description: "Search for a user, a post or a comment. Access: PUB"
+      description: "Search for a user, a post or a comment(UI8). Access: PUB"
       tags:
         - "M09: Search"
       parameters:
@@ -882,7 +982,7 @@ paths:
     get:
       operationId: R1001
       summary: "R1001: Admin page"
-      description: "Get the administration page. Access: ADM"
+      description: "Get the administration page(UI14,UI15,UI16,UI17). Access: ADM"
       tags:
         - "M10: Administration"
       responses:
