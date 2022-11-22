@@ -258,13 +258,13 @@ paths:
             Location:
               schema:
                 type: string
-              examples:
-                302Success:
-                  description: "Sucessful deletion. Redirecting to home page"
-                  value: "/"
-                302Error:
-                  description: "Failed deletion. Redirecting back to user profile"
-                  value: "/user/{id}"
+                examples: 
+                  302Success:
+                    description: "Sucessful deletion. Redirecting to home page"
+                    value: "/"
+                  302Error:
+                    description: "Failed deletion. Redirecting back to user profile"
+                    value: "/user/{id}"
   
 
 
