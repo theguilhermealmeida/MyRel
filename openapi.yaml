@@ -240,7 +240,7 @@ paths:
     delete:
       operationId: R203
       summary: "R203: Delete User Profile"
-      description: "Delete user profile. Access: ADM"
+      description: "Delete user profile. Access: USR,ADM"
       tags:
         - "M02: User"
       parameters:
@@ -435,7 +435,7 @@ paths:
     post:
       operationId: R404
       summary: "R404: Update Post"
-      description: "Update a post. Access: USR, ADM"
+      description: "Update a post. Access: PTO, ADM"
       tags:
         - "M04: Posts"
       parameters:
@@ -474,7 +474,7 @@ paths:
     delete:
       operationId: R405
       summary: "R405: Delete Post"
-      description: "Delete a post. Access: USR, ADM"
+      description: "Delete a post. Access: PTO, ADM"
       tags:
         - "M04: Posts"
       parameters:
@@ -541,7 +541,7 @@ paths:
     post:
       operationId: R502
       summary: "R502: Update Comment"
-      description: "Update a comment. Access: USR, ADM"
+      description: "Update a comment. Access: CMO, ADM"
       tags:
         - "M05: Comments"
       parameters:
@@ -573,7 +573,7 @@ paths:
     delete:
       operationId: R503
       summary: "R503: Delete Comment"
-      description: "Delete a comment. Access: USR, ADM"
+      description: "Delete a comment. Access: CMO, ADM"
       tags:
         - "M05: Comments"
       parameters:
@@ -634,7 +634,7 @@ paths:
     post:
       operationId: R602
       summary: "R602: Update Reply"
-      description: "Update a reply. Access: USR, ADM"
+      description: "Update a reply. Access: RPO, ADM"
       tags:
         - "M06: Replies"
       parameters:
@@ -666,7 +666,7 @@ paths:
     delete:
       operationId: R603
       summary: "R603: Delete Reply"
-      description: "Delete a reply. Access: USR, ADM"
+      description: "Delete a reply. Access: RPO, ADM"
       tags:
         - "M06: Replies"
       parameters:
@@ -724,7 +724,7 @@ paths:
     delete:
       operationId: R702
       summary: "R702: Delete PostReaction"
-      description: "Delete a postreaction. Access: USR, ADM"
+      description: "Delete a postreaction. Access: RCO, ADM"
       tags:
         - "M07: Reactions"
       responses:
@@ -775,7 +775,7 @@ paths:
     delete:
       operationId: R704
       summary: "R704: Delete CommentReaction"
-      description: "Delete a commentreaction. Access: USR, ADM"
+      description: "Delete a commentreaction. Access: RCO, ADM"
       tags:
         - "M07: Reactions"
       responses:
@@ -826,7 +826,7 @@ paths:
     delete:
       operationId: R706
       summary: "R706: Delete ReplyReaction"
-      description: "Delete a replyreaction. Access: USR, ADM"
+      description: "Delete a replyreaction. Access: RCO, ADM"
       tags:
         - "M07: Reactions"
       responses:
