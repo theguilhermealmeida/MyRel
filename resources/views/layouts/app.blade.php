@@ -21,7 +21,6 @@
     <link href="{{ asset('./dist/css/tabler.min.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/posts.css') }}" rel="stylesheet">
 </head>
-
 <body class="theme-dark">
     <div class="wrapper">
         <header class="navbar navbar-expand-md navbar-light d-print-none">
@@ -30,7 +29,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-                    <a href="/posts" style="display:flex; align-items:center;">LBAW</a>
+                  
+                    <a href="/posts" style="display:flex; align-items:center;"><img src="{{ asset('./img/logo.png') }}" style="height:42px;" alt="Tabler" class="navbar-brand-image"></a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
                     <div class="nav-item dropdown d-none d-md-flex me-3">
@@ -48,17 +48,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                            <span class="avatar avatar-sm" style="background-image: url({{ Auth::user()->photo }})"></span>
-                            <div class="d-none d-xl-block ps-2">
+
+
+                    <div class="dropdown">
+                      <button style="background:none; border:none;" class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img style="width:30px; height:30px;" class="avatar avatar-sm" src={{ Auth::user()->photo }}></img>
+
                                 <div>{{Auth::user()->name}}</div>
-                            </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Logout</a> @if (Auth::check()) <a class="button" href="{{ url('/logout') }}"> Logout </a> <a href="/user/{{ Auth::user()->id }}">{{ Auth::user()->name }}</a> @endif
-                        </div>
+
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                       
+                      <a href="{{ url('/logout') }}" class="dropdown-item">Logout</a>
+                      </div>
+                    </div>
+
+
+                 
                     </div>
                 </div>
             </div>
@@ -140,8 +146,8 @@
                                 <section id="search"> <?php
                     echo Form::open(array('url' => '/search', 'method' => 'get'));
                     echo "Search:";
-                    echo Form::text('search');
-                    echo Form::button('Search', array('type' => 'submit'));
+                    echo Form::text('search', null, array('placeholder' => 'Search'));
+                    echo Form::button('Search', array('type' => 'submit', 'class' => 'btn btn-primary btn-margin'));
                     echo Form::close();
                   ?> </section>
                             </div>
@@ -185,21 +191,18 @@
                             <header>
                                 <h2 onclick="location.href='/user/{{Auth::user()->id}}';" style="cursor:pointer;"><img src={{ Auth::user()->photo }}</a></h2>
                             </header>
-                            <div style="margin-left:10px; margin-top:10px;"> <?php
+                            <div style="margin-left:10px; margin-top:10px; width:100%;"> <?php
             echo Form::open(array('url' => 'api/posts', 'method' => 'put'));
-            echo Form::textarea('text', 'Share your thoughts with us...');
-            echo "Visibility";
+            echo Form::textarea('text', null, array('placeholder' => 'Share your thoughts with us...', 'class' => 'form-control form-text'));
+            echo "Visibility";            
             echo Form::select('visibility', array('Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers'));
-            echo Form::button('Create new Post', array('type' => 'submit'));
+            echo Form::button('Create new Post', array('type' => 'submit', 'class' => 'btn btn-primary', 'style' => 'position:absolute; right:25px; margin-top:10px;'));
             echo Form::close();
           ?> </div>
                         </article>
                     </section>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+          
             </div>
         </div>
     </div>

@@ -18,6 +18,11 @@
 
   </head>
   <body  class=" border-top-wide border-primary d-flex flex-column theme-dark">
+    <style>
+           input {
+                    color:white;
+                }
+    </style>
     <div class="page page-center">
       <div class="container-tight py-4">
         <div class="text-center mb-4">

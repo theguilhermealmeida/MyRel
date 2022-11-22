@@ -178,11 +178,3 @@ function createItem(item) {
 }
 
 addEventListeners();
-
-
-function toggleEditPostPopUp(){
-  document.getElementById("popup1").classList.toggle("active");
-}
-function toggleEditProfilePopUp(){
-  document.getElementById("popup2").classList.toggle("active");
-}

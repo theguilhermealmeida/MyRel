@@ -4,16 +4,6 @@
 
 @section('content')
 
-<section id="search">
-    <?php
-      echo Form::open(array('url' => '/search', 'method' => 'get'));
-      echo "Search:";
-      echo Form::text('search',$search);
-      echo Form::button('Search', array('type' => 'submit'));
-      echo Form::close();
-    ?>
-</section>
-
 
 <section id="users">
     <h2>USERS</h2>

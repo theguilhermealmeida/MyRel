@@ -126,3 +126,29 @@
                     color: #999;
                     margin-left: 5px;;
                 }
+
+
+                #search form{
+                    display:flex;
+                    flex-direction: column;
+                }
+
+                #search form input{
+                    margin-top:10px;
+                    border-radius:3px; border:none; height: 35px;  padding:6px 15px;
+                 
+                }
+
+                .btn-margin{
+                    margin-top: 10px;
+                    
+                }
+
+                .form-text{
+
+                    width: 100%;;
+
+                }
+
+
+             
