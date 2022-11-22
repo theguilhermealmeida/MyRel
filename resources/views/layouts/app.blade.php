@@ -49,7 +49,7 @@
                         </div>
                     </div>
 
-
+                    @if (Auth::check())
                     <div class="dropdown">
                       <button style="background:none; border:none;" class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img style="width:30px; height:30px;" class="avatar avatar-sm" src={{ Auth::user()->photo }}></img>
@@ -62,7 +62,7 @@
                       <a href="{{ url('/logout') }}" class="dropdown-item">Logout</a>
                       </div>
                     </div>
-
+                    @endif
 
                  
                     </div>
@@ -129,6 +129,7 @@
                                         <span>Family</span>
                                     </a>
                                     <hr style="margin:5px 0px; width: 80%;">
+                                    @if (Auth::check())
                                     <a class="left-menu-item" href="/user/{{Auth::user()->id}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -138,6 +139,7 @@
                                         </svg>
                                         <span>Profile</span>
                                     </a>
+                                    @endif
                                     <button class="post-btn btn" data-toggle="modal" data-target="#exampleModal"> POST </button>
                                 </nav>
                             </div>
@@ -188,9 +190,11 @@
                 <div class="modal-body">
                     <section id="new_post">
                         <article style="display:flex;">
+                            @if (Auth::check())
                             <header>
                                 <h2 onclick="location.href='/user/{{Auth::user()->id}}';" style="cursor:pointer;"><img src={{ Auth::user()->photo }}</a></h2>
                             </header>
+                            @endif
                             <div style="margin-left:10px; margin-top:10px; width:100%;"> <?php
             echo Form::open(array('url' => 'api/posts', 'method' => 'put'));
             echo Form::textarea('text', null, array('placeholder' => 'Share your thoughts with us...', 'class' => 'form-control form-text'));
