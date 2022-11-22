@@ -911,7 +911,11 @@ paths:
                   type: object
                   properties:
                     users:
-                      type: integer 
+                      type: object 
+                    posts:
+                      type: object
+                    comments:
+                      type: object
 
   /admin:
     get:
