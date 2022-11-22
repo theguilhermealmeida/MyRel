@@ -49,6 +49,15 @@
                         </div>
                     </div>
 
+                    @can('isAdmin', Auth::getUser())
+                    <div>
+                        <a class='btn btn-primary btn-margin' href="admin">
+                            <span>Admin</span>
+                        </a>
+                    </div>
+                        
+                    @endcan
+
 
                     <div class="dropdown">
                       <button style="background:none; border:none;" class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -195,7 +204,7 @@
             echo Form::open(array('url' => 'api/posts', 'method' => 'put'));
             echo Form::textarea('text', null, array('placeholder' => 'Share your thoughts with us...', 'class' => 'form-control form-text'));
             echo "Visibility";            
-            echo Form::select('visibility', array('Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers'));
+            echo Form::select('visibility', array('Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers', 'required'));
             echo Form::button('Create new Post', array('type' => 'submit', 'class' => 'btn btn-primary', 'style' => 'position:absolute; right:25px; margin-top:10px;'));
             echo Form::close();
           ?> </div>

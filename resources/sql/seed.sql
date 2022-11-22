@@ -387,6 +387,15 @@ EXECUTE PROCEDURE reply_search_update();
 -- Finally, create a GIN index for ts_vectors.
 CREATE INDEX search_idx_reply ON replies USING GIN (tsvectors);
 
+INSERT INTO users VALUES (
+   0,
+  'Cristiano Ronaldo',
+  'cr7@example.com',
+  'Male',
+  'Sou lindo',
+  'https://robohash.org/solutacumqueet.png?size=50x50&set=set1',
+  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
+); -- Password is 1234. Generated using Hash::make('1234')
 
 INSERT INTO users VALUES (
   DEFAULT,

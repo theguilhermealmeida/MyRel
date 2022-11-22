@@ -10,6 +10,18 @@ class UserPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user is admin. 
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function isAdmin(User $user)
+    {
+        return $user->id == 0;
+    }
+    
+
+    /**
      * Determine whether the user can view any models.
      *
      * @param  \App\Models\User  $user
