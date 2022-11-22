@@ -298,7 +298,7 @@ paths:
                     text :
                       type: string
 
-  api/notifications/{id}: # update the notification to set it as read
+  /api/notifications/{id}: # update the notification to set it as read
     post:
       operationId: R302
       summary: "R302: Update Notification"
@@ -537,7 +537,7 @@ paths:
                 type: string
               examples: "/post/{postid}"
   
-  api/comments/{id}:
+  /api/comments/{id}:
     post:
       operationId: R502
       summary: "R502: Update Comment"
@@ -630,7 +630,7 @@ paths:
                 type: string
               examples: "/post/{postid}"
   
-  api/replies/{id}:
+  /api/replies/{id}:
     post:
       operationId: R602
       summary: "R602: Update Reply"
