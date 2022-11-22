@@ -41,11 +41,27 @@ class PostController extends Controller
                 $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility',$relation->pivot->type));
             }
         }
+        $posts = $posts->merge(Post::all()->where('user_id',$user_id));
         return $posts;
     }
 
+    /**
+     * Gives a list of posts allowed to be seen by a user with given id
+     * 
+     * @param Collection $posts
+     * @return Collection
+     */
+    public function getComments($posts)
+    {
+        $comments = new \Illuminate\Database\Eloquent\Collection;
+        foreach($posts as $post){
+            $comments = $comments->merge($post->comments()->get());
+        }
+        return $comments;    
+    }
 
-        /**
+
+    /**
      * Shows all relations posts.
      *
      * @return Response
