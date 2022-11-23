@@ -29,11 +29,6 @@ Route::put('api/posts', 'PostController@create');
 Route::get('admin', 'AdminController@admin');
 
 // API
-Route::put('api/cards', 'CardController@create');
-Route::delete('api/cards/{card_id}', 'CardController@delete');
-Route::put('api/cards/{card_id}/', 'ItemController@create');
-Route::post('api/item/{id}', 'ItemController@update');
-Route::delete('api/item/{id}', 'ItemController@delete');
 Route::put('api/posts', 'PostController@create');
 Route::post('api/posts/{id}', 'PostController@update');
 Route::post('api/user/{id}', 'UserController@update');
