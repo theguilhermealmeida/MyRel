@@ -30,6 +30,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
     public function getName() {
       if ($this->ban) {
       return "unkown account";

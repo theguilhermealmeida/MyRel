@@ -31,9 +31,9 @@
                     </div>
                     <?php
                     echo Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'post']);
-                    echo Form::textarea('text', $post->text);
+                    echo Form::text('text', $post->text, array('required'));
                     echo 'Visibility';
-                    echo Form::select('visibility', ['Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers'], $post->visibility);
+                    echo Form::select('visibility', ['Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers']);
                     echo Form::button('Edit Post', ['type' => 'submit']);
                     echo Form::close();
                     ?>
