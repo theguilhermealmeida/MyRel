@@ -44,18 +44,4 @@ class LoginController extends Controller
     public function home() {
         return redirect('/posts');
     }
-
-//     public function logout2(Request $request)
-// {
-//     $this->guard()->logout();
-
-//     $request->session()->invalidate();
-
-//     $request->session()->regenerateToken();
-
-//     return $role == 1
-//         ? redirect('/dashboard/login')
-//         : redirect('/login');
-// }
-
 }
