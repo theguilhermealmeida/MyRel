@@ -42,6 +42,7 @@ class PostController extends Controller
             }
         }
         $posts = $posts->merge(Post::all()->where('user_id',$user_id));
+        $posts = $posts->merge(Post::where('visibility',NULL)->get());
         return $posts;
     }
 
@@ -114,7 +115,12 @@ class PostController extends Controller
 
         $post->user_id = Auth::user()->id;
         $post->text = $request->input('text');
-        $post->visibility = $request->input('visibility');
+        if ($request->input('visibility') == 'Strangers') {
+            $post->visibility = NULL; 
+        }
+        else {
+            $post->visibility = $request->input('visibility');
+        }
         $post->save();
 
         return redirect('posts');
@@ -155,14 +161,14 @@ class PostController extends Controller
     public function update(Request $request)
     {
         
+        $post = Post::find($request->id);
+        $post->text = $request->input('text');
         if ($request->input('visibility') == 'Strangers') {
             $post->visibility = NULL; 
         }
         else {
             $post->visibility = $request->input('visibility');
         }
-        $post = Post::find($request->id);
-        $post->text = $request->input('text');
         $post->save();
 
         return redirect('posts/'.$post->id);

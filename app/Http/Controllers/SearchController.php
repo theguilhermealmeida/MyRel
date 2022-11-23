@@ -25,7 +25,7 @@ class SearchController extends Controller
         }
         else{
             $search_posts = Post::search($request->search)->simplePaginate(20);
-            $visible_posts = (new PostController)->allowed_posts(Auth::user()->id);                     
+            $visible_posts = (new PostController)->allowed_posts(Auth::user()->id);                   
         }
         $posts = $visible_posts->intersect($search_posts); 
         $posts = $posts-> slice(0,5);

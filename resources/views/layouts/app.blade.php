@@ -163,8 +163,8 @@
                                         </svg>
                                         <span>Profile</span>
                                     </a>
-                                    @endif
                                     <button class="post-btn btn" data-toggle="modal" data-target="#exampleModal"> POST </button>
+                                    @endif
                                 </nav>
                             </div>
                             <div class="col-6" id="feed"> @yield('content') </div>
@@ -221,9 +221,9 @@
                             @endif
                             <div style="margin-left:10px; margin-top:10px; width:100%;"> <?php
             echo Form::open(array('url' => 'api/posts', 'method' => 'put'));
-            echo Form::textarea('text', null, array('placeholder' => 'Share your thoughts with us...', 'class' => 'form-control form-text'));
+            echo Form::textarea('text', null, array('placeholder' => 'Share your thoughts with us...', 'class' => 'form-control form-text','required'));
             echo "Visibility";            
-            echo Form::select('visibility', array('Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers', 'required'));
+            echo Form::select('visibility', array('Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers'));
             echo Form::button('Create new Post', array('type' => 'submit', 'class' => 'btn btn-primary', 'style' => 'position:absolute; right:25px; margin-top:10px;'));
             echo Form::close();
           ?> </div>

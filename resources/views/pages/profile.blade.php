@@ -31,7 +31,7 @@
                 }
             </style>
 
-            @if (Auth::user()->id == 0 || Auth::user()->id == $user->id)
+            @if (null !== Auth::user() && (Auth::user()->id == 0 || Auth::user()->id == $user->id))
                 <button class="btn-primary btn" onclick="toggleEditProfilePopUp()">Edit Profile</button>
                 <div class="popup" id="popup2">
                     <div class='overlay'></div>
@@ -72,14 +72,14 @@
     @endif
 
 
-    @if ((Auth::user()->id == 0 && !$user->ban) || Auth::user()->id == $user->id)
+    @if (null !== Auth::user() && ((Auth::user()->id == 0 && !$user->ban) || Auth::user()->id == $user->id))
         <?php
         echo Form::open(['url' => 'api/user/' . $user->id, 'method' => 'delete']);
         echo Form::button('Delete Account', ['type' => 'submit', 'class' => 'btn-danger btn']);
         echo Form::close();
         ?>
     @endif
-    @if ((Auth::user()->id == 0 && $user->ban) || Auth::user()->id == $user->id)
+    @if (null !== Auth::user() && (Auth::user()->id == 0 && $user->ban))
         <?php
         echo Form::open(['url' => 'api/user/' . $user->id, 'method' => 'delete']);
         echo Form::button('Unban Account', ['type' => 'submit', 'class' => 'btn-danger btn']);
