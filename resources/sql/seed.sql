@@ -396,8 +396,8 @@ INSERT INTO users VALUES (
   'Male',
   'Gosto de gatos',
   'https://robohash.org/solutacumqueet.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 INSERT INTO users VALUES (
   DEFAULT,
@@ -406,8 +406,8 @@ INSERT INTO users VALUES (
   'Male',
   'FC PORTO <3',
   'https://robohash.org/sintbeataefugiat.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 INSERT INTO users VALUES (
   DEFAULT,
@@ -416,8 +416,8 @@ INSERT INTO users VALUES (
   'Male',
   'empower global e-commerce',
   'https://robohash.org/architectodoloremnon.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 INSERT INTO users VALUES (
   DEFAULT,
@@ -426,8 +426,8 @@ INSERT INTO users VALUES (
   'Female',
   'repurpose enterprise functionalities',
   'https://robohash.org/nisipraesentiumqui.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -437,8 +437,8 @@ INSERT INTO users VALUES (
   'Male',
   'synergize distributed niches',
   'https://robohash.org/sedassumendadebitis.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -448,8 +448,8 @@ INSERT INTO users VALUES (
   'Female',
   'maximize visionary schemas',
   'https://robohash.org/etquiid.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -459,8 +459,8 @@ INSERT INTO users VALUES (
   'Female',
   'redefine extensible supply-chains',
   'https://robohash.org/quiaetinventore.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -470,8 +470,8 @@ INSERT INTO users VALUES (
   'Male',
   'strategize value-added partnerships',
   'https://robohash.org/doloremexvoluptatem.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -481,8 +481,8 @@ INSERT INTO users VALUES (
   'Male',
   'enable impactful experiences',
   'https://robohash.org/pariaturofficiaquia.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -492,8 +492,8 @@ INSERT INTO users VALUES (
   'Male',
   'utilize front-end systems',
   'https://robohash.org/aliasvoluptateseveniet.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -503,8 +503,8 @@ INSERT INTO users VALUES (
   'Female',
   'mesh impactful web services',
   'https://robohash.org/perferendisremesse.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 INSERT INTO users VALUES (
   DEFAULT,
@@ -513,8 +513,8 @@ INSERT INTO users VALUES (
   'Male',
   'optimize 24/7 users',
   'https://robohash.org/corporisidiure.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -524,8 +524,8 @@ INSERT INTO users VALUES (
   'Female',
   'integrate visionary solutions',
   'https://robohash.org/optiovelitvoluptatum.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -535,8 +535,8 @@ INSERT INTO users VALUES (
   'Male',
   'disintermediate e-business interfaces',
   'https://robohash.org/temporaplaceatnihil.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -546,8 +546,8 @@ INSERT INTO users VALUES (
   'Female',
   'cultivate open-source paradigms',
   'https://robohash.org/voluptasnequenisi.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -557,8 +557,8 @@ INSERT INTO users VALUES (
   'Female',
   'engage sticky vortals',
   'https://robohash.org/dolorvoluptatibusesse.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -568,8 +568,8 @@ INSERT INTO users VALUES (
   'Male',
   'harness bleeding-edge markets',
   'https://robohash.org/iustoesseconsequuntur.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -579,8 +579,8 @@ INSERT INTO users VALUES (
   'Male',
   'evolve seamless architectures',
   'https://robohash.org/idsuntipsa.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -590,8 +590,8 @@ INSERT INTO users VALUES (
   'Male',
   'unleash cross-media infomediaries',
   'https://robohash.org/estmaximeoptio.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -601,8 +601,8 @@ INSERT INTO users VALUES (
   'Male',
   'reinvent impactful functionalities',
   'https://robohash.org/minimamolestiaelaudantium.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -612,8 +612,8 @@ INSERT INTO users VALUES (
   'Female',
   'redefine dot-com web-readiness',
   'https://robohash.org/maioreslaudantiumdignissimos.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -623,8 +623,8 @@ INSERT INTO users VALUES (
   'Female',
   'generate extensible relationships',
   'https://robohash.org/totamvitaeaut.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 INSERT INTO users VALUES (
   DEFAULT,
@@ -633,8 +633,8 @@ INSERT INTO users VALUES (
   'Male',
   'synergize world-class eyeballs',
   'https://robohash.org/distinctioconsequaturtempora.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -644,8 +644,8 @@ INSERT INTO users VALUES (
   'Male',
   'deploy robust infomediaries',
   'https://robohash.org/abeaquevoluptas.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -655,8 +655,8 @@ INSERT INTO users VALUES (
   'Female',
   'leverage cutting-edge platforms',
   'https://robohash.org/quiadbeatae.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -666,8 +666,8 @@ INSERT INTO users VALUES (
   'Female',
   'target leading-edge bandwidth',
   'https://robohash.org/autfugaiusto.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -677,8 +677,8 @@ INSERT INTO users VALUES (
   'Female',
   'seize open-source e-tailers',
   'https://robohash.org/dignissimosoptioofficia.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W'
-); -- Password is 1234. Generated using Hash::make('1234')
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W'
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -688,9 +688,9 @@ INSERT INTO users VALUES (
   'Male',
   'strategize visionary e-markets',
   'https://robohash.org/natusplaceatmolestiae.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W',
   TRUE
-); -- Password is 1234. Generated using Hash::make('1234')
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -700,9 +700,9 @@ INSERT INTO users VALUES (
   'Female',
   'e-enable intuitive relationships',
   'https://robohash.org/etquiet.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W',
   TRUE
-); -- Password is 1234. Generated using Hash::make('1234')
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO users VALUES (
@@ -712,9 +712,9 @@ INSERT INTO users VALUES (
   'Male',
   'transition 24/365 schemas',
   'https://robohash.org/aperiamnumquammaiores.png?size=50x50&set=set1',
-  '$2y$10$HfzIhGCCaxqyaIdGgjARSuOKAcm1Uy82YfLuNaajn6JrjLWy9Sj/W',
+  '$2y$10$fh7ZzO4ki1gbq4gc4.t6se3fZEOYhrtt0tiaE4GwDQtVjSgWBp77W',
   TRUE
-); -- Password is 1234. Generated using Hash::make('1234')
+); -- Password is 123456. Generated using Hash::make('123456')
 
 
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://pbs.twimg.com/profile_images/429285908953579520/InZKng9-_x96.jpeg','Friends');

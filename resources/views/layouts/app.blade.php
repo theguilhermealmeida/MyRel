@@ -62,6 +62,19 @@
                       <a href="{{ url('/logout') }}" class="dropdown-item">Logout</a>
                       </div>
                     </div>
+                    @else
+                    <div class="dropdown">
+                      <button style="background:none; border:none;" class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                <div> Options </div>
+
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                       
+                      <a href="{{ url('/login') }}" class="dropdown-item">Login</a>
+                      <a href="{{ url('/register') }}" class="dropdown-item">Register</a>
+                      </div>
+                    </div>
                     @endif
 
                  
