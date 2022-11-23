@@ -13,13 +13,20 @@
 // Home
 Route::get('/', 'Auth\LoginController@home');
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
-
 //Posts
-Route::get('posts', 'PostController@list');
+Route::get('posts', 'PostController@feed');
 Route::get('posts/{id}', 'PostController@show');
+
+//Users
+Route::get('user/{id}', 'UserController@show');
+
+//Search
+Route::get('search', 'SearchController@search');
+
+Route::put('api/posts', 'PostController@create');
+
+//Admin
+Route::get('admin', 'AdminController@admin');
 
 // API
 Route::put('api/cards', 'CardController@create');
@@ -27,6 +34,11 @@ Route::delete('api/cards/{card_id}', 'CardController@delete');
 Route::put('api/cards/{card_id}/', 'ItemController@create');
 Route::post('api/item/{id}', 'ItemController@update');
 Route::delete('api/item/{id}', 'ItemController@delete');
+Route::put('api/posts', 'PostController@create');
+Route::post('api/posts/{id}', 'PostController@update');
+Route::post('api/user/{id}', 'UserController@update');
+Route::delete('api/posts/{id}', 'PostController@destroy');
+Route::delete('api/user/{id}', 'UserController@ban');
 
 // Authentication
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

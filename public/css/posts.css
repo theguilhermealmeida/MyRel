@@ -1,0 +1,154 @@
+
+                  .left-menu-item{
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: 14px 0;
+                  }
+
+                  .left-menu-item span{
+                    margin-left: 10px;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 19px;;
+                  }
+
+                  .left-menu-item svg{
+                    width: 23px;
+                    height: 23px;
+                    color: white;
+                  }
+
+                  .left-menu-item:hover{
+                    text-decoration: none;
+                    opacity: 0.75;
+                  }
+
+                  .post-btn{
+                    background-color: #0099ee;
+                    color: white;
+                    padding: 10px 20px;
+                    width: 80%;
+                    margin-top: 35px;
+                    font-weight: bold;
+                    border-radius: 30px;
+                  }
+
+                  .post{
+                    padding:30px;
+                  }
+                  .post-header{
+                    display: flex;
+                    flex-direction: row;
+                    margin-bottom: 20px;
+                    align-items: center;
+                  }
+
+                  .post-profile-pic{
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background-color: #0099ee;
+                    margin-right: 10px;
+                  }
+
+                  .post-header-info *{
+                    margin: 0;
+                  }
+
+                  .post-header-info p{
+                    font-size: 11px;
+                    color: #999;
+                  }
+
+                  .comment-label{
+                    font-size: 13px;
+                    color: #999;
+                    cursor: pointer;
+                    padding: 5px 0px;
+                  }
+
+                  .comment-label:hover{
+                    color:white;
+                  }
+
+                  .post-footer{
+                    margin-top: 30px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+
+                  .reaction-label{
+                    font-size: 13px;
+                    color: #999;
+                    cursor: pointer;
+                    padding: 5px 9px;
+                    margin-left: 5px;
+                  }
+
+                  .reaction-label:hover{
+                    font-size: 15px;
+                  }
+
+                  .post:not(:first-child){
+                    margin-top:20px;
+                  }
+
+                  .post-body{
+                    color:white;
+                  }
+
+                  .post-body:hover{
+                    color:white;
+                    text-decoration: none;
+                    opacity:0.8;
+                  }
+
+        
+                .relationship-header{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
+
+                .relationship-add-info{
+
+                    font-weight: bold;
+                    font-size: 16px;
+                    margin-top: 15px;
+
+                }
+
+                .relationship-sub-add-info{
+                    font-size: 12px;
+                    color: #999;
+                    margin-left: 5px;;
+                }
+
+
+                #search form{
+                    display:flex;
+                    flex-direction: column;
+                }
+
+                #search form input{
+                    margin-top:10px;
+                    border-radius:3px; border:none; height: 35px;  padding:6px 15px;
+                 
+                }
+
+                .btn-margin{
+                    margin-top: 10px;
+                    
+                }
+
+                .form-text{
+
+                    width: 100%;;
+
+                }
+
+
+             

@@ -30,6 +30,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+    public function getName() {
+      if ($this->ban) {
+      return "unkown account";
+      }
+      else return $this->name;
+    }
+
     /**
      * The cards this user owns.
      */
@@ -50,4 +58,52 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany('App\Models\Comment');
       }
+
+    /**
+     * The replies this user owns.
+     */
+    public function replies() {
+        return $this->hasMany('App\Models\Reply');
+      }
+
+    /**
+     * The relationships this user has.
+     */
+    public function relationships() {
+      return $this->belongsToMany(User::class, 'relationships', 'user_id', 'related_id')->withPivot('id','type', 'state');
+    }
+
+    public function relationships2() {
+      return $this->belongsToMany(User::class, 'relationships', 'related_id', 'user_id')->withPivot('id','type', 'state');
+    }
+
+    /**
+     * The postreactions this user has.
+     */
+    public function postreactions() {
+      return $this->hasMany('App\Models\Postreaction');
+    }
+
+    /**
+     * The commentreactions this user has.
+     */
+    public function commentreactions() {
+      return $this->hasMany('App\Models\Commentreaction');
+    }
+
+    /**
+     * The replyreactions this user has.
+     */
+    public function replyreactions() {
+      return $this->hasMany('App\Models\Replyreaction');
+    }
+
+
+    public function scopeSearch($query, $search)
+    {
+      if(!$search){
+        return $query;
+      }
+      return $query->whereRaw('tsvectors @@ plainto_tsquery(\'english\',?)',[$search])->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
+    }
 }
