@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -21,7 +22,6 @@ class UserController extends Controller
         
     return view('pages.profile', ['user' => $user]);
     }
-
 
 
     /**
@@ -95,9 +95,20 @@ class UserController extends Controller
     public function ban(Request $request)
     {
         $user = User::find($request->id);
-        $user->ban = 'True';
+        if ($user->ban) {
+        $user->ban = 'False';
+        }
+        else {
+            $user->ban = 'True';
+        }
+
         $user->save();
-        return redirect('logout');
+        if (Auth::user()->id == 0) {
+            return redirect('/admin');
+        }
+        else {
+            return redirect('/logout');
+        }
     }
 
     /**
@@ -110,6 +121,6 @@ class UserController extends Controller
     {
         $user = User::find($request->id);
         $user->delete();
-        return redirect('posts');
+        
     }
 }
