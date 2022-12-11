@@ -29,7 +29,7 @@ Route::put('api/posts', 'PostController@create');
 Route::get('admin', 'AdminController@admin');
 
 // API
-Route::put('api/posts', 'PostController@create');
+Route::put('api/posts', array('before'=>'csrf','PostController@create'));
 Route::post('api/posts/{id}', 'PostController@update');
 Route::post('api/user/{id}', 'UserController@update');
 Route::delete('api/posts/{id}', 'PostController@destroy');
