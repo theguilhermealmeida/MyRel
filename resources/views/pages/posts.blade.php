@@ -3,10 +3,11 @@
 @section('title', 'Posts')
 
 @section('content')
-<h1>Create a new Post</h1>
+<button id="toggle_create_post" class="mx-auto btn btn-primary btn-lg">Create a new Post</button>
+
 <hr>
 
-<div class="post card mb-3">
+<div style="display:none" id="create_post" class="post card mb-3">
   {!!Form::open(['url' => 'api/posts', 'method' => 'put','enctype' => 'multipart/form-data','class'=>'form-horizontal']) !!}
   {!! Form::token() !!}
     <div class="form-group">
