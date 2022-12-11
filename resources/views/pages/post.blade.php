@@ -9,7 +9,6 @@
           <div class="post-header">
               <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
               <div class="post-header-info">
-        
                   <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
                   <div>{{ $post->date }}</div>
               </div>

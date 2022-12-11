@@ -16,7 +16,17 @@
     </div>
     <div class="form-group">
         <div>
-        <input type="file" name="image">
+          <input style="color:black;background-color:white" id="newpost" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
+          <img id="output"/>
+          <script>
+            var loadFile = function(event) {
+              var output = document.getElementById('output');
+              output.src = URL.createObjectURL(event.target.files[0]);
+              output.onload = function() {
+                URL.revokeObjectURL(output.src) // free memory
+              }
+            };
+          </script>
         </div>
     </div>
     <div class="form-group">
