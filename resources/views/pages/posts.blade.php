@@ -8,26 +8,18 @@
 <hr>
 
 <div style="display:none" id="create_post" class="post card mb-3">
-  {!!Form::open(['url' => 'api/posts', 'method' => 'put','enctype' => 'multipart/form-data','class'=>'form-horizontal']) !!}
+  {!!Form::open(['url' => 'api/posts', 'method' => 'put','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'create_post_form']) !!}
   {!! Form::token() !!}
     <div class="form-group">
         <div>
-        <textarea name="text" placeholder="Share your thoughts with us..." maxlength="180" class="form-control" rows="3"></textarea>
+        <textarea name="text" onkeyup="countChars(this);" placeholder="Share your thoughts with us..." maxlength="280" class="form-control" rows="5"></textarea>
+        <p id="charNum">0 characters</p>
         </div>
     </div>
     <div class="form-group">
         <div>
           <input style="color:black;background-color:white" id="newpost" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
-          <img id="output"/>
-          <script>
-            var loadFile = function(event) {
-              var output = document.getElementById('output');
-              output.src = URL.createObjectURL(event.target.files[0]);
-              output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
-              }
-            };
-          </script>
+          <img class="m-3" id="output"/>
         </div>
     </div>
     <div class="form-group">
