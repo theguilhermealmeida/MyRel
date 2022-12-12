@@ -22,7 +22,7 @@ CREATE TABLE users (
 CREATE TABLE posts(
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
-  date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+  date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
   text VARCHAR(800),
   photo VARCHAR(800),
   visibility relationship_type,
@@ -33,7 +33,7 @@ CREATE TABLE postreactions(
     id SERIAL PRIMARY KEY,
     post_id INTEGER REFERENCES posts ON DELETE CASCADE NOT NULL,
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
     type reactions NOT NULL,
     UNIQUE (post_id,user_id)
 );
@@ -42,7 +42,7 @@ CREATE TABLE postreactionnotifications(
     postreaction_id INTEGER REFERENCES postreactions ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE comments(
@@ -50,7 +50,7 @@ CREATE TABLE comments(
   user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
   post_id INTEGER REFERENCES posts ON DELETE CASCADE NOT NULL,
   text VARCHAR(800) NOT NULL,
-  date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+  date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE commentnotifications(
@@ -58,14 +58,14 @@ CREATE TABLE commentnotifications(
     comment_id INTEGER REFERENCES comments ON DELETE CASCADE NOT NULL,
     text VARCHAR(800) NOT NULL,
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE commentreactions(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     comment_id INTEGER REFERENCES comments ON DELETE CASCADE NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
     type reactions NOT NULL,
     UNIQUE (comment_id,user_id)
 );
@@ -75,7 +75,7 @@ CREATE TABLE commentreactionnotifications(
     commentreaction_id INTEGER REFERENCES commentreactions ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE replies(
@@ -83,7 +83,7 @@ CREATE TABLE replies(
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     comment_id INTEGER REFERENCES comments ON DELETE CASCADE NOT NULL,
     text VARCHAR(800) NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE replynotifications(
@@ -91,14 +91,14 @@ CREATE TABLE replynotifications(
     reply_id INTEGER REFERENCES replies ON DELETE CASCADE NOT NULL,
     text VARCHAR(800) NOT NULL,
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE replyreactions(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     reply_id INTEGER REFERENCES replies ON DELETE CASCADE NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
     type reactions NOT NULL,
     UNIQUE (user_id,reply_id)
 );
@@ -108,7 +108,7 @@ CREATE TABLE replyreactionnotifications(
     replyreaction_id INTEGER REFERENCES replyreactions ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE relationships(
@@ -126,7 +126,7 @@ CREATE TABLE relationshipnotifications(
     receiver_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE FUNCTION create_post_reaction_notification() RETURNS trigger AS $$

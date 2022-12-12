@@ -63,7 +63,7 @@
               </div>
           </div>
           @if (Auth::check())
-                    <button id="toggle_create_comment" class="mx-auto btn btn-primary btn-xs">Comment</button>
+                    <button id="toggle_create_comment" class="mx-auto btn btn-primary">Comment</button>
             @endif
 
         @can('update', $post)
