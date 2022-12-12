@@ -23,6 +23,18 @@ if (btn2 != null && btn2.value == '') {
   };
 }
 
+const targetDiv3 = document.getElementById("edit_post");
+const btn3 = document.getElementById("toggle_edit_post");
+if (btn3 != null && btn3.value == '') {
+  btn3.onclick = function () {
+    if (targetDiv3.style.display !== "none") {
+      targetDiv3.style.display = "none";
+    } else {
+      targetDiv3.style.display = "block";
+    }
+  };
+}
+
 
 
 var loadFile = function(event) {
@@ -62,6 +74,11 @@ if(document.getElementById("charNumDescription")){
   count_chars_edit_profile_description.onload = countChars(document.getElementById('edit_profile_description'),count_chars_edit_profile_description,280);
 }
 
+if(document.getElementById("charNumTextEdit")){
+  var count_chars_edit_post_text = document.getElementById('charNumTextEdit');
+  count_chars_edit_post_text.onload = countChars(document.getElementById('edit_post_text'),count_chars_edit_post_text,280);
+}
+
 function sameValue(element,value){
   if(element.value == value){
     element.selected = "selected";
@@ -77,6 +94,10 @@ function selectOption(element,value){
 
 if(document.getElementById('edit_profile_gender')){
   selectOption(document.getElementById('edit_profile_gender'),document.getElementById('edit_profile_gender').getAttribute('data-gender'));
+}
+
+if(document.getElementById('edit_post_visibility')){
+  selectOption(document.getElementById('edit_post_visibility'),document.getElementById('edit_post_visibility').getAttribute('data-visibility'));
 }
 
   

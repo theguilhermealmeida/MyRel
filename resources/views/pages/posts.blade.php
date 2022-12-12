@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <div>
-        <select required name ="visibility" class="selectpicker" multiple data-width="60%">
+        <select required name ="visibility"  class="selectpicker" data-width="60%">
           <option>Close Friends</option>
           <option>Friends</option>
           <option>Family</option>

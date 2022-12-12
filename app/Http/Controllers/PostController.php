@@ -172,7 +172,11 @@ class PostController extends Controller
      */
     public function update(Request $request)
     {
-        
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+
         $post = Post::find($request->id);
         $post->text = $request->input('text');
         if ($request->input('visibility') == 'Strangers') {
@@ -181,6 +185,17 @@ class PostController extends Controller
         else {
             $post->visibility = $request->input('visibility');
         }
+
+        if($request->hasFile('image')){   
+            $image_path = $post->photo;
+            if (File::exists(public_path($image_path))) {
+                File::delete(public_path($image_path));
+            }      
+            $imageName = time().'.'.$request->image->extension(); 
+            $request->image->move(public_path('post_images'), $imageName);
+            $post->photo = "/post_images/". $imageName;
+        }
+
         $post->save();
 
         return redirect('posts/'.$post->id);

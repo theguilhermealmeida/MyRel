@@ -8,12 +8,14 @@
           </div>
           <a class="post-body" href="/posts/{{ $post->id }}">
               <p>{{ $post->text }}</p>
+              @if($post->photo !== null)
               <div style="
                     width: 100%;
                     border-radius: 1em;
                     height: 20em;
                     background-image: url({{ $post->photo }});
                     background-size: 100% 100%;"></div>
+              @endif
           </a>
           <div class="post-footer">
               <span class="comment-label">
