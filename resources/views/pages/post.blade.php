@@ -62,6 +62,9 @@
                   </span>
               </div>
           </div>
+          @if (Auth::check())
+                    <button id="toggle_create_comment" class="mx-auto btn btn-primary btn-xs">Comment</button>
+            @endif
 
         @can('update', $post)
             <div style="display:none" id="edit_post" class="post card mb-3">
@@ -93,13 +96,27 @@
             {!! Form::close() !!}
         </div>
         @endcan
+            <div style="display:none" id="create_comment" class="post card mb-3">
+            {!!Form::open(['url' => 'api/comments', 'method' => 'PUT','class'=>'form-horizontal','id'=>'create_comment_form']) !!}
+            {!! Form::token() !!}
+                <div class="form-group">
+                    <div>
+                    <textarea required name="text" onkeyup="countChars(this,document.getElementById('charNumTextComment'),280);" placeholder="Share your opinion on this post..." maxlength="280" class="form-control" rows="5"></textarea>
+                    <p id="charNumTextComment">0 characters</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary float-right">Comment</button>
+                </div>
+                <input type="hidden" id="postId" name="postId" value="{{$post->id}}" />
+            {!! Form::close() !!}
+            </div>
+        <section id="comments" >
+            @each('partials.comment', $post->comments()->get(), 'comment')
+        </section>
         <section id="reactions" style="margin-top:30px;">
             <h2>Reactions</h2>
             @each('partials.reaction', $post->reactions()->get(), 'reaction')
-        </section>
-        <section id="comments" >
-            <h2>COMMENTS</h2>
-            @each('partials.comment', $post->comments()->get(), 'comment')
         </section>
     </article>
 @endsection

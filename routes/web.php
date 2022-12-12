@@ -23,16 +23,17 @@ Route::get('user/{id}', 'UserController@show');
 //Search
 Route::get('search', 'SearchController@search');
 
-Route::put('api/posts', 'PostController@create');
-
 //Admin
 Route::get('admin', 'AdminController@admin');
 
 // API
 Route::put('api/posts', array('before'=>'csrf','PostController@create'));
+Route::put('api/comments', 'CommentController@create');
 Route::post('api/posts/{id}', 'PostController@update');
+Route::post('api/comments/{id}', 'CommentController@update');
 Route::post('api/user/{id}', 'UserController@update');
 Route::delete('api/posts/{id}', 'PostController@destroy');
+Route::delete('api/comments/{id}', 'CommentController@destroy');
 Route::delete('api/user/{id}', 'UserController@ban');
 
 // Authentication
