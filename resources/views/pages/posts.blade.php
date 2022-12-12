@@ -12,8 +12,8 @@
   {!! Form::token() !!}
     <div class="form-group">
         <div>
-        <textarea name="text" onkeyup="countChars(this);" placeholder="Share your thoughts with us..." maxlength="280" class="form-control" rows="5"></textarea>
-        <p id="charNum">0 characters</p>
+        <textarea required name="text" onkeyup="countChars(this,document.getElementById('charNumText'),280);" placeholder="Share your thoughts with us..." maxlength="280" class="form-control" rows="5"></textarea>
+        <p id="charNumText">0 characters</p>
         </div>
     </div>
     <div class="form-group">

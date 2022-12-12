@@ -8,7 +8,12 @@
           </div>
           <a class="post-body" href="/posts/{{ $post->id }}">
               <p>{{ $post->text }}</p>
-              <!-- <img src="https://www.algavalor.pt/wp-content/uploads/2020/04/FEUP-Autoria-Global-Imagens.jpg" class="post-image"> -->
+              <div style="
+                    width: 100%;
+                    border-radius: 1em;
+                    height: 20em;
+                    background-image: url({{ $post->photo }});
+                    background-size: 100% 100%;"></div>
           </a>
           <div class="post-footer">
               <span class="comment-label">
