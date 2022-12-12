@@ -144,7 +144,7 @@
                                             <path d="M12 13h.01"></path>
                                             <path d="M12 16h.01"></path>
                                         </svg>
-                                        <span>Friends</span>
+                                        <span>Friendsssss</span>
                                     </a>
                                     <a class="left-menu-item">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-seeding" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
