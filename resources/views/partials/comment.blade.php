@@ -45,7 +45,6 @@
               </div>
           </div>
 
-        <h3>Replies</h3>
         <section id="replies" style="margin-left:25px;">
                 @each('partials.reply', $comment->replies()->get(), 'reply')
         </section>
