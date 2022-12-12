@@ -27,7 +27,7 @@ Route::get('search', 'SearchController@search');
 Route::get('admin', 'AdminController@admin');
 
 // API
-Route::put('api/posts', array('before'=>'csrf','PostController@create'));
+Route::put('api/posts', 'PostController@create');
 Route::put('api/comments', 'CommentController@create');
 Route::put('api/replies', 'ReplyController@create');
 Route::post('api/posts/{id}', 'PostController@update');
