@@ -13,45 +13,51 @@
                     <div>{{ $user->gender }}</div>
                     <div>{{ $user->description }}</div>
                 </div>
+                @if (null !== Auth::user() && (Auth::user()->id == 0 || Auth::user()->id == $user->id))
+                    <button id="toggle_edit_profile" class="mx-auto btn btn-primary btn-lg">Edit Profile</button>
+                @endif
             </div>
 
-
-            <style>
-                .form-holder {
-                    margin-top: 30px;
-                }
-
-                .form-holder form {
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                .form-holder form textarea {
-                    margin-bottom: 10px;
-                }
-            </style>
-
             @if (null !== Auth::user() && (Auth::user()->id == 0 || Auth::user()->id == $user->id))
-                <button class="btn-primary btn" onclick="toggleEditProfilePopUp()">Edit Profile</button>
-                <div class="popup" id="popup2">
-                    <div class='overlay'></div>
-                    <div class='content'>
-                        <div class="close-btn" onclick="toggleEditProfilePopUp()">&times;
-                        </div>
-                        <div class="form-holder">
-                            <?php
-                            echo Form::open(['url' => 'api/user/' . $user->id, 'method' => 'post']);
-                            echo 'Name';
-                            echo Form::textarea('name', $user->getName(), ['rows' => 1]);
-                            echo 'Gender';
-                            echo Form::textarea('gender', $user->gender, ['rows' => 1]);
-                            echo 'Description';
-                            echo Form::textarea('description', $user->description);
-                            echo Form::button('Edit Profile', ['type' => 'submit', 'class' => 'btn btn-primary', 'style' => 'margin-top:10px;']);
-                            echo Form::close();
-                            ?>
+
+                <div  style="display:none" id="edit_profile" class="post card mb-3">
+                {!!Form::open(['url' => 'api/user/' . $user->id, 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'edit_profile_form']) !!}
+                {!! Form::token() !!}
+                    <div class="form-group">
+                        <div>
+                        <label for="edit_profile_name">Name</label>
+                        <textarea required name="name" onkeyup="countChars(this,document.getElementById('charNumName'),30);" maxlength="30" id="edit_profile_name" class="form-control" rows="1">{{ $user->getName() }}</textarea>
+                        <p id="charNumName">0 characters</p>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div>
+                        <label for="edit_profile_gender">Gender</label>
+                        <select required name ="gender" id="edit_profile_gender" class="selectpicker" data-gender="{{$user->gender}}">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                        <label for="edit_profile_description">Description</label>
+                        <textarea required name="description" onkeyup="countChars(this,document.getElementById('charNumDescription'),280);" maxlength="280" id="edit_profile_description" class="form-control" rows="5">{{ $user->description }}</textarea>
+                        <p id="charNumDescription">0 characters</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                        <label for="edit_profile_picture">Profile Picture</label>
+                        <input style="color:black;background-color:white" id="edit_profile_picture" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
+                        <img class="m-3" id="output"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Edit Profile</button>
+                    </div>
+                {!! Form::close() !!}
                 </div>
             @endif
             <section id="relationships">

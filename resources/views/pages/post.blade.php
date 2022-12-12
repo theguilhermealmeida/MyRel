@@ -5,52 +5,94 @@
 @section('content')
     <article class="post" data-id="{{ $post->id }}" >
 
-    <div class="post card" >
-          <div class="post-header">
+    <div class="post-header">
               <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
               <div class="post-header-info">
-        
                   <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
-                  <div>{{ $post->date }}</div>
+                  <p>{{ $post->date }}</p>
+              </div>
+              @can('update', $post)
+              <button id="toggle_edit_post" class="mx-auto btn btn-primary ">Edit Post</button>
+              @endcan
+              @can('delete', $post)
+                {!!Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'delete'])!!}
+                <button type="submit" class="mx-auto btn btn-danger ">Delete Post</button>
+                {!!Form::close()!!}
+              @endcan
+          </div>
+          <div class="post-body">
+              <p>{{ $post->text }}</p>
+              @if($post->photo !== null)
+              <div style="
+                    width: 100%;
+                    border-radius: 1em;
+                    height: 20em;
+                    background-image: url({{ $post->photo }});
+                    background-size: 100% 100%;"></div>
+              @endif
+          </a>
+          <div class="post-footer">
+              <span class="comment-label">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"></path>
+                  </svg>
+                  <span>{{$post->comments()->count()}}</span>
+              </span>
+              <div class="reaction-holder">
+                  <span class="reaction-label">
+                      <span>👍🏻</span>
+                      <span>{{$post->reactions()->where('type','Like')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>👎🏻</span>
+                      <span>{{$post->reactions()->where('type','Dislike')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>😿</span>
+                      <span>{{$post->reactions()->where('type','Sad')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>😡</span>
+                      <span>{{$post->reactions()->where('type','Angry')->count()}}</span>
+                  </span>
+                  <span class="reaction-label">
+                      <span>😍</span>
+                      <span>{{$post->reactions()->where('type','Amazed')->count()}}</span>
+                  </span>
               </div>
           </div>
-          <a class="post-body" href="/posts/{{ $post->id }}">
-              <p>{{ $post->text }}</p>
-              <img src={{ $post->photo }}>
-
-          </a>
-
-      </div>
 
         @can('update', $post)
-            <button onclick="toggleEditPostPopUp()">Edit post</button>
-            <div class="popup" id="popup1">
-                <div class='overlay'></div>
-                <div class='content'>
-                    <div class="close-btn" onclick="toggleEditPostPopUp()">&times;
+            <div style="display:none" id="edit_post" class="post card mb-3">
+            {!!Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'edit_post_form']) !!}
+            {!! Form::token() !!}
+                <div class="form-group">
+                    <div>
+                    <textarea required name="text" onkeyup="countChars(this,document.getElementById('charNumTextEdit'),280);" maxlength="280" id="edit_post_text" class="form-control" rows="5">{{ $post->text }}</textarea>
+                    <p id="charNumTextEdit">0 characters</p>
                     </div>
-                    <?php
-                    echo Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'post']);
-                    echo Form::text('text', $post->text, array('required'));
-                    echo 'Visibility';
-                    echo Form::select('visibility', ['Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers']);
-                    echo Form::button('Edit Post', ['type' => 'submit']);
-                    echo Form::close();
-                    ?>
                 </div>
-            </div>
+                <div class="form-group">
+                    <div>
+                    <input style="color:black;background-color:white" id="edit_post_picture" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
+                    <img class="m-3" id="output"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                    <select required name ="visibility" id="edit_post_visibility" data-visibility="{{$post->visibility}}" class="selectpicker" data-width="60%">
+                    <option>Close Friends</option>
+                    <option>Friends</option>
+                    <option>Family</option>
+                    <option>Strangers</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary float-right">Edit</button>
+                    </div>
+                </div>
+            {!! Form::close() !!}
+        </div>
         @endcan
-        @can('delete', $post)
-            <?php
-            echo Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'delete']);
-            echo Form::button('Delete Post', ['type' => 'submit']);
-            echo Form::close();
-            ?>
-        @endcan
-
-
-
-
         <section id="reactions" style="margin-top:30px;">
             <h2>Reactions</h2>
             @each('partials.reaction', $post->reactions()->get(), 'reaction')

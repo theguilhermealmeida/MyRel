@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {   
@@ -111,6 +112,10 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         $post = new Post();
 
         $post->user_id = Auth::user()->id;
@@ -121,6 +126,13 @@ class PostController extends Controller
         else {
             $post->visibility = $request->input('visibility');
         }
+
+        if($request->hasFile('image')){         
+            $imageName = time().'.'.$request->image->extension(); 
+            $request->image->move(public_path('post_images'), $imageName);
+            $post->photo = "/post_images/". $imageName;
+        }
+        
         $post->save();
 
         return redirect('posts');
@@ -160,7 +172,11 @@ class PostController extends Controller
      */
     public function update(Request $request)
     {
-        
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+
         $post = Post::find($request->id);
         $post->text = $request->input('text');
         if ($request->input('visibility') == 'Strangers') {
@@ -169,6 +185,17 @@ class PostController extends Controller
         else {
             $post->visibility = $request->input('visibility');
         }
+
+        if($request->hasFile('image')){   
+            $image_path = $post->photo;
+            if (File::exists(public_path($image_path))) {
+                File::delete(public_path($image_path));
+            }      
+            $imageName = time().'.'.$request->image->extension(); 
+            $request->image->move(public_path('post_images'), $imageName);
+            $post->photo = "/post_images/". $imageName;
+        }
+
         $post->save();
 
         return redirect('posts/'.$post->id);
@@ -183,6 +210,10 @@ class PostController extends Controller
     public function destroy(Request $request)
     {
         $post = Post::find($request->id);
+        $image_path = $post->photo;
+        if (File::exists(public_path($image_path))) {
+            File::delete(public_path($image_path));
+        }
         $post->delete();
         return redirect('posts');
     }

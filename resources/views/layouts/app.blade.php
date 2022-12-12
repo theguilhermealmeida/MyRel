@@ -15,9 +15,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>MyRel</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script defer src="/js/myrel.js"></script>
     <link href="{{ asset('./dist/css/tabler.min.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/posts.css') }}" rel="stylesheet">
 </head>
@@ -163,7 +166,6 @@
                                         </svg>
                                         <span>Profile</span>
                                     </a>
-                                    <button class="post-btn btn" data-toggle="modal" data-target="#exampleModal"> POST </button>
                                     @endif
                                 </nav>
                             </div>
@@ -199,39 +201,6 @@
                     </div>
                 </div>
             </footer>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="exampleModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
-                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <section id="new_post">
-                        <article style="display:flex;">
-                            @if (Auth::check())
-                            <header>
-                                <h2 onclick="location.href='/user/{{Auth::user()->id}}';" style="cursor:pointer;"><img src={{ Auth::user()->photo }}</a></h2>
-                            </header>
-                            @endif
-                            <div style="margin-left:10px; margin-top:10px; width:100%;"> <?php
-            echo Form::open(array('url' => 'api/posts', 'method' => 'put'));
-            echo Form::textarea('text', null, array('placeholder' => 'Share your thoughts with us...', 'class' => 'form-control form-text','required'));
-            echo "Visibility";            
-            echo Form::select('visibility', array('Close Friends' => 'Close Friends', 'Friends' => 'Friends', 'Family' => 'Family', 'Strangers' => 'Strangers'));
-            echo Form::button('Create new Post', array('type' => 'submit', 'class' => 'btn btn-primary', 'style' => 'position:absolute; right:25px; margin-top:10px;'));
-            echo Form::close();
-          ?> </div>
-                        </article>
-                    </section>
-                </div>
-          
-            </div>
         </div>
     </div>
     <!-- Libs JS -->

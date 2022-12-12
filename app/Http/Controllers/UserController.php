@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -76,10 +77,25 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
         $user = User::find($request->id);
         $user->name = $request->input('name');
         $user->gender = $request->input('gender');
         $user->description = $request->input('description');
+
+        if($request->hasFile('image')){   
+            $image_path = $user->photo;
+            if (File::exists(public_path($image_path))) {
+                File::delete(public_path($image_path));
+            }      
+            $imageName = time().'.'.$request->image->extension(); 
+            $request->image->move(public_path('profile_images'), $imageName);
+            $user->photo = "/profile_images/". $imageName;
+        }
 
         $user->save();
         
