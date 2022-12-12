@@ -35,6 +35,30 @@ if (btn3 != null && btn3.value == '') {
   };
 }
 
+const targetDiv4 = document.getElementById("edit_comment");
+const btn4 = document.getElementById("toggle_edit_comment");
+if (btn4 != null && btn4.value == '') {
+  btn4.onclick = function () {
+    if (targetDiv4.style.display !== "none") {
+      targetDiv4.style.display = "none";
+    } else {
+      targetDiv4.style.display = "block";
+    }
+  };
+}
+
+const targetDiv5 = document.getElementById("create_comment");
+const btn5 = document.getElementById("toggle_create_comment");
+if (btn5 != null && btn5.value == '') {
+  btn5.onclick = function () {
+    if (targetDiv5.style.display !== "none") {
+      targetDiv5.style.display = "none";
+    } else {
+      targetDiv5.style.display = "block";
+    }
+  };
+}
+
 
 
 var loadFile = function(event) {
@@ -64,6 +88,14 @@ if(document.getElementById("create_post_form")){
   document.getElementById("create_post_form").reset();
 }
 
+if(document.getElementById("create_comment_form")){
+  document.getElementById("create_comment_form").reset();
+}
+
+if(document.getElementById("edit_comment_form")){
+  document.getElementById("edit_comment_form").reset();
+}
+
 if(document.getElementById("charNumName")){
   var count_chars_edit_profile_name = document.getElementById('charNumName');
   count_chars_edit_profile_name.onload = countChars(document.getElementById('edit_profile_name'),count_chars_edit_profile_name,30);
@@ -77,6 +109,11 @@ if(document.getElementById("charNumDescription")){
 if(document.getElementById("charNumTextEdit")){
   var count_chars_edit_post_text = document.getElementById('charNumTextEdit');
   count_chars_edit_post_text.onload = countChars(document.getElementById('edit_post_text'),count_chars_edit_post_text,280);
+}
+
+if(document.getElementById("charNumCommentEdit")){
+  var count_chars_edit_comment_text = document.getElementById('charNumCommentEdit');
+  count_chars_edit_comment_text.onload = countChars(document.getElementById('edit_comment_text'),count_chars_edit_comment_text,280);
 }
 
 function sameValue(element,value){

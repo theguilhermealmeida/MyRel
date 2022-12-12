@@ -62,6 +62,9 @@
                   </span>
               </div>
           </div>
+          @if (Auth::check())
+                    <button id="toggle_create_comment" class="mx-auto btn btn-primary btn-xs">Comment</button>
+            @endif
 
         @can('update', $post)
             <div style="display:none" id="edit_post" class="post card mb-3">
@@ -93,7 +96,7 @@
             {!! Form::close() !!}
         </div>
         @endcan
-            <div style="display:" id="create_comment" class="post card mb-3">
+            <div style="display:none" id="create_comment" class="post card mb-3">
             {!!Form::open(['url' => 'api/comments', 'method' => 'PUT','class'=>'form-horizontal','id'=>'create_comment_form']) !!}
             {!! Form::token() !!}
                 <div class="form-group">

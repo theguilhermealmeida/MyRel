@@ -1,6 +1,6 @@
 
 
-
+<hr style="margin:1em;">
 <div class="post reply" style="font-size: 13px;">
 <div class="post-header">
               <img src={{ $reply->user()->get()[0]->photo }} class="post-profile-pic">
@@ -40,7 +40,5 @@
           </div>
 
 </div>
-
-<hr style="margin:0;">
 
 
