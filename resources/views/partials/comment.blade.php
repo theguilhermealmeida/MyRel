@@ -69,6 +69,24 @@
             {!! Form::close() !!}
         </div>
         @endcan
+        @if (Auth::check())
+            <button id="toggle_create_reply" class="toggle_create_reply mx-auto btn btn-primary btn-sm">Reply</button>
+        @endif
+        <div style="display:none" id="create_reply" class="post card mb-3">
+            {!!Form::open(['url' => 'api/replies', 'method' => 'PUT','class'=>'form-horizontal','id'=>'create_reply_form']) !!}
+            {!! Form::token() !!}
+                <div class="form-group">
+                    <div>
+                    <textarea required name="text" onkeyup="countChars(this,document.getElementById('charNumTextReply'),280);" placeholder="Share your opinion on this comment..." maxlength="280" class="form-control" rows="5"></textarea>
+                    <p id="charNumTextReply">0 characters</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary float-right">Reply</button>
+                </div>
+                <input type="hidden" id="commentId" name="commentId" value="{{$comment->id}}" />
+            {!! Form::close() !!}
+            </div>
 
         <section style="display:none" class="replies ml-2">
                 @each('partials.reply', $comment->replies()->get(), 'reply')

@@ -59,14 +59,43 @@ if (btn5 != null && btn5.value == '') {
   };
 }
 
+const targetDiv6 = document.getElementById("edit_reply");
+const btn6 = document.getElementById("toggle_edit_reply");
+if (btn6 != null && btn6.value == '') {
+  btn6.onclick = function () {
+    if (targetDiv6.style.display !== "none") {
+      targetDiv6.style.display = "none";
+    } else {
+      targetDiv6.style.display = "block";
+    }
+  };
+}
+
+var btn = document.getElementsByClassName("toggle_create_reply");
+for (var i = btn.length - 1; i >= 0; i--){
+  if (btn[i] != null && btn[i].value == '') {
+    btn[i].onclick = function () {
+      if (this.nextElementSibling.style.display !== "none") {
+        this.nextElementSibling.style.display  = "none";
+      } else {
+        this.nextElementSibling.style.display  = "block";
+      }
+    };
+  }
+}
+
 var btn = document.getElementsByClassName("comment-label");
 for (var i = btn.length - 1; i >= 0; i--){
   if (btn[i] != null && btn[i].value == '') {
     btn[i].onclick = function () {
-      if (this.parentElement.nextElementSibling.style.display !== "none") {
-        this.parentElement.nextElementSibling.style.display = "none";
+      let node = this.parentElement;
+      while (!(node.classList.contains('replies'))) {
+        node = node.nextElementSibling;
+      }
+      if (node.style.display !== "none") {
+        node.style.display  = "none";
       } else {
-        this.parentElement.nextElementSibling.style.display = "block";
+        node.style.display  = "block";
       }
     };
   }
@@ -110,6 +139,14 @@ if(document.getElementById("edit_comment_form")){
   document.getElementById("edit_comment_form").reset();
 }
 
+if(document.getElementById("create_reply_form")){
+  document.getElementById("create_reply_form").reset();
+}
+
+if(document.getElementById("edit_reply_form")){
+  document.getElementById("edit_reply_form").reset();
+}
+
 if(document.getElementById("charNumName")){
   var count_chars_edit_profile_name = document.getElementById('charNumName');
   count_chars_edit_profile_name.onload = countChars(document.getElementById('edit_profile_name'),count_chars_edit_profile_name,30);
@@ -128,6 +165,11 @@ if(document.getElementById("charNumTextEdit")){
 if(document.getElementById("charNumCommentEdit")){
   var count_chars_edit_comment_text = document.getElementById('charNumCommentEdit');
   count_chars_edit_comment_text.onload = countChars(document.getElementById('edit_comment_text'),count_chars_edit_comment_text,280);
+}
+
+if(document.getElementById("charNumReplyEdit")){
+  var count_chars_edit_reply_text = document.getElementById('charNumReplyEdit');
+  count_chars_edit_reply_text.onload = countChars(document.getElementById('edit_reply_text'),count_chars_edit_reply_text,280);
 }
 
 function sameValue(element,value){

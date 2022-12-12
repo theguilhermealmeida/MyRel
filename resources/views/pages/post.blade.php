@@ -9,7 +9,7 @@
               <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
               <div class="post-header-info">
                   <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
-                  <p>{{ $post->date-> }}</p>
+                  <p>{{ $post->date }}</p>
               </div>
               @can('update', $post)
               <button id="toggle_edit_post" class="mx-auto btn btn-primary ">Edit Post</button>
@@ -63,7 +63,7 @@
               </div>
           </div>
           @if (Auth::check())
-                    <button id="toggle_create_comment" class="mx-auto btn btn-primary btn-xs">Comment</button>
+                    <button id="toggle_create_comment" class="mx-auto btn btn-primary">Comment</button>
             @endif
 
         @can('update', $post)
