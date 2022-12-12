@@ -104,6 +104,8 @@ class User extends Authenticatable
       if(!$search){
         return $query;
       }
-      return $query->whereRaw('tsvectors @@ plainto_tsquery(\'english\',?)',[$search])->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
+      return $query->whereRaw('tsvectors @@ plainto_tsquery(\'english\',?)',[$search])
+            ->orWhere('name', 'LIKE', '%' . $search . '%')->orWhere('description', 'LIKE', '%' . $search . '%')
+          ->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
     }
 }

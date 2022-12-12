@@ -42,7 +42,9 @@ class Comment extends Model
     if(!$search){
       return $query;
     }
-    return $query->whereRaw('tsvectors @@ plainto_tsquery(\'english\',?)',[$search])->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
+    return $query->whereRaw('tsvectors @@ plainto_tsquery(\'english\',?)',[$search])
+    ->orWhere('text', 'LIKE', '%' . $search . '%')
+    ->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
   }
 
 }
