@@ -3,7 +3,9 @@
 @section('title', 'Posts')
 
 @section('content')
+@if (Auth::check())
 <button id="toggle_create_post" class="mx-auto btn btn-primary btn-lg">Create a new Post</button>
+@endif
 
 <hr>
 

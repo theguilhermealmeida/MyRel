@@ -8,6 +8,11 @@
                   <h3><a href="/user/{{ $comment->user()->get()[0]->id }}">{{ $comment->user()->get()[0]->name }}</a></h3>
                   <p>{{ $comment->date }}</p>
               </div>
+              @can('delete', $comment)
+              {!!Form::open(['url' => 'api/comments/' . $comment->id, 'method' => 'delete'])!!}
+                <button type="submit" class="mx-auto btn btn-danger btn-sm">Delete Comment</button>
+              {!!Form::close()!!}
+              @endcan
           </div>
           <a class="post-body">
               <p>{{ $comment->text }}</p>

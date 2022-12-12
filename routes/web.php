@@ -32,6 +32,7 @@ Route::put('api/comments', 'CommentController@create');
 Route::post('api/posts/{id}', 'PostController@update');
 Route::post('api/user/{id}', 'UserController@update');
 Route::delete('api/posts/{id}', 'PostController@destroy');
+Route::delete('api/comments/{id}', 'CommentController@destroy');
 Route::delete('api/user/{id}', 'UserController@ban');
 
 // Authentication
