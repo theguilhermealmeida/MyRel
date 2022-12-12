@@ -59,6 +59,20 @@ if (btn5 != null && btn5.value == '') {
   };
 }
 
+var btn = document.getElementsByClassName("comment-label");
+for (var i = btn.length - 1; i >= 0; i--){
+  if (btn[i] != null && btn[i].value == '') {
+    btn[i].onclick = function () {
+      if (this.parentElement.nextElementSibling.style.display !== "none") {
+        this.parentElement.nextElementSibling.style.display = "none";
+      } else {
+        this.parentElement.nextElementSibling.style.display = "block";
+      }
+    };
+  }
+}
+
+
 
 
 var loadFile = function(event) {
