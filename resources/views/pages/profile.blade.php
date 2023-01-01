@@ -57,18 +57,95 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Edit Profile</button>
                     </div>
+                    
+                {!! Form::close() !!}
+                {!!Form::open(['route' => ['password.change', 'id' => $user->id], 'method' => 'get','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'change_password_button']) !!}
+                {!! Form::token() !!}
+                    <button class='btn btn-link'>change password</button>
                 {!! Form::close() !!}
                 </div>
             @endif
+
+
+            @if (Auth::check() && $user->getRelationship(Auth::user()->id, $user->id) != null)
+                @php
+                    $rel = $user->getRelationship(Auth::user()->id, $user->id);
+                @endphp
+
+                @if ($rel['pivot']['state'] == 'accepted')
+                    {!!Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'delete','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'remove_rel_form']) !!}
+                    {!! Form::token() !!}
+                        <button type="submit" class="badge badge-pill badge-light" name="remove_relationship"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                            <div class="mx-2">Close Friends</div>
+                        </button>
+                    {!! Form::close() !!}
+                @elseif ($rel['pivot']['state'] == 'pending')
+                    {!!Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'delete','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'remove_rel_form']) !!}
+                    {!! Form::token() !!}
+                        <button type="submit" class="badge badge-pill badge-light" name="remove_relationship"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                            <div class="mx-2">Pending</div>
+                        </button>
+                    {!! Form::close() !!}
+                @endif
+
+            @elseif (Auth::check() && Auth::user()->id != $user->id && $user->getRelationship(Auth::user()->id, $user->id) == null)
+                {!!Form::open(['url' => 'api/relationships/' . $user->id, 'method' => 'put','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'request_relationship_form']) !!}
+                {!! Form::token() !!}
+                    <div class="form-group">
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownRequest" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Request Relationship
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="form-group">
+                                <button type="submit" class="dropdown-item" name="type" value="Friends">Friend</button>
+                                <button type="submit" class="dropdown-item" name="type" value="Close Friends">Close Friend</button>
+                                <button type="submit" class="dropdown-item" name="type" value="Family">Family</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                {!! Form::close() !!}
+            @endif
+
+               
+            <div class="mx-10"></div>
+                
+
             <section id="relationships">
-                <h2 style="font-size:19px; font-weight:bold;margin-top:30px;">RELATIONSHIPS</h2>
-                <hr>
-                <?php
-                $relationship = $user->relationships()->get();
-                $relationship = $relationship->merge($user->relationships2()->get());
-                $relationship = $relationship->sortBy('id');
-                ?>
-                    @each('partials.relationship', $relationship, 'relationship')
+                @if (Auth::check() && Auth::user()->id == $user->id)
+                <a class='btn btn-link btn-lg pl-2' href="../relationships">
+                    <span>Relationships</span>
+                    <div class="ml-2"> {{$relationships->where('pivot.state','accepted')->count()}}</div>
+                </a>
+                @endif
+                @if ((Auth::check() && Auth::user()->id != $user->id) ||  Auth::check() == null)
+                <a class='btn btn-link btn-lg pl-2'>
+                    <span>Relationships</span>
+                    <div class="ml-2"> {{$relationships->where('pivot.state', 'accepted')->count()}}</div>
+                </a>
+                @endif
+                <div class="relationship-holder">
+                    <span class="reaction-label">
+                        <span>Close Friends:</span>
+                        {{$close_friends->count()}}
+                    </span>
+                    <span class="reaction-label">
+                        <span>Friends:</span>
+                        {{$friends->count()}}
+                    </span>
+                    <span class="reaction-label">
+                        <span>Family:</span>
+                        {{$family->count()}}
+                    </span>
+                </div>
             </section>
     </article>
 @else
@@ -77,17 +154,19 @@
     </section>
     @endif
 
+    <hr>
 
     @if (null !== Auth::user() && ((Auth::user()->id == 0 && !$user->ban) || Auth::user()->id == $user->id))
+        <h3 style="color: red">Danger Zone</h2>
         <?php
-        echo Form::open(['url' => 'api/user/' . $user->id, 'method' => 'delete']);
+        echo Form::open(['url' => 'api/user/ban/' . $user->id, 'method' => 'post']);
         echo Form::button('Delete Account', ['type' => 'submit', 'class' => 'btn-danger btn']);
         echo Form::close();
         ?>
     @endif
     @if (null !== Auth::user() && (Auth::user()->id == 0 && $user->ban))
         <?php
-        echo Form::open(['url' => 'api/user/' . $user->id, 'method' => 'delete']);
+        echo Form::open(['url' => 'api/user/ban/' . $user->id, 'method' => 'post']);
         echo Form::button('Unban Account', ['type' => 'submit', 'class' => 'btn-danger btn']);
         echo Form::close();
         ?>

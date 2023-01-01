@@ -193,8 +193,175 @@ if(document.getElementById('edit_post_visibility')){
   selectOption(document.getElementById('edit_post_visibility'),document.getElementById('edit_post_visibility').getAttribute('data-visibility'));
 }
 
-  
 
 
+function encodeForAjax(data) {
+  if (data == null) return null;
+  return Object.keys(data).map(function(k){
+    return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+  }).join('&');
+}
+
+function sendAjaxRequest(method, url, data, handler) {
+  let request = new XMLHttpRequest();
+
+  request.open(method, url, true);
+
+  request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  request.setRequestHeader('X-CSRF-TOKEN', document.querySelector('input[name="_token"]').getAttribute('value'));
+  request.addEventListener('load', handler);
+  request.send(encodeForAjax(data));
+}
+
+function build_search_results_dropdown(response_json){
+  let new_dropdown = document.createElement('div');
+  new_dropdown.classList.add('dropdown');
+  new_dropdown.classList.add('search_results_dropdown');
+  let new_dropdown_menu = document.createElement('div');
+  new_dropdown_menu.classList.add('dropdown-menu');
+  new_dropdown_menu.classList.add('show');
+  new_dropdown_menu.setAttribute('aria-labelledby', 'dropdownMenuLink');
+  new_dropdown.appendChild(new_dropdown_menu);
+  let new_dropdown_menu_ul = document.createElement('ul');
+  new_dropdown_menu_ul.classList.add('list-group');
+  new_dropdown_menu_ul.classList.add('list-group-flush');
+  new_dropdown_menu.appendChild(new_dropdown_menu_ul);
+  // add response_json.posts 
+  for (let i = 0; i < response_json.posts.length; i++){
+    let new_dropdown_menu_ul_li = document.createElement('li');
+    new_dropdown_menu_ul_li.classList.add('list-group-item');
+    new_dropdown_menu_ul_li.classList.add('search_results_dropdown_item');
+    new_dropdown_menu_ul_li.setAttribute('data-post-id', response_json.posts[i].id);
+    new_dropdown_menu_ul_li.style.cursor = 'pointer';
+    new_dropdown_menu_ul_li.style.display = 'flex';
+    new_dropdown_menu_ul_li.style.justifyContent = 'space-between';
+
+
+    let img_el = document.createElement('img');
+    img_el.setAttribute('src', response_json.posts[i].photo);
+    img_el.setAttribute('width', '50px');
+    img_el.setAttribute('height', '50px');
+    img_el.setAttribute('alt', 'post photo');
+    img_el.style.borderRadius = '50%';
+    img_el.style.marginRight = '10px';
+
+    new_dropdown_menu_ul_li.appendChild(img_el);
+
+
+    let text_el = document.createElement('span');
+    text_el.innerHTML = response_json.posts[i].text;
+    //cut the text to the first 50 characters and add '...' if the text is longer than 50 characters
+    if (text_el.innerHTML.length > 50){
+      text_el.innerHTML = text_el.innerHTML.substring(0,50) + '...';
+    }
+
+    new_dropdown_menu_ul_li.appendChild(text_el);
+
+    new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
+
+    new_dropdown_menu_ul_li.addEventListener('click', function(event){
+      let post_id = event.target.getAttribute('data-post-id');
+      let post_title = event.target.getAttribute('data-post-title');
+      let search_input = document.querySelector('input[name="search"]');
+
+      search_input.value = post_title;
+      remove_dropdown_from_search_input(search_input);
+      window.location.href = '/posts/' + post_id;
+    });
+  }
+
+
+
+  // add response_json.users
+  for (let i = 0; i < response_json.users.data.length; i++){
+    let new_dropdown_menu_ul_li = document.createElement('li');
+    new_dropdown_menu_ul_li.classList.add('list-group-item');
+    new_dropdown_menu_ul_li.classList.add('search_results_dropdown_item');
+    new_dropdown_menu_ul_li.setAttribute('data-user-id', response_json.users.data[i].id);
+    new_dropdown_menu_ul_li.style.cursor = 'pointer';
+    new_dropdown_menu_ul_li.style.display = 'flex';
+    new_dropdown_menu_ul_li.style.justifyContent = 'left';
+    new_dropdown_menu_ul_li.style.alignItems = 'center';
+
+
+
+    let img_el = document.createElement('img');
+    img_el.setAttribute('src', response_json.users.data[i].photo);
+    img_el.setAttribute('width', '50px');
+    img_el.setAttribute('height', '50px');
+    img_el.setAttribute('alt', 'user photo');
+    img_el.style.borderRadius = '50%';
+    img_el.style.marginRight = '10px';
+
+    new_dropdown_menu_ul_li.appendChild(img_el);
+
+
+    let text_el = document.createElement('span');
+    text_el.innerHTML = response_json.users.data[i].name;
+    //cut the text to the first 50 characters and add '...' if the text is longer than 50 characters
+    if (text_el.innerHTML.length > 50){
+      text_el.innerHTML = text_el.innerHTML.substring(0,50) + '...';
+    }
+
+    new_dropdown_menu_ul_li.appendChild(text_el);
+
+    new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
+
+    new_dropdown_menu_ul_li.addEventListener('click', function(event){
+      let user_id = event.target.getAttribute('data-user-id');
+      let user_name = event.target.getAttribute('data-user-name');
+      let search_input = document.querySelector('input[name="search"]');
+      search_input.value = user_name;
+      remove_dropdown_from_search_input(search_input);
+      window.location.href = '/users/' + user_id;
+    });
+  }
+
+
+
+
+  return new_dropdown;
+}
+
+
+function add_dropwon_to_search_input(search_input, dropdown){
+  let search_input_parent = search_input.parentNode;
+  search_input_parent.appendChild(dropdown);
+}
+
+function remove_dropdown_from_search_input(search_input){
+  let search_input_parent = search_input.parentNode;
+  let dropdown = search_input_parent.querySelector('.search_results_dropdown');
+  if (dropdown) search_input_parent.removeChild(dropdown);
+}
+
+
+
+window.addEventListener("load", function(){
+
+  let search = document.querySelector('input[name="search"]');
+
+  //remove autocomplete
+  search.setAttribute('autocomplete', 'off');
+
+  search.addEventListener('input', function(event){
+    let search_query = event.target.value;
+    if (!search_query){
+      remove_dropdown_from_search_input(search);
+      return;
+    }
+    sendAjaxRequest("POST", "/api/search", {"search": search_query}, function(event){
+      let response_json_str = event.target.response;
+      let response_json = JSON.parse(response_json_str);
+      console.log(response_json);
+
+      remove_dropdown_from_search_input(search);
+      let dropdown = build_search_results_dropdown(response_json);
+      add_dropwon_to_search_input(search, dropdown);
+
+
+    })
+  })
+})
 
 

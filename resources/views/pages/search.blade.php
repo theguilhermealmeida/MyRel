@@ -4,20 +4,37 @@
 
 @section('content')
 
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Usuários</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="false">Posts</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comentários</a>
+  </li>
+</ul>
 
-<section id="users">
-    <h2>USERS</h2>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
   @each('partials.user', $users, 'user')
-</section>
-
-<section id="posts">
-    <h2>POSTS</h2>
+  </div>
+  <div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
   @each('partials.post', $posts, 'post')
-</section>
+  </div>
+  <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
 
-<section id="comments">
-    <h2>COMMENTS</h2>
   @each('partials.comment', $comments, 'comment')
-</section>
+  </div>
+</div>
+
+
+<script>
+$(function () {
+  $('#myTab a:first').tab('show')
+})
+</script>
+
 
 @endsection
