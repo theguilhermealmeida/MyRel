@@ -104,13 +104,6 @@
                     font-size: 15px;
                   }
 
-                  .user-reaction {
-                    border-bottom:2px solid white;
-                    font-weight: bold;
-                    font-size: 16px;
-                    
-                    }
-
                     
                   .post:not(:first-child){
                     margin-top:20px;
@@ -171,7 +164,23 @@
 
                 .form-text{
 
-                    width: 100%;;
+                    width: 100%;
 
                 }
 
+                form#add_reaction_form {
+                  display: inline-block;
+                }
+
+                .reaction-holder .reaction-label .reaction-label{
+                  border: none;
+                }
+                .reaction-holder .reaction-label .reaction-label:hover {
+                  background: transparent;
+                } 
+
+                .user-reaction {
+                  border-bottom:2px solid white;
+                  font-weight: bold;
+                  font-size: 16px;
+                  }
