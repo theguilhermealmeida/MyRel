@@ -69,7 +69,7 @@
                         </a>
                     
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (Auth::user()->unreadrelationshipnotifications() as $notification) 
+                            @foreach (Auth::user()->unreadrelationshipnotifications()->get() as $notification) 
                                 <a class="dropdown-item" href="#">{{ $notification->text }}</a>
                             @endforeach
                         </div>
