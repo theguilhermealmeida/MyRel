@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Notifications\Relationshipnotification;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword as ResetPasswordContract;
@@ -133,5 +136,18 @@ class User extends Authenticatable
       return $query->whereRaw('tsvectors @@ plainto_tsquery(\'english\',?)',[$search])
             ->orWhere('name', 'LIKE', '%' . $search . '%')->orWhere('description', 'LIKE', '%' . $search . '%')
           ->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
+    }
+
+    /**
+     * The relationship notifications this user has.
+     */
+    public function unreadrelationshipnotifications() 
+    {
+      if (!Auth::check() || Auth::user()->id != $this->id)
+      {
+        abort(403);
+      }
+
+      return $this->hasMany('App\Models\Notifications\Relationshipnotification', 'receiver_id')->where('read', 0);
     }
 }

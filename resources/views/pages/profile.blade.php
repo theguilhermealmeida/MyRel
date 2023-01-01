@@ -67,9 +67,10 @@
             @endif
 
 
-            @if (Auth::check() && $user->getRelationship(Auth::user()->id, $user->id) != null)
+            @if (Auth::check() && ($user->getRelationship(Auth::user()->id, $user->id) != null || $user->getRelationship($user->id, Auth::user()->id) != null))
                 @php
                     $rel = $user->getRelationship(Auth::user()->id, $user->id);
+                    if ($rel == null) {$rel = $user->getRelationship($user->id, Auth::user()->id);}
                 @endphp
 
                 @if ($rel['pivot']['state'] == 'accepted')
@@ -83,6 +84,17 @@
                         </button>
                     {!! Form::close() !!}
                 @elseif ($rel['pivot']['state'] == 'pending')
+                {{-- @php
+                    echo 'sender_id '. $rel->['pivot']['user_id'];
+                    echo 'recipient_id '. $rel->['pivot']['related_id'];
+                @endphp --}}
+                    {{-- @if (Auth::user()->id == $rel->user_id && user()->id == $rel->related_id) --}}
+                    {{-- @php
+                        foreach($rel as $r){
+                            echo $r;
+                        }
+                    @endphp --}}
+                    @if ($rel['pivot']['user_id'] == Auth::user()->id && $rel['pivot']['related_id'] == $user->id)
                     {!!Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'delete','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'remove_rel_form']) !!}
                     {!! Form::token() !!}
                         <button type="submit" class="badge badge-pill badge-light" name="remove_relationship"> 
@@ -92,6 +104,19 @@
                             <div class="mx-2">Pending</div>
                         </button>
                     {!! Form::close() !!}
+                    @elseif ($rel['pivot']['user_id'] == $user->id && $rel['pivot']['related_id'] == Auth::user()->id)
+                    <div class="btn-group" role="group" aria-label="Basic example">
+
+                        {!! Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'post']) !!}
+                                <button type="submit" class="btn btn-primary btn-sm mr-2">Accept Request</button>
+                        {!! Form::close() !!}
+                        {!! Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'delete']) !!}
+                                <button type="submit" class="btn btn-secondary btn-sm">Decline Request</button>
+                        {!! Form::close() !!}
+                    </div>
+                    @endif
+                    {{-- @endif --}}
+
                 @endif
 
             @elseif (Auth::check() && Auth::user()->id != $user->id && $user->getRelationship(Auth::user()->id, $user->id) == null)
