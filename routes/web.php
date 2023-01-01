@@ -39,6 +39,7 @@ Route::put('api/comments', 'CommentController@create');
 Route::put('api/replies', 'ReplyController@create');
 Route::put('api/relationships/{id}', 'RelationshipController@create');
 Route::post('api/posts/{id}', 'PostController@update');
+Route::post('api/posts/{id}/reaction', 'PostController@addReaction')->name('addReaction');
 Route::post('api/comments/{id}', 'CommentController@update');
 Route::post('api/replies/{id}', 'ReplyController@update');
 Route::post('api/user/{id}', 'UserController@update');

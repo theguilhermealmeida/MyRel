@@ -365,3 +365,39 @@ window.addEventListener("load", function(){
 })
 
 
+$(document).ready(function() {
+  // Bind a click event to the "Add Reaction" button
+  $('.reaction-label').click(function() {
+      e.preventDefault(); // Prevent the form from being submitted
+
+      var form = $(this).closest('form');
+
+      var reactionType = $(this).val();
+      var postId = form.find('input[name=id]').val();
+      var csrfToken = form.find('input[name=_token]').val();
+
+      // Make an AJAX request to the server
+      $.ajax({
+          url: '/posts/' + postId + '/reaction',
+          method: 'POST',
+          data: {
+              reaction_type: reactionType,
+              post_id: postId,
+              _token: csrfToken
+          },
+          success: function(response) {
+              // The reaction was added successfully
+              // Update the reaction count and display a message
+              // ...
+              var reactionCountSpan = form.find('.reaction-count');
+                var currentReactionCount = parseInt(reactionCountSpan.text());
+                reactionCountSpan.text(currentReactionCount + 1);
+          },
+          error: function(error) {
+              // There was an error adding the reaction
+              // Display an error message
+              // ...
+          },
+      });
+  });
+});
