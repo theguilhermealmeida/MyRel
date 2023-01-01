@@ -10,6 +10,8 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
+{{ csrf_field() }}
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -23,6 +25,7 @@
     <script defer src="/js/myrel.js"></script>
     <link href="{{ asset('./dist/css/tabler.min.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/posts.css') }}" rel="stylesheet">
+
 </head>
 <body class="theme-dark">
     <div class="sticky-top wrapper">
@@ -175,7 +178,6 @@
                     echo Form::open(array('url' => '/search', 'method' => 'get'));
                     echo "Search:";
                     echo Form::text('search', null, array('placeholder' => 'Search'));
-                    echo Form::button('Search', array('type' => 'submit', 'class' => 'btn btn-primary btn-margin'));
                     echo Form::close();
                   ?> </section>
                             </div>

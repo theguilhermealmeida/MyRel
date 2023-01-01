@@ -5,20 +5,33 @@
 @section('content')
     <article class="post" data-id="{{ $post->id }}" >
 
-    <div class="post-header">
-              <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
-              <div class="post-header-info">
-                  <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
-                  <p>{{ $post->date }}</p>
-              </div>
-              @can('update', $post)
-              <button id="toggle_edit_post" class="mx-auto btn btn-primary ">Edit Post</button>
-              @endcan
-              @can('delete', $post)
-                {!!Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'delete'])!!}
-                <button type="submit" class="mx-auto btn btn-danger ">Delete Post</button>
-                {!!Form::close()!!}
-              @endcan
+    <div class="post-header-main">
+
+            <div>
+
+                <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
+                <div class="post-header-info">
+                    <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
+                    <p>{{ $post->date }}</p>
+                </div>
+            </div>
+
+<div>
+
+
+    @can('update', $post)
+    <button id="toggle_edit_post" class="mx-auto btn btn-primary ">Edit Post</button>
+    @endcan
+
+    @can('delete', $post)
+    &nbsp; &nbsp; &nbsp;
+      {!!Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'delete'])!!}
+      <button type="submit" class="mx-auto btn btn-danger ">Delete Post</button>
+      {!!Form::close()!!}
+    @endcan
+</div>
+
+
           </div>
           <div class="post-body">
               <p>{{ $post->text }}</p>
@@ -39,31 +52,52 @@
                   </svg>
                   <span>{{$post->comments()->count()}}</span>
               </span>
+              
+        
+
               <div class="reaction-holder">
-                  <span class="reaction-label">
-                      <span>👍🏻</span>
-                      <span>{{$post->reactions()->where('type','Like')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>👎🏻</span>
-                      <span>{{$post->reactions()->where('type','Dislike')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>😿</span>
-                      <span>{{$post->reactions()->where('type','Sad')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>😡</span>
-                      <span>{{$post->reactions()->where('type','Angry')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>😍</span>
-                      <span>{{$post->reactions()->where('type','Amazed')->count()}}</span>
-                  </span>
-              </div>
+    <?php
+        $reaction = $post->reactions()
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($reaction) {
+            $type = $reaction->type;
+        } else {
+            $type = null;
+        }
+    ?>
+
+
+
+    <span class="reaction-label {{ $type == 'Like' ? 'user-reaction' : '' }}">
+        <span>👍🏻</span>
+        <span>{{$post->reactions()->where('type','Like')->count()}}</span>
+    </span>
+    <span class="reaction-label {{ $type == 'Dislike' ? 'user-reaction' : '' }}">
+        <span>👎🏻</span>
+        <span>{{$post->reactions()->where('type','Dislike')->count()}}</span>
+    </span>
+    <span class="reaction-label {{ $type == 'Sad' ? 'user-reaction' : '' }}">
+        <span>😿</span>
+        <span>{{$post->reactions()->where('type','Sad')->count()}}</span>
+    </span>
+    <span class="reaction-label {{ $type == 'Angry' ? 'user-reaction' : '' }}">
+        <span>😡</span>
+        <span>{{$post->reactions()->where('type','Angry')->count()}}</span>
+    </span>
+    <span class="reaction-label {{ $type == 'Amazed' ? 'user-reaction' : '' }}">
+        <span>😍</span>
+        <span>{{$post->reactions()->where('type','Amazed')->count()}}</span>
+    </span>
+</div>
+
+
+
           </div>
+          <hr>
           @if (Auth::check())
-                    <button id="toggle_create_comment" class="mx-auto btn btn-primary">Comment</button>
+                    <button id="toggle_create_comment" class="mx-auto btn btn-primary" style="margin-bottom:30px;">Comment</button>
             @endif
 
         @can('update', $post)

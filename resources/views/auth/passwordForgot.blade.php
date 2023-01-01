@@ -13,7 +13,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>MyRel - Register</title>
+    <title>MyRel - Forgot Password</title>
 
     <link href="{{ asset('./dist/css/tabler.min.css') }}" rel="stylesheet">
 
@@ -25,30 +25,27 @@
             color: white;
         }
     </style>
+   
+   @if (session('status'))
+      <div class='alert alert-success' role='alert'> 
+        {{session('status')}}
+      </div>
+   @endif
+
     <div class="page page-center">
         <div class="container-tight py-4">
             <div class="text-center mb-4">
                 <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36"
                         alt=""></a>
             </div>
+            
 
-
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('password.email') }}">
                 {{ csrf_field() }}
 
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Register a new account</h2>
+                    <h2 class="card-title text-center mb-4">Forgot your password?</h2>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="name">Name</label>
-                        <input class="form-control" id="name" type="text" name="name" value="{{ old('name') }}" required
-                            autofocus>
-                        @if ($errors->has('name'))
-                            <span class="error">
-                                {{ $errors->first('name') }}
-                            </span>
-                        @endif
-                    </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="email">E-Mail Address</label>
@@ -60,34 +57,19 @@
                         @endif
                     </div>
 
-                    <div class="mb-2">
-                        <label class="form-label" for="password">Password</label>
-                        <input class="form-control" id="password" type="password" name="password" required>
-                        @if ($errors->has('password'))
-                            <span class="error">
-                                {{ $errors->first('password') }}
-                            </span>
-                        @endif
-                    </div>
-
-                    <div class="mb-2">
-                        <label class="form-label" for="password-confirm">Confirm Password</label>
-                        <input class="form-control" id="password-confirm" type="password" name="password_confirmation" required>
-                    </div>
-
                     <div class="form-footer">
-                        <button class="btn btn-primary w-100" type="submit">
-                            Register
-                        </button>
-                        <div class="text-center text-muted mt-3">
-                          Already have an account? <a class="button button-outline" href="{{ route('login') }}">Login</a>
-                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Send reset password e-mail</button>
                     </div>
+
+                </div>
             </form>
+            <div class="text-center text-muted mt-3">
+                Back to login <a class="button button-outline" href="{{ route('login') }}">Login</a>
+            </div>
         </div>
     </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->
     <script type="text/javascript" src={{ asset('dist/js/tabler.min.js') }} defer>
-        < /body>  <
+        < /body> <
         /html>

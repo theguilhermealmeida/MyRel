@@ -20,8 +20,23 @@ class UserController extends Controller
     {
     
     $user = User::find($id);
-        
-    return view('pages.profile', ['user' => $user]);
+    
+    $pending_relationships = $user->relationships()->where('state', 'pending')->orderBy('id')->get();
+    $pending_relationships = $pending_relationships->merge($user->relationships2()->where('state', 'pending')->orderBy('id')->get());
+
+    $friends = $user->relationships()->where('state', 'accepted')->where('type', 'Friends')->orderBy('id')->get();
+    $friends = $friends->merge($user->relationships2()->where('state', 'accepted')->where('type', 'Friends')->orderBy('id')->get());
+
+    $close_friends = $user->relationships()->where('state', 'accepted')->where('type', 'Close Friends')->orderBy('id')->get();
+    $close_friends = $close_friends->merge($user->relationships2()->where('state', 'accepted')->where('type', 'Close Friends')->orderBy('id')->get());
+
+    $family = $user->relationships()->where('state', 'accepted')->where('type', 'Family')->orderBy('id')->get();
+    $family = $family->merge($user->relationships2()->where('state', 'accepted')->where('type', 'Family')->orderBy('id')->get());
+
+    $all_rel = $friends->merge($close_friends->merge($family->merge($pending_relationships)));
+
+    
+    return view('pages.profile', ['user' => $user, 'pending_relationships' => $pending_relationships, 'friends' => $friends, 'close_friends' => $close_friends, 'family' => $family, 'relationships' => $all_rel]);
     }
 
 
@@ -139,4 +154,5 @@ class UserController extends Controller
         $user->delete();
         
     }
+
 }

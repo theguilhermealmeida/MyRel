@@ -37,7 +37,19 @@
                   .post{
                     padding:30px;
                   }
-                  .post-header{
+                  .post-header, .post-header-main{
+                    display: flex;
+                    flex-direction: row;
+                    margin-bottom: 20px;
+                    align-items: center;
+                   
+                  }
+
+                  .post-header-main{
+                    justify-content: space-between;
+                  }
+
+                  .post-header-main > div{
                     display: flex;
                     flex-direction: row;
                     margin-bottom: 20px;
@@ -92,19 +104,32 @@
                     font-size: 15px;
                   }
 
+                  .user-reaction {
+                    border-bottom:2px solid white;
+                    font-weight: bold;
+                    font-size: 16px;
+                    
+                    }
+
+                    
                   .post:not(:first-child){
                     margin-top:20px;
                   }
 
                   .post-body{
                     color:white;
+
                   }
 
-                  .post-body:hover{
-                    color:white;
-                    text-decoration: none;
-                    opacity:0.8;
+
+                  .post-body > p{
+                    font-size: 16px;
                   }
+
+                  .post-body > div:first-of-type{
+                    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+                  }
+
 
         
                 .relationship-header{

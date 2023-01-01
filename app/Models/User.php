@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword as ResetPasswordContract;
+use Illuminate\Auth\Passwords\CanResetPassword;
+
 
 class User extends Authenticatable
 {
@@ -18,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','ban'
     ];
 
     /**
@@ -76,6 +79,29 @@ class User extends Authenticatable
     public function relationships2() {
       return $this->belongsToMany(User::class, 'relationships', 'related_id', 'user_id')->withPivot('id','type', 'state');
     }
+
+    public function getAllRelationships($id) {
+      $user = User::find($id);
+      
+      $relationships = $user->relationships()->orderBy('id')->get();
+      $relationships = $relationships->merge($user->relationships()->orderBy('id')->get());
+
+      return $relationships;
+    }
+
+    public function getRelationship($sender_id, $receiver_id) {
+      $relationships = $this->relationships()->where('user_id', $sender_id)->where('related_id', $receiver_id)->orderBy('id')->get();
+      $relationships = $relationships->merge($this->relationships2()->where('user_id', $sender_id)->where('related_id', $receiver_id)->orderBy('id')->get());
+
+      if ($relationships == null) {
+        $relationships = $this->relationships()->where('user_id', $receiver_id)->where('related_id', $sender_id)->orderBy('id')->get();
+        $relationships = $relationships->merge($this->relationships2()->where('user_id', $receiver_id)->where('related_id', $sender_id)->orderBy('id')->get()); 
+      }
+      return $relationships->first();
+
+      // return $relationships->where('user_id', $sender_id)->where('related_id', $receiver_id)->first;
+    }
+
 
     /**
      * The postreactions this user has.
