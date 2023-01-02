@@ -39,6 +39,7 @@ CREATE TABLE postreactions(
 );
 
 CREATE TABLE postreactionnotifications(
+    id SERIAL PRIMARY KEY,
     postreaction_id INTEGER REFERENCES postreactions ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,

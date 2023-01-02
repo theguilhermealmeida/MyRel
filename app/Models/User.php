@@ -138,16 +138,36 @@ class User extends Authenticatable
           ->orderByRaw('ts_rank(tsvectors,plainto_tsquery(\'english\',?)) DESC',[$search]);
     }
 
-    /**
-     * The relationship notifications this user has.
-     */
-    public function unreadrelationshipnotifications() 
-    {
+
+
+    // User Notifications Section
+
+    public function unreadNotifications() {
       if (!Auth::check() || Auth::user()->id != $this->id)
       {
         abort(403);
       }
 
-      return $this->hasMany('App\Models\Notifications\Relationshipnotification', 'receiver_id')->where('read', 0);
+      $relationship_notifications = $this->hasMany('App\Models\Notifications\Relationshipnotification', 'receiver_id')->where('read', 0)->get();
+      $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification', 'postreaction_id')->where('read', 0)->get();
+      $comment_notifications = $this->hasMany('App\Models\Notifications\Commentnotification', 'comment_id')->where('read', 0)->get();
+      $comment_reaction_notification = $this->hasMany('App\Models\Notifications\Commentreactionnotification', 'commentreaction_id')->where('read', 0)->get();
+      $reply_notification = $this->hasMany('App\Models\Notifications\Replynotification', 'reply_id')->where('read', 0)->get();
+      $reply_reaction_notification = $this->hasMany('App\Models\Notifications\Replyreactionnotification', 'replyreaction_id')->where('read', 0)->get();
+
+      $all_notifications = $relationship_notifications->merge($post_reaction_notifications->merge($comment_notifications->merge($comment_reaction_notification->merge($reply_notification->merge($reply_reaction_notification)))));
+
+      $all_notifications->sortBy('date');
+
+      return $all_notifications;
     }
+
+    public function marknotificationsasread() {
+      $all_notificatoins = $this->unreadNotifications()->get();
+
+      foreach($all_notificatoins as $notification) {
+        $notification->read = 1;
+      }
+    }
+
 }

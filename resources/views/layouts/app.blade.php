@@ -63,13 +63,13 @@
                                 <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                                 <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                             </svg>
-                            @if (Auth::user()->unreadrelationshipnotifications()->count()) 
-                                <span class="badge badge-light">{{ Auth::user()->unreadrelationshipnotifications()->count() }}</span>
+                            @if (Auth::user()->unreadNotifications()->count()) 
+                                <span class="badge badge-light">{{ Auth::user()->unreadNotifications()->count() }}</span>
                             @endif
                         </a>
                     
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach (Auth::user()->unreadrelationshipnotifications()->get() as $notification) 
+                            @foreach (Auth::user()->unreadNotifications() as $notification) 
                                 <a class="dropdown-item" href="#">{{ $notification->text }}</a>
                             @endforeach
                         </div>
