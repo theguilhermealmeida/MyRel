@@ -20,7 +20,7 @@ Route::get('/', 'Auth\LoginController@home');
 //Posts
 Route::get('posts', 'PostController@feed');
 Route::get('posts/{id}', 'PostController@show');
-Route::get('posts/{id}/reactions', 'PostController@get_reactions');
+Route::get('posts/{id}/reactions', 'PostController@get_reactions')->name('getPostReactions');
 
 //Users
 Route::get('user/{id}', 'UserController@show');
@@ -33,6 +33,12 @@ Route::get('admin', 'AdminController@admin');
 
 // Relationships
 Route::get('relationships', 'RelationshipController@show');
+
+//Contacts 
+Route::view('contacts', 'pages.contacts');
+
+//Contacts 
+Route::view('about-us', 'pages.aboutus');
 
 // API
 Route::put('api/posts', 'PostController@create');
