@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Commentreaction;
+use App\Http\Controllers\CommentreactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -101,4 +103,54 @@ class CommentController extends Controller
         $comment->delete();
         return redirect('posts/'.$id);
     }
+
+    public function addReaction(Request $request, $comment_id) 
+    {
+
+         if (!Auth::check())
+        {
+            return redirect()->back()->withErrors([
+                'You must be logged in to create a reaction',
+            ]);
+        }
+
+        $request->validate([
+            'reaction_type' => 'required|in:Like,Dislike,Sad,Angry,Amazed',
+        ]);
+
+        $user = Auth::user();
+        $comment = Comment::find($comment_id); 
+
+        // check if the user has already reacted to the comment
+
+        $reaction = Commentreaction::where('user_id', $user->id)->where('comment_id', $comment->id)->first();
+
+        // user already reacted to the comment
+        if ($reaction)
+        {
+
+            // wants to change reaction type
+            if ($reaction->type != $request->input('reaction_type'))
+            {
+                $reaction->update(['type' => $request->input('reaction_type')]);
+            }
+            // user wants to remove the reaction
+            else
+            {
+                $reaction->destroy($reaction->id);
+            }
+            
+        }
+        // user has not reacted to the comment
+        else 
+        {
+            $new_reaction = Commentreaction::create(['user_id' => $user->id, 'comment_id' => $comment_id, 'type' => $request->input('reaction_type')]);
+        }
+
+        // return response()->json([
+        //     'message' => 'Reaction added successfully',
+        // ]);
+        return redirect()->back()->with('sucess', 'you added a reaction!');
+    }
+
 }

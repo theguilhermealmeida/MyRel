@@ -29,29 +29,56 @@
                   </svg>
                   <span>{{$comment->replies()->count()}}</span>
                 </button>
-              <div class="reaction-holder">
-                  <span class="reaction-label">
-                      <span>👍🏻</span>
-                      <span>{{$comment->reactions()->where('type','Like')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>👎🏻</span>
-                      <span>{{$comment->reactions()->where('type','Dislike')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>😿</span>
-                      <span>{{$comment->reactions()->where('type','Sad')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>😡</span>
-                      <span>{{$comment->reactions()->where('type','Angry')->count()}}</span>
-                  </span>
-                  <span class="reaction-label">
-                      <span>😍</span>
-                      <span>{{$comment->reactions()->where('type','Amazed')->count()}}</span>
-                  </span>
-              </div>
-          </div>
+
+                <div class="reaction-holder">
+                <?php
+                    $reaction = $comment->reactions()
+                        ->where('user_id', auth()->id())
+                        ->first();
+            
+                    if ($reaction) {
+                        $type = $reaction->type;
+                    } else {
+                        $type = null;
+                    }
+                ?>
+            
+                    {!!Form::open(['route' => ['addCommentReaction', $comment->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_commentreaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Like' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Like'>👍🏻</button>
+                    <span class=reaction-count>{{$comment->reactions()->where('type','Like')->count()}}</span>
+                </span>
+                    {!!Form::close()!!}                    
+                    {!!Form::open(['route' => ['addCommentReaction', $comment->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_commentreaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Dislike' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Dislike'>👎🏻</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$comment->reactions()->where('type','Dislike')->count()}}</span>
+                </span>
+                    {!!Form::open(['route' => ['addCommentReaction', $comment->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_commentreaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Sad' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Sad'>😿</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$comment->reactions()->where('type','Sad')->count()}}</span>
+                </span>
+                    {!!Form::open(['route' => ['addCommentReaction', $comment->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_commentreaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Angry' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Angry'>😡</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$comment->reactions()->where('type','Angry')->count()}}</span>
+                </span>
+                    {!!Form::open(['route' => ['addCommentReaction', $comment->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_commentreaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Amazed' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Amazed'>😍</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$comment->reactions()->where('type','Amazed')->count()}}</span>
+                </span>
+            </div>
 
           @can('update', $comment)
             <div style="display:none" id="edit_comment" class="post card mb-3">

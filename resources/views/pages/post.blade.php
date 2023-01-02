@@ -31,8 +31,38 @@
     @endcan
 </div>
 
-
+        
           </div>
+          @can('update', $post)
+            <div style="display:none" id="edit_post" class="post card mb-3">
+            {!!Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'edit_post_form']) !!}
+            {!! Form::token() !!}
+                <div class="form-group">
+                    <div>
+                    <textarea required name="text" onkeyup="countChars(this,document.getElementById('charNumTextEdit'),280);" maxlength="280" id="edit_post_text" class="form-control" rows="5">{{ $post->text }}</textarea>
+                    <p id="charNumTextEdit">0 characters</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                    <input style="color:black;background-color:white" id="edit_post_picture" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
+                    <img class="m-3" id="output"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                    <select required name ="visibility" id="edit_post_visibility" data-visibility="{{$post->visibility}}" class="selectpicker" data-width="60%">
+                    <option>Close Friends</option>
+                    <option>Friends</option>
+                    <option>Family</option>
+                    <option>Strangers</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary float-right">Edit</button>
+                    </div>
+                </div>
+            {!! Form::close() !!}
+        </div>
+        @endcan
           <div class="post-body">
               <p>{{ $post->text }}</p>
               @if($post->photo !== null)
@@ -106,45 +136,12 @@
                     <span class=reaction-count>{{$post->reactions()->where('type','Amazed')->count()}}</span>
                 </span>
             </div>
-
-
-
           </div>
           <hr>
-          @if (Auth::check())
-                    <button id="toggle_create_comment" class="mx-auto btn btn-primary" style="margin-bottom:30px;">Comment</button>
-            @endif
 
-        @can('update', $post)
-            <div style="display:none" id="edit_post" class="post card mb-3">
-            {!!Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'edit_post_form']) !!}
-            {!! Form::token() !!}
-                <div class="form-group">
-                    <div>
-                    <textarea required name="text" onkeyup="countChars(this,document.getElementById('charNumTextEdit'),280);" maxlength="280" id="edit_post_text" class="form-control" rows="5">{{ $post->text }}</textarea>
-                    <p id="charNumTextEdit">0 characters</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                    <input style="color:black;background-color:white" id="edit_post_picture" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
-                    <img class="m-3" id="output"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                    <select required name ="visibility" id="edit_post_visibility" data-visibility="{{$post->visibility}}" class="selectpicker" data-width="60%">
-                    <option>Close Friends</option>
-                    <option>Friends</option>
-                    <option>Family</option>
-                    <option>Strangers</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary float-right">Edit</button>
-                    </div>
-                </div>
-            {!! Form::close() !!}
-        </div>
-        @endcan
+        @if (Auth::check())
+                    <button id="toggle_create_comment" class="mx-auto btn btn-primary" style="margin-bottom:30px;">Comment</button>
+        @endif
             <div style="display:none" id="create_comment" class="post card mb-3">
             {!!Form::open(['url' => 'api/comments', 'method' => 'PUT','class'=>'form-horizontal','id'=>'create_comment_form']) !!}
             {!! Form::token() !!}
