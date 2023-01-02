@@ -70,15 +70,32 @@ class PostController extends Controller
      *
      * @return Response
      */
-    public function feed()
+    public function feed(Request $request)
     {
         if (!Auth::check()){
             $posts = Post::where('visibility',NULL)->get();
         }
         else{
-            $posts = $this->allowed_posts(Auth::user()->id);
+            
+            if ($request->input('type') === 'family') {
+                $posts = $this->allowed_posts(Auth::user()->id)->where('visibility','Family');
+            }
+            else if ($request->input('type') === 'friends') {
+                $posts = $this->allowed_posts(Auth::user()->id)->where('visibility','Friends');
+            }
+            else if ($request->input('type') === 'closefriends') {
+                $posts = $this->allowed_posts(Auth::user()->id)->where('visibility','Close Friends');
+            } 
+            else {
+                if (!Auth::check()){
+                    $posts = Post::where('visibility',NULL)->get();
+                }
+                else{
+                    $posts = $this->allowed_posts(Auth::user()->id);
+                }   
+            }
         }   
-        return view('pages.posts', ['posts' => $posts->sortBy('id')]);
+        return view('pages.posts', ['posts' => $posts->sortBy('id')->reverse()]);
     }
     
     
