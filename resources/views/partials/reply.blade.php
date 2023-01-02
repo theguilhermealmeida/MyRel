@@ -7,7 +7,7 @@
             <p>{{ $reply->date }}</p>
         </div>
         @can('update', $reply)
-        <button id="toggle_edit_reply" class="mx-auto btn btn-primary btn-sm">Edit Reply</button>
+        <button class="toggle_edit_reply mx-auto btn btn-primary btn-sm">Edit Reply</button>
         @endcan
         @can('delete', $reply)
         {!!Form::open(['url' => 'api/replies/' . $reply->id, 'method' => 'delete'])!!}
@@ -16,7 +16,7 @@
         @endcan
     </div>
     @can('update', $reply)
-    <div style="display:none" id="edit_reply" class="post card mb-3">
+    <div style="display:none" id="edit_reply_{!!$reply->id!!}" class="post card mb-3">
         {!!Form::open(['url' => 'api/replies/' . $reply->id, 'method' => 'post','class'=>'form-horizontal','id'=>'edit_reply_form']) !!}
             {!! Form::token() !!}
             <div class="form-group">

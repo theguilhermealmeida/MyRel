@@ -35,16 +35,18 @@ if (btn3 != null && btn3.value == '') {
   };
 }
 
-const targetDiv4 = document.getElementById("edit_comment");
-const btn4 = document.getElementById("toggle_edit_comment");
-if (btn4 != null && btn4.value == '') {
-  btn4.onclick = function () {
-    if (targetDiv4.style.display !== "none") {
-      targetDiv4.style.display = "none";
-    } else {
-      targetDiv4.style.display = "block";
-    }
-  };
+var btn = document.getElementsByClassName("toggle_edit_comment");
+for (var i = btn.length - 1; i >= 0; i--) {
+  if (btn[i] != null && btn[i].value == '') {
+    btn[i].onclick = function () {
+      let node = this.parentElement.nextElementSibling;
+      if (node.style.display !== "none") {
+        node.style.display = "none";
+      } else {
+        node.style.display = "block";
+      }
+    };
+  }
 }
 
 const targetDiv5 = document.getElementById("create_comment");
@@ -59,16 +61,18 @@ if (btn5 != null && btn5.value == '') {
   };
 }
 
-const targetDiv6 = document.getElementById("edit_reply");
-const btn6 = document.getElementById("toggle_edit_reply");
-if (btn6 != null && btn6.value == '') {
-  btn6.onclick = function () {
-    if (targetDiv6.style.display !== "none") {
-      targetDiv6.style.display = "none";
-    } else {
-      targetDiv6.style.display = "block";
-    }
-  };
+var btn = document.getElementsByClassName("toggle_edit_reply");
+for (var i = btn.length - 1; i >= 0; i--) {
+  if (btn[i] != null && btn[i].value == '') {
+    btn[i].onclick = function () {
+      let node = this.parentElement.nextElementSibling;
+      if (node.style.display !== "none") {
+        node.style.display = "none";
+      } else {
+        node.style.display = "block";
+      }
+    };
+  }
 }
 
 var btn = document.getElementsByClassName("toggle_create_reply");

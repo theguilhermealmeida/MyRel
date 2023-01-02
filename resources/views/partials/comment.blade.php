@@ -6,7 +6,7 @@
             <p>{{ $comment->date }}</p>
         </div>
         @can('update', $comment)
-        <button id="toggle_edit_comment" class="mx-auto btn btn-primary btn-sm">Edit Comment</button>
+        <button class="toggle_edit_comment mx-auto btn btn-primary btn-sm">Edit Comment</button>
         @endcan
         @can('delete', $comment)
         {!!Form::open(['url' => 'api/comments/' . $comment->id, 'method' => 'delete'])!!}
@@ -15,7 +15,7 @@
         @endcan
     </div>
     @can('update', $comment)
-    <div style="display:none" id="edit_comment" class="post card mb-3">
+    <div style="display:none" id="edit_comment{!!$comment->id!!}" class="post card mb-3">
         {!!Form::open(['url' => 'api/comments/' . $comment->id, 'method' => 'post','class'=>'form-horizontal','id'=>'edit_comment_form']) !!}
             {!! Form::token() !!}
             <div class="form-group">
