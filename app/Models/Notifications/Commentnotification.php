@@ -11,6 +11,9 @@ class Commentnotification extends Model
   public $timestamps  = false;
 
   
+  protected $fillable = [
+    'read'
+];
 
   /**
    * The user this Commentnotification belongs to

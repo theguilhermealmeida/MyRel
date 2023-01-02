@@ -155,4 +155,42 @@ class UserController extends Controller
         
     }
 
+    public function marknotificationsasread(Request $request) {
+        $user = User::find($request->id);
+        $all_notifications = $user->unreadNotifications();
+  
+        foreach($all_notifications as $notification) {
+          $notification->read = 1;
+          $notification->save();
+        }
+
+        return redirect()->back();
+        // return response()->json(['success' => true]); 
+      }
+
+      public function marknotificationasread(Request $request) {
+        $user = User::find($request->id);
+        $notification = $user->unreadNotifications()->where('id', $request->notification_id)->first();
+  
+        $notification->read = 1;
+        $notification->save();
+
+        return redirect()->back();
+      }
+
+    public function showNotifications(Request $request)
+    {
+      if (Auth::check())
+      {
+        if (Auth::user()->id == $request->id) 
+        {
+            $user = User::find($request->id);    
+            $notifications = $user->allNotifications();
+            return view('pages.notifications', ['user' => $user, 'notifications' => $notifications]);
+        }
+    
+    }
+    abort(403);
+    }
+
 }

@@ -10,7 +10,9 @@ class Commentreactionnotification extends Model
     // Don't add create and update timestamps in database.
   public $timestamps  = false;
 
-  
+  protected $fillable = [
+    'read'
+]; 
 
   /**
    * The user this Commentreactionnotification belongs to

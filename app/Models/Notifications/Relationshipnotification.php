@@ -10,7 +10,9 @@ class Relationshipnotification extends Model
     // Don't add create and update timestamps in database.
   public $timestamps  = false;
 
-  
+  protected $fillable = [
+    'read'
+];
 
   /**
    * The user this Relationshipnotification belongs to

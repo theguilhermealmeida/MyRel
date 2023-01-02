@@ -175,5 +175,28 @@
 
                 }
 
+                .no-notifications {
+                  font-size: 18px;
+                  color: #999;
+                  text-transform: uppercase;
+                  letter-spacing: 1px;
+                  font-weight: bold;
+                  margin-top: 20px;
+                }
+                
+                .mark-all-as-read {
+                  background: transparent;
+                  border: none;
+                  color: grey;
+                }
 
+                .unread-notification-button {
+                  background: transparent;
+                  border: none;
+                  color: grey;
+                }
+
+                
              
+
+

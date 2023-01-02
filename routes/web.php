@@ -64,3 +64,8 @@ Route::get('/change-password/{id}', 'PasswordResetController@showChangeForm')->n
 Route::post('/forgot-password', 'PasswordResetController@sendResetLinkEmail')->name('password.email');
 Route::get('/reset-password/{token}', 'PasswordResetController@showResetForm')->name('password.reset');
 Route::post('/reset-password', 'PasswordResetController@reset')->name('password.update');
+
+// Notifications
+Route::get('notifications/{id}', 'UserController@showNotifications')->name('notifications.show');
+Route::get('notifications/mark-all-as-read/{id}', 'UserController@marknotificationsasread')->name('notifications.markAllAsRead');
+Route::get('notifications/mark-as-read/{id}', 'UserController@marknotificationasread')->name('notifications.markAsRead');

@@ -364,4 +364,16 @@ window.addEventListener("load", function(){
   })
 })
 
+$('.notification-bell').on('beforeClose.bs.dropdown', function (e) {
+  // Mark the notifications as read here
+  $.ajax({
+    url: '../notifications/'+user_id+'/mark-all-as-read',
+    method: 'POST',
+    success: function() {
+      $('#notifications-bell').dropdown('toggle');
+    }
+  });
+});
+
+
 

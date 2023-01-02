@@ -162,12 +162,24 @@ class User extends Authenticatable
       return $all_notifications;
     }
 
-    public function marknotificationsasread() {
-      $all_notificatoins = $this->unreadNotifications()->get();
-
-      foreach($all_notificatoins as $notification) {
-        $notification->read = 1;
+    public function allNotifications() {
+      if (!Auth::check() || Auth::user()->id != $this->id)
+      {
+        abort(403);
       }
+
+      $relationship_notifications = $this->hasMany('App\Models\Notifications\Relationshipnotification', 'receiver_id')->get();
+      $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification', 'postreaction_id')->get();
+      $comment_notifications = $this->hasMany('App\Models\Notifications\Commentnotification', 'comment_id')->get();
+      $comment_reaction_notification = $this->hasMany('App\Models\Notifications\Commentreactionnotification', 'commentreaction_id')->get();
+      $reply_notification = $this->hasMany('App\Models\Notifications\Replynotification', 'reply_id')->get();
+      $reply_reaction_notification = $this->hasMany('App\Models\Notifications\Replyreactionnotification', 'replyreaction_id')->get();
+
+      $all_notifications = $relationship_notifications->merge($post_reaction_notifications->merge($comment_notifications->merge($comment_reaction_notification->merge($reply_notification->merge($reply_reaction_notification)))));
+
+      $all_notifications->sortBy('id')->reverse();
+
+      return $all_notifications;
     }
 
 }
