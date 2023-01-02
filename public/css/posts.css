@@ -92,6 +92,22 @@
                     align-items: center;
                   }
 
+                  .post-create-reply{
+                    margin-top: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+
+                  .post-replies{
+                    margin-top: 30px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                  }
+
                   .reaction-label{
                     font-size: 13px;
                     color: #999;
@@ -169,6 +185,14 @@
                 }
 
                 form#add_reaction_form {
+                  display: inline-block;
+                }
+
+                form#add_commentreaction_form {
+                  display: inline-block;
+                }
+
+                form#add_replyreaction_form {
                   display: inline-block;
                 }
 

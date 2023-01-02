@@ -72,30 +72,31 @@ if (btn6 != null && btn6.value == '') {
 }
 
 var btn = document.getElementsByClassName("toggle_create_reply");
-for (var i = btn.length - 1; i >= 0; i--){
+for (var i = btn.length - 1; i >= 0; i--) {
   if (btn[i] != null && btn[i].value == '') {
     btn[i].onclick = function () {
       if (this.nextElementSibling.style.display !== "none") {
-        this.nextElementSibling.style.display  = "none";
+        this.nextElementSibling.style.display = "none";
       } else {
-        this.nextElementSibling.style.display  = "block";
+        this.nextElementSibling.style.display = "block";
       }
     };
   }
 }
 
 var btn = document.getElementsByClassName("comment-label");
-for (var i = btn.length - 1; i >= 0; i--){
+for (var i = btn.length - 1; i >= 0; i--) {
   if (btn[i] != null && btn[i].value == '') {
     btn[i].onclick = function () {
-      let node = this.parentElement;
-      while (!(node.classList.contains('replies'))) {
+      let node = this.parentElement.nextElementSibling;
+      while (!(node.classList.contains('post-replies'))) {
         node = node.nextElementSibling;
       }
-      if (node.style.display !== "none") {
-        node.style.display  = "none";
+      let childnode = node.firstElementChild;
+      if (childnode.style.display !== "none") {
+        childnode.style.display = "none";
       } else {
-        node.style.display  = "block";
+        childnode.style.display = "block";
       }
     };
   }
@@ -104,100 +105,100 @@ for (var i = btn.length - 1; i >= 0; i--){
 
 
 
-var loadFile = function(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
+var loadFile = function (event) {
+  var output = document.getElementById('output');
+  output.src = URL.createObjectURL(event.target.files[0]);
+  output.onload = function () {
+    URL.revokeObjectURL(output.src) // free memory
+  }
+};
 
-function countChars(obj,obj2,length){
-    var maxLength = length;
-    var strLength = obj.value.length;
-    
-    if(strLength == maxLength){
-        obj2.innerHTML = '<span style="color: red;">'+strLength+' out of '+maxLength+' characters</span>';
-    }else{
-        obj2.innerHTML = strLength+' out of '+maxLength+' characters';
-    }
+function countChars(obj, obj2, length) {
+  var maxLength = length;
+  var strLength = obj.value.length;
+
+  if (strLength == maxLength) {
+    obj2.innerHTML = '<span style="color: red;">' + strLength + ' out of ' + maxLength + ' characters</span>';
+  } else {
+    obj2.innerHTML = strLength + ' out of ' + maxLength + ' characters';
+  }
 }
 
-if(document.getElementById("edit_profile_form")){
+if (document.getElementById("edit_profile_form")) {
   document.getElementById("edit_profile_form").reset();
 }
 
-if(document.getElementById("create_post_form")){
+if (document.getElementById("create_post_form")) {
   document.getElementById("create_post_form").reset();
 }
 
-if(document.getElementById("create_comment_form")){
+if (document.getElementById("create_comment_form")) {
   document.getElementById("create_comment_form").reset();
 }
 
-if(document.getElementById("edit_comment_form")){
+if (document.getElementById("edit_comment_form")) {
   document.getElementById("edit_comment_form").reset();
 }
 
-if(document.getElementById("create_reply_form")){
+if (document.getElementById("create_reply_form")) {
   document.getElementById("create_reply_form").reset();
 }
 
-if(document.getElementById("edit_reply_form")){
+if (document.getElementById("edit_reply_form")) {
   document.getElementById("edit_reply_form").reset();
 }
 
-if(document.getElementById("charNumName")){
+if (document.getElementById("charNumName")) {
   var count_chars_edit_profile_name = document.getElementById('charNumName');
-  count_chars_edit_profile_name.onload = countChars(document.getElementById('edit_profile_name'),count_chars_edit_profile_name,30);
+  count_chars_edit_profile_name.onload = countChars(document.getElementById('edit_profile_name'), count_chars_edit_profile_name, 30);
 }
 
-if(document.getElementById("charNumDescription")){
+if (document.getElementById("charNumDescription")) {
   var count_chars_edit_profile_description = document.getElementById('charNumDescription');
-  count_chars_edit_profile_description.onload = countChars(document.getElementById('edit_profile_description'),count_chars_edit_profile_description,280);
+  count_chars_edit_profile_description.onload = countChars(document.getElementById('edit_profile_description'), count_chars_edit_profile_description, 280);
 }
 
-if(document.getElementById("charNumTextEdit")){
+if (document.getElementById("charNumTextEdit")) {
   var count_chars_edit_post_text = document.getElementById('charNumTextEdit');
-  count_chars_edit_post_text.onload = countChars(document.getElementById('edit_post_text'),count_chars_edit_post_text,280);
+  count_chars_edit_post_text.onload = countChars(document.getElementById('edit_post_text'), count_chars_edit_post_text, 280);
 }
 
-if(document.getElementById("charNumCommentEdit")){
+if (document.getElementById("charNumCommentEdit")) {
   var count_chars_edit_comment_text = document.getElementById('charNumCommentEdit');
-  count_chars_edit_comment_text.onload = countChars(document.getElementById('edit_comment_text'),count_chars_edit_comment_text,280);
+  count_chars_edit_comment_text.onload = countChars(document.getElementById('edit_comment_text'), count_chars_edit_comment_text, 280);
 }
 
-if(document.getElementById("charNumReplyEdit")){
+if (document.getElementById("charNumReplyEdit")) {
   var count_chars_edit_reply_text = document.getElementById('charNumReplyEdit');
-  count_chars_edit_reply_text.onload = countChars(document.getElementById('edit_reply_text'),count_chars_edit_reply_text,280);
+  count_chars_edit_reply_text.onload = countChars(document.getElementById('edit_reply_text'), count_chars_edit_reply_text, 280);
 }
 
-function sameValue(element,value){
-  if(element.value == value){
+function sameValue(element, value) {
+  if (element.value == value) {
     element.selected = "selected";
   }
 }
 
-function selectOption(element,value){
+function selectOption(element, value) {
   var options = element.getElementsByTagName("option");
-  for (var i = options.length - 1; i >= 0; i--){
-    sameValue(options[i],value);
+  for (var i = options.length - 1; i >= 0; i--) {
+    sameValue(options[i], value);
   }
 }
 
-if(document.getElementById('edit_profile_gender')){
-  selectOption(document.getElementById('edit_profile_gender'),document.getElementById('edit_profile_gender').getAttribute('data-gender'));
+if (document.getElementById('edit_profile_gender')) {
+  selectOption(document.getElementById('edit_profile_gender'), document.getElementById('edit_profile_gender').getAttribute('data-gender'));
 }
 
-if(document.getElementById('edit_post_visibility')){
-  selectOption(document.getElementById('edit_post_visibility'),document.getElementById('edit_post_visibility').getAttribute('data-visibility'));
+if (document.getElementById('edit_post_visibility')) {
+  selectOption(document.getElementById('edit_post_visibility'), document.getElementById('edit_post_visibility').getAttribute('data-visibility'));
 }
 
 
 
 function encodeForAjax(data) {
   if (data == null) return null;
-  return Object.keys(data).map(function(k){
+  return Object.keys(data).map(function (k) {
     return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
   }).join('&');
 }
@@ -213,7 +214,7 @@ function sendAjaxRequest(method, url, data, handler) {
   request.send(encodeForAjax(data));
 }
 
-function build_search_results_dropdown(response_json){
+function build_search_results_dropdown(response_json) {
   let new_dropdown = document.createElement('div');
   new_dropdown.classList.add('dropdown');
   new_dropdown.classList.add('search_results_dropdown');
@@ -227,7 +228,7 @@ function build_search_results_dropdown(response_json){
   new_dropdown_menu_ul.classList.add('list-group-flush');
   new_dropdown_menu.appendChild(new_dropdown_menu_ul);
   // add response_json.posts 
-  for (let i = 0; i < response_json.posts.length; i++){
+  for (let i = 0; i < response_json.posts.length; i++) {
     let new_dropdown_menu_ul_li = document.createElement('li');
     new_dropdown_menu_ul_li.classList.add('list-group-item');
     new_dropdown_menu_ul_li.classList.add('search_results_dropdown_item');
@@ -251,15 +252,15 @@ function build_search_results_dropdown(response_json){
     let text_el = document.createElement('span');
     text_el.innerHTML = response_json.posts[i].text;
     //cut the text to the first 50 characters and add '...' if the text is longer than 50 characters
-    if (text_el.innerHTML.length > 50){
-      text_el.innerHTML = text_el.innerHTML.substring(0,50) + '...';
+    if (text_el.innerHTML.length > 50) {
+      text_el.innerHTML = text_el.innerHTML.substring(0, 50) + '...';
     }
 
     new_dropdown_menu_ul_li.appendChild(text_el);
 
     new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
 
-    new_dropdown_menu_ul_li.addEventListener('click', function(event){
+    new_dropdown_menu_ul_li.addEventListener('click', function (event) {
       let post_id = event.target.getAttribute('data-post-id');
       let post_title = event.target.getAttribute('data-post-title');
       let search_input = document.querySelector('input[name="search"]');
@@ -273,7 +274,7 @@ function build_search_results_dropdown(response_json){
 
 
   // add response_json.users
-  for (let i = 0; i < response_json.users.data.length; i++){
+  for (let i = 0; i < response_json.users.data.length; i++) {
     let new_dropdown_menu_ul_li = document.createElement('li');
     new_dropdown_menu_ul_li.classList.add('list-group-item');
     new_dropdown_menu_ul_li.classList.add('search_results_dropdown_item');
@@ -299,15 +300,15 @@ function build_search_results_dropdown(response_json){
     let text_el = document.createElement('span');
     text_el.innerHTML = response_json.users.data[i].name;
     //cut the text to the first 50 characters and add '...' if the text is longer than 50 characters
-    if (text_el.innerHTML.length > 50){
-      text_el.innerHTML = text_el.innerHTML.substring(0,50) + '...';
+    if (text_el.innerHTML.length > 50) {
+      text_el.innerHTML = text_el.innerHTML.substring(0, 50) + '...';
     }
 
     new_dropdown_menu_ul_li.appendChild(text_el);
 
     new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
 
-    new_dropdown_menu_ul_li.addEventListener('click', function(event){
+    new_dropdown_menu_ul_li.addEventListener('click', function (event) {
       let user_id = event.target.getAttribute('data-user-id');
       let user_name = event.target.getAttribute('data-user-name');
       let search_input = document.querySelector('input[name="search"]');
@@ -324,12 +325,12 @@ function build_search_results_dropdown(response_json){
 }
 
 
-function add_dropwon_to_search_input(search_input, dropdown){
+function add_dropwon_to_search_input(search_input, dropdown) {
   let search_input_parent = search_input.parentNode;
   search_input_parent.appendChild(dropdown);
 }
 
-function remove_dropdown_from_search_input(search_input){
+function remove_dropdown_from_search_input(search_input) {
   let search_input_parent = search_input.parentNode;
   let dropdown = search_input_parent.querySelector('.search_results_dropdown');
   if (dropdown) search_input_parent.removeChild(dropdown);
@@ -337,20 +338,20 @@ function remove_dropdown_from_search_input(search_input){
 
 
 
-window.addEventListener("load", function(){
+window.addEventListener("load", function () {
 
   let search = document.querySelector('input[name="search"]');
 
   //remove autocomplete
   search.setAttribute('autocomplete', 'off');
 
-  search.addEventListener('input', function(event){
+  search.addEventListener('input', function (event) {
     let search_query = event.target.value;
-    if (!search_query){
+    if (!search_query) {
       remove_dropdown_from_search_input(search);
       return;
     }
-    sendAjaxRequest("POST", "/api/search", {"search": search_query}, function(event){
+    sendAjaxRequest("POST", "/api/search", { "search": search_query }, function (event) {
       let response_json_str = event.target.response;
       let response_json = JSON.parse(response_json_str);
       console.log(response_json);
@@ -364,40 +365,39 @@ window.addEventListener("load", function(){
   })
 })
 
-
-$(document).ready(function() {
+$(document).ready(function () {
   // Bind a click event to the "Add Reaction" button
-  $('.reaction-label').click(function() {
-      e.preventDefault(); // Prevent the form from being submitted
+  $('.reaction-label').click(function () {
+    e.preventDefault(); // Prevent the form from being submitted
 
-      var form = $(this).closest('form');
+    var form = $(this).closest('form');
 
-      var reactionType = $(this).val();
-      var postId = form.find('input[name=id]').val();
-      var csrfToken = form.find('input[name=_token]').val();
+    var reactionType = $(this).val();
+    var postId = form.find('input[name=id]').val();
+    var csrfToken = form.find('input[name=_token]').val();
 
-      // Make an AJAX request to the server
-      $.ajax({
-          url: '/posts/' + postId + '/reaction',
-          method: 'POST',
-          data: {
-              reaction_type: reactionType,
-              post_id: postId,
-              _token: csrfToken
-          },
-          success: function(response) {
-              // The reaction was added successfully
-              // Update the reaction count and display a message
-              // ...
-              var reactionCountSpan = form.find('.reaction-count');
-                var currentReactionCount = parseInt(reactionCountSpan.text());
-                reactionCountSpan.text(currentReactionCount + 1);
-          },
-          error: function(error) {
-              // There was an error adding the reaction
-              // Display an error message
-              // ...
-          },
-      });
+    // Make an AJAX request to the server
+    $.ajax({
+      url: '/posts/' + postId + '/reaction',
+      method: 'POST',
+      data: {
+        reaction_type: reactionType,
+        post_id: postId,
+        _token: csrfToken
+      },
+      success: function (response) {
+        // The reaction was added successfully
+        // Update the reaction count and display a message
+        // ...
+        var reactionCountSpan = form.find('.reaction-count');
+        var currentReactionCount = parseInt(reactionCountSpan.text());
+        reactionCountSpan.text(currentReactionCount + 1);
+      },
+      error: function (error) {
+        // There was an error adding the reaction
+        // Display an error message
+        // ...
+      },
+    });
   });
 });

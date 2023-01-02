@@ -9,6 +9,17 @@ class Replyreaction extends Model
     // Don't add create and update timestamps in database.
   public $timestamps  = false;
 
+      /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+    'user_id', 'reply_id', 'type'
+  ];
+
+
+
   /**
    * The user this replyreaction belongs to
    */
