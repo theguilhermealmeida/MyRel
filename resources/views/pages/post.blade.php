@@ -139,26 +139,33 @@
           </div>
 
           <div class="card">
+            <!-- Button to refresh the tabbed reaction list -->
+            <!-- Refresh symbol -->
+            
             <div class="card-header">
                 <button class="btn btn-secondary ReactionsButton">Reactions</button>
+                <button id="refresh-reaction-list-btn" type="button" class="btn btn-secondary ml-auto" data-post-id="{{ $post->id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> 
+                </button>
             </div>
-            <!-- Tabs -->
-            <ul class="nav nav-tabs" id="reactionTabs" role="tablist">
-            @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
-            <li class="nav-item">
-                <a class="nav-link{{ $key == 0 ? ' active' : '' }}" id="{{ $reactionType }}-tab" data-toggle="tab" href="#{{ $reactionType }}" role="tab" aria-controls="{{ $reactionType }}" aria-selected="true">{{ ucfirst($reactionType) }}</a>
-            </li>
-            @endforeach
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content" id="reactionTabsContent">
-            @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
-            <div class="tab-pane fade{{ $key == 0 ? ' show active' : '' }}" id="{{ $reactionType }}" role="tabpanel" aria-labelledby="{{ $reactionType }}-tab">
-                @each('partials.reaction', $post->reactions()->where('type',$reactionType)->get(), 'reaction')
+            <div class="show_post_reactions" id="reactionTabsContent">
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
+                    <li class="nav-item">
+                        <a class="nav-link{{ $key == 0 ? ' active' : '' }}" id="{{ $reactionType }}-tab" data-toggle="tab" href="#{{ $reactionType }}" role="tab" aria-controls="{{ $reactionType }}" aria-selected="true">{{ ucfirst($reactionType) }}</a>
+                    </li>
+                @endforeach
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
+                        <div class="tab-pane fade{{ $key == 0 ? ' show active' : '' }}" id="{{ $reactionType }}" role="tabpanel" aria-labelledby="{{ $reactionType }}-tab">
+                            @each('partials.reaction', $post->reactions()->where('type',$reactionType)->get(), 'reaction')
+                        </div>
+                    @endforeach
+                </div>
             </div>
-            @endforeach
-            </div>
-
         </div>
 
           <hr>

@@ -361,8 +361,23 @@ const hideReactionsButton = document.querySelector('.ReactionsButton');
     event.preventDefault();
     // Toggle the visibility of the reactions
     event.target.parentElement.nextElementSibling.classList.toggle('d-none');
-    event.target.parentElement.nextElementSibling.nextElementSibling.classList.toggle('d-none');
   });
+
+
+  const refreshBtn = document.getElementById('refresh-reaction-list-btn');
+
+  refreshBtn.addEventListener('click', function() {
+    // Get the ID of the post from the data-post-id attribute of the button
+    let postId = this.getAttribute('data-post-id');
+  
+    // Send an AJAX request to the server to get the updated reaction list for the post
+    sendAjaxRequest('GET', '/posts/' + postId + '/reactions', null, function(event) {
+      // Update the tabbed reaction list with the returned HTML
+      //console.log(event.target.response);
+      document.getElementById('reactionTabsContent').innerHTML = event.target.response;
+    });
+  });
+  
 
 window.addEventListener("load", function () {
 

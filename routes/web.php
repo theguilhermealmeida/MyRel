@@ -20,6 +20,7 @@ Route::get('/', 'Auth\LoginController@home');
 //Posts
 Route::get('posts', 'PostController@feed');
 Route::get('posts/{id}', 'PostController@show');
+Route::get('posts/{id}/reactions', 'PostController@get_reactions');
 
 //Users
 Route::get('user/{id}', 'UserController@show');

@@ -25,13 +25,7 @@
                   </svg>
                   <span>{{$post->comments()->count()}}</span>
               </span>
-
-
-
-
-
-
-
+              
             <div class="reaction-holder">
                 <?php
                     $reaction = $post->reactions()

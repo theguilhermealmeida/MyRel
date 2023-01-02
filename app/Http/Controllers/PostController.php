@@ -268,4 +268,11 @@ class PostController extends Controller
         // ]);
         return redirect()->back()->with('sucess', 'you added a reaction!');
     }
+
+    public function get_reactions($id)
+    {
+        $post = Post::find($id);
+        return view('pages.post_reactions', ['post' => $post]);
+    }
+
 }
