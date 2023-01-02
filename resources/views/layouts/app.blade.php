@@ -207,13 +207,14 @@
                     <div class="row text-center align-items-center flex-row-reverse">
                         <div class="col-lg-auto ms-lg-auto">
                             <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item"><a href="/about-us" class="link-secondary">About Us</a></li>
+                                <li class="list-inline-item"><a href="/contacts" class="link-secondary">Contacts</a></li>
                                 <li class="list-inline-item"><a href="https://git.fe.up.pt/lbaw/lbaw2223/lbaw2212" target="_blank" class="link-secondary">Documentation</a></li>
                             </ul>
                         </div>
                         <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                             <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item"> Projeto LBAW 2022/2023 <a href="." class="link-secondary">G2212</a>
-                                </li>
+                                <li class="list-inline-item"> Projeto LBAW 2022/2023 <a href="." class="link-secondary">G2212</a></li>
                             </ul>
                         </div>
                     </div>

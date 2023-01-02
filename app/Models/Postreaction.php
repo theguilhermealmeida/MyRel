@@ -10,6 +10,14 @@ class Postreaction extends Model
   public $timestamps  = false;
 
   /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+      'user_id', 'post_id', 'type'
+  ];
+  /**
    * The user this postreaction belongs to
    */
   public function user() {

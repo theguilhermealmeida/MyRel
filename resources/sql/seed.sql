@@ -150,10 +150,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 CREATE TRIGGER create_post_reaction_notification
-AFTER INSERT ON postreactions
+AFTER INSERT OR UPDATE ON postreactions
 FOR EACH ROW
 EXECUTE PROCEDURE create_post_reaction_notification();
-
 
 
 CREATE FUNCTION create_comment_notification() RETURNS trigger AS $$
@@ -189,7 +188,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER create_comment_reaction_notification
-AFTER INSERT ON commentreactions
+AFTER INSERT OR UPDATE ON commentreactions
 FOR EACH ROW
 EXECUTE PROCEDURE create_comment_reaction_notification();
 
@@ -228,7 +227,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 CREATE TRIGGER create_reply_reaction_notification
-AFTER INSERT ON replyreactions
+AFTER INSERT OR UPDATE ON replyreactions
 FOR EACH ROW
 EXECUTE PROCEDURE create_reply_reaction_notification();
 
