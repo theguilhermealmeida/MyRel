@@ -137,7 +137,32 @@
                 </span>
             </div>
           </div>
+
+          <div class="card">
+            <div class="card-header">
+                <button class="btn btn-secondary ReactionsButton">Reactions</button>
+            </div>
+            <!-- Tabs -->
+            <ul class="nav nav-tabs" id="reactionTabs" role="tablist">
+            @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
+            <li class="nav-item">
+                <a class="nav-link{{ $key == 0 ? ' active' : '' }}" id="{{ $reactionType }}-tab" data-toggle="tab" href="#{{ $reactionType }}" role="tab" aria-controls="{{ $reactionType }}" aria-selected="true">{{ ucfirst($reactionType) }}</a>
+            </li>
+            @endforeach
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" id="reactionTabsContent">
+            @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
+            <div class="tab-pane fade{{ $key == 0 ? ' show active' : '' }}" id="{{ $reactionType }}" role="tabpanel" aria-labelledby="{{ $reactionType }}-tab">
+                @each('partials.reaction', $post->reactions()->where('type',$reactionType)->get(), 'reaction')
+            </div>
+            @endforeach
+            </div>
+
+        </div>
+
           <hr>
+
 
         @if (Auth::check())
                     <button id="toggle_create_comment" class="mx-auto btn btn-primary" style="margin-bottom:30px;">Comment</button>
@@ -159,10 +184,6 @@
             </div>
         <section id="comments" >
             @each('partials.comment', $post->comments()->get(), 'comment')
-        </section>
-        <section id="reactions" style="margin-top:30px;">
-            <h2>Reactions</h2>
-            @each('partials.reaction', $post->reactions()->get(), 'reaction')
         </section>
     </article>
 @endsection

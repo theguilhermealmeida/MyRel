@@ -82,16 +82,7 @@
                     {!!Form::close()!!}
                     <span class=reaction-count>{{$post->reactions()->where('type','Amazed')->count()}}</span>
                 </span>
-            </div>
-
-
-
-
-
-
-
-
-              
+            </div>   
           </div>
       </div>
 

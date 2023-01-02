@@ -355,6 +355,15 @@ function reset_reaction_holder(reaction_holder){
   }
 }
 
+const hideReactionsButton = document.querySelector('.ReactionsButton');
+  // Add a click event listener to the hide reactions button
+  hideReactionsButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    // Toggle the visibility of the reactions
+    event.target.parentElement.nextElementSibling.classList.toggle('d-none');
+    event.target.parentElement.nextElementSibling.nextElementSibling.classList.toggle('d-none');
+  });
+
 window.addEventListener("load", function () {
 
   let search = document.querySelector('input[name="search"]');
