@@ -110,7 +110,7 @@
         </div>
     </div>
     <div class="post-replies">
-        <section style="display:none" class="replies ml-2">
+        <section class="replies ml-2">
             @each('partials.reply', $comment->replies()->get(), 'reply')
         </section>
     </div>
