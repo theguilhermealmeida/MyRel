@@ -369,6 +369,27 @@ window.addEventListener("load", function () {
   })
 })
 
+window.addEventListener("load", function () {
+
+  var btn = document.getElementsByClassName("btn reaction-label");
+  for (var i = btn.length - 1; i >= 0; i--) {
+    if (btn[i] != null) {
+      btn[i].onclick = function (event) {
+        event.preventDefault();
+        let form = this.parentElement.parentElement;
+        let url = form.getAttribute('action');
+        let reaction = this.value;
+        console.log(url);
+        console.log(reaction);
+        sendAjaxRequest("POST", url, { "reaction_type": reaction }, function () {
+          console.log("SUCESSO");
+        });
+      };
+    }
+  }
+});
+
+/*
 $(document).ready(function () {
   // Bind a click event to the "Add Reaction" button
   $('.reaction-label').click(function () {
@@ -404,4 +425,4 @@ $(document).ready(function () {
       },
     });
   });
-});
+});*/
