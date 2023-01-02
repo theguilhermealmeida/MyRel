@@ -165,18 +165,8 @@ class UserController extends Controller
         }
 
         return redirect()->back();
-        // return response()->json(['success' => true]); 
       }
 
-      public function marknotificationasread(Request $request) {
-        $user = User::find($request->id);
-        $notification = $user->unreadNotifications()->where('id', $request->notification_id)->first();
-  
-        $notification->read = 1;
-        $notification->save();
-
-        return redirect()->back();
-      }
 
     public function showNotifications(Request $request)
     {

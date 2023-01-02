@@ -78,4 +78,3 @@ Route::post('/reset-password', 'PasswordResetController@reset')->name('password.
 // Notifications
 Route::get('notifications/{id}', 'UserController@showNotifications')->name('notifications.show');
 Route::get('notifications/mark-all-as-read/{id}', 'UserController@marknotificationsasread')->name('notifications.markAllAsRead');
-Route::get('notifications/mark-as-read/{id}', 'UserController@marknotificationasread')->name('notifications.markAsRead');

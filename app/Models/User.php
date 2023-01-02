@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword as ResetPasswordContract;
 use Illuminate\Auth\Passwords\CanResetPassword;
 
+use App\Models\Postreaction;
+
 
 class User extends Authenticatable
 {
@@ -169,7 +171,7 @@ class User extends Authenticatable
       }
 
       $relationship_notifications = $this->hasMany('App\Models\Notifications\Relationshipnotification', 'receiver_id')->get();
-      $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification', 'postreaction_id')->get();
+      $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification','postreaction_id')->get();
       $comment_notifications = $this->hasMany('App\Models\Notifications\Commentnotification', 'comment_id')->get();
       $comment_reaction_notification = $this->hasMany('App\Models\Notifications\Commentreactionnotification', 'commentreaction_id')->get();
       $reply_notification = $this->hasMany('App\Models\Notifications\Replynotification', 'reply_id')->get();
