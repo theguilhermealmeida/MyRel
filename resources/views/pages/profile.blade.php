@@ -196,8 +196,12 @@
         echo Form::close();
         ?>
     @endif
-
-
+    <hr>
+            <h1>My Feed</h1>
+        <hr>
+        <section id="posts">
+        @each('partials.post', $posts, 'post')
+        </section>
     <script>
         function toggleEditPostPopUp() {
             document.getElementById("popup1").classList.toggle("active");
@@ -207,4 +211,7 @@
             document.getElementById("popup2").classList.toggle("active");
         }
     </script>
+    
 @endsection
+
+
