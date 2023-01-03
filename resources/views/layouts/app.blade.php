@@ -58,7 +58,7 @@
                     @if (Auth::check())
                     @can('beAdmin', Auth::user())
                     <div>
-                        <a class='btn btn-primary btn-margin' href="admin">
+                        <a class='btn btn-primary btn-margin' href="/admin">
                             <span>Admin</span>
                         </a>
                     </div>
