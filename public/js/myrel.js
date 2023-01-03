@@ -430,7 +430,14 @@ window.addEventListener("load", function () {
   for (var i = btn.length - 1; i >= 0; i--) {
     if (btn[i] != null) {
       btn[i].onclick = function (event) {
+
         event.preventDefault();
+        
+        if (!document.getElementById('is-authenticated')){
+          return;
+        }
+
+       
         let span = event.target.parentElement;
         let form = span.parentElement;
         let url = form.getAttribute('action');

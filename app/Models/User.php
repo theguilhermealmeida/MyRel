@@ -151,17 +151,18 @@ class User extends Authenticatable
       }
 
       $relationship_notifications = $this->hasMany('App\Models\Notifications\Relationshipnotification', 'receiver_id')->where('read', 0)->get();
-      $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification', 'postreaction_id')->where('read', 0)->get();
-      $comment_notifications = $this->hasMany('App\Models\Notifications\Commentnotification', 'comment_id')->where('read', 0)->get();
-      $comment_reaction_notification = $this->hasMany('App\Models\Notifications\Commentreactionnotification', 'commentreaction_id')->where('read', 0)->get();
-      $reply_notification = $this->hasMany('App\Models\Notifications\Replynotification', 'reply_id')->where('read', 0)->get();
-      $reply_reaction_notification = $this->hasMany('App\Models\Notifications\Replyreactionnotification', 'replyreaction_id')->where('read', 0)->get();
+      // $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification', 'postreaction_id')->where('read', 0)->get();
+      // $comment_notifications = $this->hasMany('App\Models\Notifications\Commentnotification', 'comment_id')->where('read', 0)->get();
+      // $comment_reaction_notification = $this->hasMany('App\Models\Notifications\Commentreactionnotification', 'commentreaction_id')->where('read', 0)->get();
+      // $reply_notification = $this->hasMany('App\Models\Notifications\Replynotification', 'reply_id')->where('read', 0)->get();
+      // $reply_reaction_notification = $this->hasMany('App\Models\Notifications\Replyreactionnotification', 'replyreaction_id')->where('read', 0)->get();
 
-      $all_notifications = $relationship_notifications->merge($post_reaction_notifications->merge($comment_notifications->merge($comment_reaction_notification->merge($reply_notification->merge($reply_reaction_notification)))));
+      // $all_notifications = $relationship_notifications->merge($post_reaction_notifications->merge($comment_notifications->merge($comment_reaction_notification->merge($reply_notification->merge($reply_reaction_notification)))));
 
-      $all_notifications->sortBy('date');
+      // $all_notifications->sortBy('date');
 
-      return $all_notifications;
+      // return $all_notifications;
+      return $relationship_notifications;
     }
 
     public function allNotifications() {
@@ -171,17 +172,18 @@ class User extends Authenticatable
       }
 
       $relationship_notifications = $this->hasMany('App\Models\Notifications\Relationshipnotification', 'receiver_id')->get();
-      $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification','postreaction_id')->get();
-      $comment_notifications = $this->hasMany('App\Models\Notifications\Commentnotification', 'comment_id')->get();
-      $comment_reaction_notification = $this->hasMany('App\Models\Notifications\Commentreactionnotification', 'commentreaction_id')->get();
-      $reply_notification = $this->hasMany('App\Models\Notifications\Replynotification', 'reply_id')->get();
-      $reply_reaction_notification = $this->hasMany('App\Models\Notifications\Replyreactionnotification', 'replyreaction_id')->get();
+      // $post_reaction_notifications = $this->hasMany('App\Models\Notifications\Postreactionnotification','postreaction_id')->get();
+      // $comment_notifications = $this->hasMany('App\Models\Notifications\Commentnotification', 'comment_id')->get();
+      // $comment_reaction_notification = $this->hasMany('App\Models\Notifications\Commentreactionnotification', 'commentreaction_id')->get();
+      // $reply_notification = $this->hasMany('App\Models\Notifications\Replynotification', 'reply_id')->get();
+      // $reply_reaction_notification = $this->hasMany('App\Models\Notifications\Replyreactionnotification', 'replyreaction_id')->get();
 
-      $all_notifications = $relationship_notifications->merge($post_reaction_notifications->merge($comment_notifications->merge($comment_reaction_notification->merge($reply_notification->merge($reply_reaction_notification)))));
+      // $all_notifications = $relationship_notifications->merge($post_reaction_notifications->merge($comment_notifications->merge($comment_reaction_notification->merge($reply_notification->merge($reply_reaction_notification)))));
 
-      $all_notifications->sortBy('id')->reverse();
+      // $all_notifications->sortBy('id')->reverse();
 
-      return $all_notifications;
+      // return $all_notifications;
+      return $relationship_notifications;
     }
 
 }
