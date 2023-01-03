@@ -42,9 +42,7 @@
     
         <header class="navbar navbar-expand-md navbar-light d-print-none">
             <div class="container-xl">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                   
                     <a href="/posts" style="display:flex; align-items:center;"><img src="{{ asset('./img/logo.png') }}" style="height:42px;" alt="Tabler" class="navbar-brand-image"></a>
@@ -134,18 +132,9 @@
                 <div class="container-xl" style="min-height: 80vh;">
                     <div class="container">
 
-                    <style>
-                        @media (max-width: 767px) {
-  #main-row-content {
-    flex-direction: column;
-  }
 
-  #col-A, #col-B, #feed{
-    width: 100%;
-  }
-}
 
-                    </style>
+
 
                     
                         <div class="row" id="main-row-content">

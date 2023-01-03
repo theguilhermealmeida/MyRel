@@ -45,6 +45,20 @@
                    
                   }
 
+                  @media (max-width: 767px) {
+                    #main-row-content {
+                      flex-direction: column;
+                    }
+                  
+                    #col-A, #col-B, #feed{
+                      width: 100%;
+                    }
+
+                    .post-header, .post-header-main{
+                      flex-direction: column;
+                    }
+                  }
+
                   .post-header-main{
                     justify-content: space-between;
                   }
