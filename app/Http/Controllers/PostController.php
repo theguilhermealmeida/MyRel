@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Postreaction;
+use App\Http\Controllers\PostreactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {   
@@ -35,10 +38,18 @@ class PostController extends Controller
         $relations = $relations->merge(User::find($user_id)->relationships2()->get());
         $posts = new \Illuminate\Database\Eloquent\Collection;
         foreach ($relations as $relation) {
-            if($relation->pivot->type == 'Family'){
-                $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('family',TRUE));
-            }else{
-                $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility',$relation->pivot->type));
+            if($relation->pivot->state=='accepted'){
+                if ($relation->pivot->type=== 'Family') {
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Family'));
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Friends'));
+                }
+                else if ($relation->pivot->type === 'Friends') {
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Friends'));
+                }
+                else if ($relation->pivot->type === 'Close Friends') {
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Close Friends'));
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Friends'));
+                }
             }
         }
         $posts = $posts->merge(Post::all()->where('user_id',$user_id));
@@ -67,15 +78,32 @@ class PostController extends Controller
      *
      * @return Response
      */
-    public function feed()
+    public function feed(Request $request)
     {
         if (!Auth::check()){
             $posts = Post::where('visibility',NULL)->get();
         }
         else{
-            $posts = $this->allowed_posts(Auth::user()->id);
+
+            if ($request->input('type') === 'family') {
+                $posts = $this->allowed_posts(Auth::user()->id)->where('visibility','Family');
+            }
+            else if ($request->input('type') === 'friends') {
+                $posts = $this->allowed_posts(Auth::user()->id)->where('visibility','Friends');
+            }
+            else if ($request->input('type') === 'closefriends') {
+                $posts = $this->allowed_posts(Auth::user()->id)->where('visibility','Close Friends');
+            } 
+            else {
+                if (!Auth::check()){
+                    $posts = Post::where('visibility',NULL)->get();
+                }
+                else{
+                    $posts = $this->allowed_posts(Auth::user()->id);
+                }   
+            }
         }   
-        return view('pages.posts', ['posts' => $posts->sortBy('id')]);
+        return view('pages.posts', ['posts' => $posts->sortBy('id')->reverse()]);
     }
     
     
@@ -111,6 +139,10 @@ class PostController extends Controller
      */
     public function create(Request $request)
     {
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         $post = new Post();
 
         $post->user_id = Auth::user()->id;
@@ -121,6 +153,13 @@ class PostController extends Controller
         else {
             $post->visibility = $request->input('visibility');
         }
+
+        if($request->hasFile('image')){         
+            $imageName = time().'.'.$request->image->extension(); 
+            $request->image->move(public_path('post_images'), $imageName);
+            $post->photo = "/post_images/". $imageName;
+        }
+        
         $post->save();
 
         return redirect('posts');
@@ -160,7 +199,11 @@ class PostController extends Controller
      */
     public function update(Request $request)
     {
-        
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+
         $post = Post::find($request->id);
         $post->text = $request->input('text');
         if ($request->input('visibility') == 'Strangers') {
@@ -169,6 +212,17 @@ class PostController extends Controller
         else {
             $post->visibility = $request->input('visibility');
         }
+
+        if($request->hasFile('image')){   
+            $image_path = $post->photo;
+            if (File::exists(public_path($image_path))) {
+                File::delete(public_path($image_path));
+            }      
+            $imageName = time().'.'.$request->image->extension(); 
+            $request->image->move(public_path('post_images'), $imageName);
+            $post->photo = "/post_images/". $imageName;
+        }
+
         $post->save();
 
         return redirect('posts/'.$post->id);
@@ -183,7 +237,67 @@ class PostController extends Controller
     public function destroy(Request $request)
     {
         $post = Post::find($request->id);
+        $image_path = $post->photo;
+        if (File::exists(public_path($image_path))) {
+            File::delete(public_path($image_path));
+        }
         $post->delete();
         return redirect('posts');
     }
+
+    public function addReaction(Request $request, $post_id) 
+    {
+
+         if (!Auth::check())
+        {
+            return redirect()->back()->withErrors([
+                'You must be logged in to create a reaction',
+            ]);
+        }
+
+        $request->validate([
+            'reaction_type' => 'required|in:Like,Dislike,Sad,Angry,Amazed',
+        ]);
+
+        $user = Auth::user();
+        $post = Post::find($post_id); 
+
+        // check if the user has already reacted to the post
+
+        $reaction = Postreaction::where('user_id', $user->id)->where('post_id', $post->id)->first();
+
+        // user already reacted to the post
+        if ($reaction)
+        {
+
+            // wants to change reaction type
+            if ($reaction->type != $request->input('reaction_type'))
+            {
+                $reaction->update(['type' => $request->input('reaction_type')]);
+            }
+            // user wants to remove the reaction
+            else
+            {
+                $reaction->destroy($reaction->id);
+            }
+            
+        }
+        // user has not reacted to the post
+        else 
+        {
+            $new_reaction = Postreaction::create(['user_id' => $user->id, 'post_id' => $post_id, 'type' => $request->input('reaction_type')]);
+        }
+
+        // return response()->json([
+        //     'message' => 'Reaction added successfully',
+        // ]);
+        return redirect()->back()->with('sucess', 'you added a reaction!');
+    }
+
+    public function get_reactions($id)
+    {
+        $post = Post::find($id);
+        return view('pages.post_reactions', ['post' => $post]);
+    }
+
 }

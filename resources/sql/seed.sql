@@ -22,27 +22,27 @@ CREATE TABLE users (
 CREATE TABLE posts(
   id SERIAL PRIMARY KEY,
   user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
-  date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+  date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
   text VARCHAR(800),
   photo VARCHAR(800),
-  visibility relationship_type,
-  family BOOLEAN NOT NULL DEFAULT FALSE
+  visibility relationship_type
 );
 
 CREATE TABLE postreactions(
     id SERIAL PRIMARY KEY,
     post_id INTEGER REFERENCES posts ON DELETE CASCADE NOT NULL,
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
     type reactions NOT NULL,
     UNIQUE (post_id,user_id)
 );
 
 CREATE TABLE postreactionnotifications(
+    id SERIAL PRIMARY KEY,
     postreaction_id INTEGER REFERENCES postreactions ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE comments(
@@ -50,7 +50,7 @@ CREATE TABLE comments(
   user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
   post_id INTEGER REFERENCES posts ON DELETE CASCADE NOT NULL,
   text VARCHAR(800) NOT NULL,
-  date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+  date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE commentnotifications(
@@ -58,14 +58,14 @@ CREATE TABLE commentnotifications(
     comment_id INTEGER REFERENCES comments ON DELETE CASCADE NOT NULL,
     text VARCHAR(800) NOT NULL,
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE commentreactions(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     comment_id INTEGER REFERENCES comments ON DELETE CASCADE NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
     type reactions NOT NULL,
     UNIQUE (comment_id,user_id)
 );
@@ -75,7 +75,7 @@ CREATE TABLE commentreactionnotifications(
     commentreaction_id INTEGER REFERENCES commentreactions ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE replies(
@@ -83,7 +83,7 @@ CREATE TABLE replies(
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     comment_id INTEGER REFERENCES comments ON DELETE CASCADE NOT NULL,
     text VARCHAR(800) NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE replynotifications(
@@ -91,14 +91,14 @@ CREATE TABLE replynotifications(
     reply_id INTEGER REFERENCES replies ON DELETE CASCADE NOT NULL,
     text VARCHAR(800) NOT NULL,
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE replyreactions(
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     reply_id INTEGER REFERENCES replies ON DELETE CASCADE NOT NULL,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL,
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
     type reactions NOT NULL,
     UNIQUE (user_id,reply_id)
 );
@@ -108,7 +108,7 @@ CREATE TABLE replyreactionnotifications(
     replyreaction_id INTEGER REFERENCES replyreactions ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
 );
 
 CREATE TABLE relationships(
@@ -126,7 +126,13 @@ CREATE TABLE relationshipnotifications(
     receiver_id INTEGER REFERENCES users ON DELETE CASCADE NOT NULL,
     text VARCHAR(800),
     read BOOLEAN NOT NULL DEFAULT FALSE,
-    date TIMESTAMP DEFAULT (NOW() at time zone 'utc') NOT NULL
+    date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL
+);
+
+CREATE TABLE password_resets(
+  email VARCHAR(255) UNIQUE NOT NULL, 
+  token VARCHAR(255) UNIQUE NOT NULL,
+  created_at TIMESTAMP
 );
 
 CREATE FUNCTION create_post_reaction_notification() RETURNS trigger AS $$
@@ -143,10 +149,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 CREATE TRIGGER create_post_reaction_notification
-AFTER INSERT ON postreactions
+AFTER INSERT OR UPDATE ON postreactions
 FOR EACH ROW
 EXECUTE PROCEDURE create_post_reaction_notification();
-
 
 
 CREATE FUNCTION create_comment_notification() RETURNS trigger AS $$
@@ -182,7 +187,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER create_comment_reaction_notification
-AFTER INSERT ON commentreactions
+AFTER INSERT OR UPDATE ON commentreactions
 FOR EACH ROW
 EXECUTE PROCEDURE create_comment_reaction_notification();
 
@@ -221,7 +226,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 CREATE TRIGGER create_reply_reaction_notification
-AFTER INSERT ON replyreactions
+AFTER INSERT OR UPDATE ON replyreactions
 FOR EACH ROW
 EXECUTE PROCEDURE create_reply_reaction_notification();
 
@@ -726,30 +731,30 @@ INSERT INTO users VALUES (
 ); -- Password is 123456. Generated using Hash::make('123456')
 
 
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://pbs.twimg.com/profile_images/429285908953579520/InZKng9-_x96.jpeg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'The 3 best ADVANCED techniques I learned while building in public last month were:,,1) How to use Chrome Inspect Console properly, especially the Network - Fetch/XHR - Responses feature.,,Understanding the requests from a site is life changing for web scraping.,,(1/3)','https://pbs.twimg.com/profile_images/1461710621397897223/XZciUUbZ_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(18,'Halloween is coming','https://pbs.twimg.com/profile_images/1269253433703510016/B6XjoBkv_x96.jpg',NULL);
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(6,'October traffic has been in the red so far.,,Heres how I plan to make it green: Create helpful and relevant posts in communities (Reddit, Facebook, IH),, Run an engineering as marketing campaign. Experiment with content marketing. As usual, will share everything here ','https://pbs.twimg.com/profile_images/1535551343036964865/13nIczOn_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Puppy thinks hes a bunny.. ','https://pbs.twimg.com/profile_images/1130022182971760640/FlbICzEn_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'The Psychology of Manipulation You Should Know Before Its Too Late...','https://pbs.twimg.com/profile_images/1431998771349626882/614uNv3Y_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,' Hacked filter: sepia() to colorize white walls by masking them with a canvas from an image from auto detected segment that adds it as a image-mask to the image ,,So that you user can soon colorize any walls with a slider','https://pbs.twimg.com/profile_images/1562107516066095106/IUccJ78Y_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'-you*','https://pbs.twimg.com/profile_images/1562107516066095106/IUccJ78Y_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(16,'20 must-watch movies that will change your life & mindset:,,1. Schindler’s List','https://pbs.twimg.com/profile_images/1568369300909473793/JUHo6Ali_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'Let us not forget the Indian version of Michael Jacksons THRILLER!','https://pbs.twimg.com/profile_images/1243734573764071424/wTvOVSyJ_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(4,'Heading for a $5k+ month ,,Someone once told me I`d never make it into the 40% tax bracket and yet here we are. A big thanks to all my clients, sponsors and supporters','https://abs-0.twimg.com/emoji/v2/svg/26a1.svg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(25,'Congratulations to Ulf Kristersson ,@moderaterna, on being elected PM of Sweden. Im sure - cooperation will continue active development, and ’s support in the fight against Russian aggression will increase. I am grateful to Magdalena Andersson for solidarity & supporting .','https://pbs.twimg.com/profile_images/1215070700026855425/7edvU72D_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(21,'Steps to become a data analyst (my preference) :,,Stats (yes),↓,,SQL,↓,,Storytelling with data,(Tableau/ PowerBI),↓,,Build dashboards,↓,,Python,↓,,Visualization libraries,(Pandas, Matplotlib, NumPy, Seaborn),Portfolio projects,(From data cleaning → Data analysis)','https://pbs.twimg.com/profile_images/1581653962822152193/YxHE5AVT_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(14,'En route to SF for TechCrunch Disrupt. ,,Seems like we have a fun crew here already. Who else should I meet?,,And who wants to join our tech crew?','https://abs-0.twimg.com/emoji/v2/svg/1f499.svg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'A historic failure','https://pbs.twimg.com/profile_images/1085150433960706048/_T5T_iZY_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Trabalhe mais feliz com os portáteis HP com a plataforma Intel® Evo™. Com a funcionalidade HP de redução do ruído pode trabalhar de onde quiser, quando quiser.','https://pbs.twimg.com/profile_images/1542882499851845635/wwafo2gn_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'Uncanny ','https://pbs.twimg.com/profile_images/1210913904597110784/8tFdcHPs_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Mountain Climber Fights Off Bear (2022)','https://pbs.twimg.com/profile_images/1495825338806554631/9g1Bm6qt_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(17,'Playful bear seems to dance in the forest','https://pbs.twimg.com/profile_images/557958031606939649/jExOWkdO_x96.jpeg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(9,'Lose your belly fat','https://pbs.twimg.com/profile_images/1581205234407247872/eeoMBwIb_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(19,'Submitting Tailscan to the Chrome Web Store later today! Yesterday, I finished one of the last core features:,,Tailwind CSS config support!,,You can save your own config so that all your custom classes and variants are available','https://pbs.twimg.com/profile_images/1574976813272813570/qASrP2yS_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(3,'mhuaw','https://pbs.twimg.com/profile_images/1581003527735894017/Kwb-vg5A_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'If you want to build an African startup, its not about copying the Silicon Valley model.,,Its about finding the *African* way to do things. Different problems, different contexts, different solutions.','https://pbs.twimg.com/profile_images/1480420844941848580/eiJBfe6h_x96.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(23,'Do you work in English? Check our specialized search engine for English-speaking professionals looking for opportunities in Portugal.','https://pbs.twimg.com/profile_images/481545308094996480/pP7T4KkS_x96.png','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://www.sphereinc.com/wp-content/uploads/2021/07/Python-and-machine-learning-blog-header.webp','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'The best ADVANCED techniques I learned while building in public last month was How to use Chrome Inspect Console properly, especially the Network - Fetch/XHR - Responses feature','https://www.itsecurityguru.org/wp-content/uploads/2022/05/arget-zvHhKiVuR9M-unsplash-scaled.jpg','Close Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(18,'Halloween is coming','https://media.cnn.com/api/v1/images/stellar/prod/210922143623-pet-halloween-costumes-lead.jpg?q=x_0,y_0,h_2532,w_4499,c_fill/h_720,w_1280',NULL);
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(6,'October traffic has been in the red so far. Heres how I plan to make it green: Create helpful and relevant posts in communities (Reddit, Facebook, IH). Run an engineering as marketing campaign. Experiment with content marketing. As usual, will share everything here.','https://c4.wallpaperflare.com/wallpaper/646/235/690/icons-social-media-social-media-wallpaper-preview.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Puppy thinks hes a bunny...','https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/wp11895-baby-sandy-lop-rabbit-with-sleepy-golden-retriever-pup-warren-photographic.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'The Psychology of Manipulation You Should Know Before Its Too Late...','https://content.sintelly.com/articles/UOtgCx0zKsl6imeivLuq/content/dark-psychology-manipulation-and-mind-control-0-@sintelly.jpeg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,' Hacked filter: sepia() to colorize white walls by masking them with a canvas from an image from auto detected segment that adds it as a image-mask to the image. So that you user can soon colorize any walls with a slider','https://www.lunapic.com/editor/premade/sepia.gif','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'-you*','https://blog.petiko.com.br/wp-content/uploads/2022/10/Design-sem-nome-18-scaled.jpg','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(16,'20 must-watch movies that will change your life & mindset: 1. Schindler’s List','https://wallpaperaccess.com/full/2006556.jpg',NULL);
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'Let us not forget the Indian version of Michael Jacksons THRILLER!','https://1.bp.blogspot.com/-LEmiPjLZs94/XWf8kYyjA1I/AAAAAAADnUQ/zcTmiemQ4Ec_KSo0O7wNshWHaow6c9K1wCLcBGAs/s1600/golimar-indian-thriller.jpg',NULL);
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(4,'Heading for a $5k+ month. Someone once told me I`d never make it into the 40% tax bracket and yet here we are. A big thanks to all my clients, sponsors and supporters','https://dc-cdn.s3-ap-southeast-1.amazonaws.com/dc-Cover-qsm384jk7nnt0cehjkdj3trri3-20160408004801.Medi.jpeg',NULL);
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(25,'Congratulations to Ulf Kristersson ,@moderaterna, on being elected PM of Sweden. Im sure - cooperation will continue active development, and ’s support in the fight against Russian aggression will increase. I am grateful to Magdalena Andersson for solidarity & supporting .','https://s3.operamundi.uol.com.br/thumb/8351537fd37c57383ff940320205af88_8d031a0218665282e816e973f7022368.png','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(21,'Steps to become a data analyst (my preference) :SQL, Storytelling with data, (Tableau/ PowerBI), Build dashboards ,Python, ,Visualization libraries, (Pandas, Matplotlib, NumPy, Seaborn), Portfolio projects, (From data cleaning → Data analysis)','https://media.istockphoto.com/id/913219882/photo/financial-graph-on-technology-abstract-background.jpg?b=1&s=170667a&w=0&k=20&c=aFXB_2Bn_T7weuTYIqZAs8sIja9MHcT-u-TlBVftvqo=','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(14,'En route to SF for TechCrunch Disrupt. Seems like we have a fun crew here already. Who else should I meet? And who wants to join our tech crew?','https://api.techpost.com.br/wp-content/uploads/2021/09/laborit-techcrunch-disrupt-.-1-1064x632.png','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'A historic failure','https://historyhustle.com/wp-content/uploads/2021/04/biggest-fails-history.jpg','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Trabalhe mais feliz com os portáteis HP com a plataforma Intel® Evo™. Com a funcionalidade HP de redução do ruído pode trabalhar de onde quiser, quando quiser.','https://picsum.photos/id/1/200/300','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'Uncanny ','https://www.theparisreview.org/blog/wp-content/uploads/2019/09/5475199813_114f842f0d_o-1024x573-1024x573.jpg','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Mountain Climber Fights Off Bear (2022)','https://images.ladbible.com/resize?type=jpeg&quality=70&width=720&fit=contain&gravity=null&dpr=1&url=https://eu-images.contentstack.com/v3/assets/bltcd74acc1d0a99f3a/blt0ac954abe1f53334/634e677857c30050d493cb15/bearstry.JPG.jpg','Close Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(17,'Playful bear seems to dance in the forest','https://i.dailymail.co.uk/i/pix/scaled/2014/01/24/article-2545411-1AEECA9300000578-792_636x382.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(9,'Lose your belly fat','https://i.ytimg.com/vi/qTBfmwHN3_I/maxresdefault.jpg','Close Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(19,'Submitting Tailscan to the Chrome Web Store later today! Yesterday, I finished one of the last core features:,,Tailwind CSS config support! You can save your own config so that all your custom classes and variants are available','https://picsum.photos/id/2/200/300','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(3,'mhuaw','https://wallpaperstock.net/wallpapers/thumbs1/42665hd.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'If you want to build an African startup, its not about copying the Silicon Valley model.,,Its about finding the *African* way to do things. Different problems, different contexts, different solutions.','https://www.menosfios.com/wp-content/uploads/2022/02/AfricanStartups.jpeg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(23,'Do you work in English? Check our specialized search engine for English-speaking professionals looking for opportunities in Portugal.','https://www.europelanguagejobs.com/uploads/posts/how-good1.jpg','Family');
 
 INSERT INTO comments(user_id, post_id, text) VALUES(2, 1, 'Thank you for the information');
 INSERT INTO comments(user_id, post_id, text) VALUES(1, 3, 'I will try it');
@@ -774,7 +779,7 @@ INSERT INTO replies(user_id, comment_id, text) VALUES(12, 8, 'You are definitely
 INSERT INTO replies(user_id, comment_id, text) VALUES(18, 9, 'Have just downloaded Docker to complete @freeCodeCamp Relational Database Cert using Docker and VSCode... wish me luck!');
 
 
-INSERT INTO postreactions(post_id, user_id, type) VALUES(1, 2, 'Amazed');
+INSERT INTO postreactions(post_id, user_id, type) VALUES(1, 1, 'Amazed');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(3, 1, 'Dislike');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(1, 3, 'Sad');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(1, 4, 'Like');
@@ -786,7 +791,7 @@ INSERT INTO postreactions(post_id, user_id, type) VALUES(1, 9, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(1, 10, 'Sad');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(1, 11, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 12, 'Amazed');
-INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 13, 'Dislike');
+INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 1, 'Dislike');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 14, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 15, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 16, 'Amazed');
@@ -794,9 +799,9 @@ INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 17, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(2, 18, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(4, 19, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(5, 13, 'Like');
-INSERT INTO postreactions(post_id, user_id, type) VALUES(6, 12, 'Like');
-INSERT INTO postreactions(post_id, user_id, type) VALUES(8, 19, 'Like');
-INSERT INTO postreactions(post_id, user_id, type) VALUES(9, 11, 'Like');
+INSERT INTO postreactions(post_id, user_id, type) VALUES(6, 1, 'Like');
+INSERT INTO postreactions(post_id, user_id, type) VALUES(8, 1, 'Like');
+INSERT INTO postreactions(post_id, user_id, type) VALUES(9, 1, 'Like');
 INSERT INTO postreactions(post_id, user_id, type) VALUES(3, 19, 'Like');
 
 INSERT INTO commentreactions(comment_id, user_id, type) VALUES(1, 1, 'Like');
@@ -805,22 +810,24 @@ INSERT INTO commentreactions(comment_id, user_id, type) VALUES(2, 2, 'Angry');
 INSERT INTO replyreactions(reply_id, user_id, type) VALUES(1, 2, 'Sad');
 INSERT INTO replyreactions(reply_id, user_id, type) VALUES(2, 1, 'Like');
 
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 2, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 3, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 4, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 5, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 6, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 7, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 7, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 8, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 9, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 10, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 11, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 12, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 13, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 14, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 15, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 16, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 17, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 18, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 19, 'Close Friends');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 2, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 3, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 4, 'Close Friends','pending');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(5, 1, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 6, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(7, 1, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 7, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 8, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 9, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 10, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 11, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 12, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 13, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 14, 'Friends','pending');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 15, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 16, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 17, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 18, 'Friends','pending');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 19, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 24, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(10,1, 'Friends','pending');
