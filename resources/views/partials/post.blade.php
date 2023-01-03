@@ -5,7 +5,11 @@
                   <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
                   <p>{{ $post->date }}</p>
               </div>
-              <div class="ml-auto badge badge-pill badge-info">{{ $post->visibility }}</div>
+              @if ($post->visibility ===NULL)
+                <div class="ml-auto badge badge-pill badge-info">Strangers</div>
+              @else
+                <div class="ml-auto badge badge-pill badge-info">{{ $post->visibility }}</div>
+              @endif
           </div>
           <a class="post-body" href="/posts/{{ $post->id }}">
               <p style="color:white;text-decoration: none; background-color: none;">{{ $post->text }}</p>
