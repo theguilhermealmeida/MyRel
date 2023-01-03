@@ -34,6 +34,12 @@
 </head>
 <body class="theme-dark">
     <div class="sticky-top wrapper">
+
+
+
+
+
+    
         <header class="navbar navbar-expand-md navbar-light d-print-none">
             <div class="container-xl">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -43,7 +49,7 @@
                   
                     <a href="/posts" style="display:flex; align-items:center;"><img src="{{ asset('./img/logo.png') }}" style="height:42px;" alt="Tabler" class="navbar-brand-image"></a>
                 </h1>
-                <div class="navbar-nav flex-row order-md-last">
+                <div class="navbar-nav flex-row order-md-last" style="">
                     @if (Auth::check())
                         
                     <div class="nav-item dropdown d-none d-md-flex me-3" id='notifications-bell'>
@@ -72,7 +78,7 @@
                     @if (Auth::check())
                     @can('beAdmin', Auth::user())
                     <div>
-                        <a class='btn btn-primary btn-margin' href="/admin">
+                        <a class='btn btn-primary' href="/admin" style="margin-top:5px;">
                             <span>Admin</span>
                         </a>
                     </div>
@@ -127,11 +133,36 @@
             <div class="page-body" id="content">
                 <div class="container-xl" style="min-height: 80vh;">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-3">
-                                <!--Create a navbar with feed, friends-->
-                                <nav>
-                                    <a class="left-menu-item" href="/posts">
+
+                    <style>
+                        @media (max-width: 767px) {
+  #main-row-content {
+    flex-direction: column;
+  }
+
+  #col-A, #col-B, #feed{
+    width: 100%;
+  }
+}
+
+                    </style>
+
+                    
+                        <div class="row" id="main-row-content">
+                            
+                        <div class="col-3" id="col-A">
+
+
+
+
+  <nav class="navbar navbar-expand-sm navbar-light" style="background:#1b2434;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <nav>
+
+    <a class="left-menu-item" href="/posts">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <polyline points="5 12 3 12 12 3 21 12 19 12"></polyline>
@@ -191,10 +222,16 @@
                                         <span>Profile</span>
                                     </a>
                                     @endif
-                                </nav>
+                                
+    </nav>
+    </div>
+  </nav>
+
+
+
                             </div>
                             <div class="col-6" id="feed"> @yield('content') </div>
-                            <div class="col-3">
+                            <div class="col-3" id="col-B">
                                 <section id="search"> <?php
                     echo Form::open(array('url' => '/search', 'method' => 'get'));
                     echo "Search:";
