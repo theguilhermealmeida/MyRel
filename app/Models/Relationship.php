@@ -25,6 +25,9 @@ class Relationship extends Model
     public function getRelationship($sender_id, $recipient_id) 
     {
         $relationship = Relationship::where('sender_id', $sender_id)->where('recipient_id', $recipient_id)->first();
+        // if ($relationship == null) {
+        //     $relationship = Relationship::where('sender_id', $recipient_id)->where('recipient_id', $sender_id)->first();
+        // }
         return $relationship;
     }
 

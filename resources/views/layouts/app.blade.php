@@ -39,21 +39,30 @@
                     <a href="/posts" style="display:flex; align-items:center;"><img src="{{ asset('./img/logo.png') }}" style="height:42px;" alt="Tabler" class="navbar-brand-image"></a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
-                    <div class="nav-item dropdown d-none d-md-flex me-3">
-                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                                <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                            </svg>
-                            <span class="badge bg-red"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
-                            <div class="card">
-                                <div class="card-body"> Test notifications </div>
+                    @if (Auth::check())
+                        
+                    <div class="nav-item dropdown d-none d-md-flex me-3" id='notifications-bell'>
+                        
+                        <a class="nav-link px-0" href='{{'../notifications/mark-all-as-read/'.Auth::user()->id}}' role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="notification-bell">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                                    <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                                </svg>
                             </div>
+                            @if (Auth::user()->unreadNotifications()->count()) 
+                                <span class="badge badge-light">{{ Auth::user()->unreadNotifications()->count() }}</span>
+                            @endif
+                        </a>
+                    
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            @foreach (Auth::user()->unreadNotifications() as $notification) 
+                                <a class="dropdown-item" method='POST' href='#'>{{ $notification->text }}</a>
+                            @endforeach
                         </div>
                     </div>
+                    @endif 
 
                     @if (Auth::check())
                     @can('beAdmin', Auth::user())
@@ -64,7 +73,6 @@
                     </div>
                         
                     @endcan
-                        
 
 
                     <div class="dropdown">
@@ -127,6 +135,14 @@
                                         </svg>
                                         <span>Feed</span>
                                     </a>
+                                    @if (Auth::check())
+                                    <a class="left-menu-item" href={{"/notifications/".Auth::user()->id}}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                        </svg>
+                                        <span>Notifications</span>
+                                    </a>
+                                    @endif
                                     <hr style="margin:5px 0px; width: 80%;">
                                     <a class="left-menu-item">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -191,13 +207,14 @@
                     <div class="row text-center align-items-center flex-row-reverse">
                         <div class="col-lg-auto ms-lg-auto">
                             <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item"><a href="/about-us" class="link-secondary">About Us</a></li>
+                                <li class="list-inline-item"><a href="/contacts" class="link-secondary">Contacts</a></li>
                                 <li class="list-inline-item"><a href="https://git.fe.up.pt/lbaw/lbaw2223/lbaw2212" target="_blank" class="link-secondary">Documentation</a></li>
                             </ul>
                         </div>
                         <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                             <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item"> Projeto LBAW 2022/2023 <a href="." class="link-secondary">G2212</a>
-                                </li>
+                                <li class="list-inline-item"> Projeto LBAW 2022/2023 <a href="." class="link-secondary">G2212</a></li>
                             </ul>
                         </div>
                     </div>

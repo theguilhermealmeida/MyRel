@@ -67,9 +67,10 @@
             @endif
 
 
-            @if (Auth::check() && $user->getRelationship(Auth::user()->id, $user->id) != null)
+            @if (Auth::check() && ($user->getRelationship(Auth::user()->id, $user->id) != null || $user->getRelationship($user->id, Auth::user()->id) != null))
                 @php
                     $rel = $user->getRelationship(Auth::user()->id, $user->id);
+                    if ($rel == null) {$rel = $user->getRelationship($user->id, Auth::user()->id);}
                 @endphp
 
                 @if ($rel['pivot']['state'] == 'accepted')
@@ -79,10 +80,21 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                             </svg>
-                            <div class="mx-2">Close Friends</div>
+                            <div class="mx-2">{{$rel['pivot']['type']}}</div>
                         </button>
                     {!! Form::close() !!}
                 @elseif ($rel['pivot']['state'] == 'pending')
+                {{-- @php
+                    echo 'sender_id '. $rel->['pivot']['user_id'];
+                    echo 'recipient_id '. $rel->['pivot']['related_id'];
+                @endphp --}}
+                    {{-- @if (Auth::user()->id == $rel->user_id && user()->id == $rel->related_id) --}}
+                    {{-- @php
+                        foreach($rel as $r){
+                            echo $r;
+                        }
+                    @endphp --}}
+                    @if ($rel['pivot']['user_id'] == Auth::user()->id && $rel['pivot']['related_id'] == $user->id)
                     {!!Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'delete','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'remove_rel_form']) !!}
                     {!! Form::token() !!}
                         <button type="submit" class="badge badge-pill badge-light" name="remove_relationship"> 
@@ -92,6 +104,19 @@
                             <div class="mx-2">Pending</div>
                         </button>
                     {!! Form::close() !!}
+                    @elseif ($rel['pivot']['user_id'] == $user->id && $rel['pivot']['related_id'] == Auth::user()->id)
+                    <div class="btn-group" role="group" aria-label="Basic example">
+
+                        {!! Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'post']) !!}
+                                <button type="submit" class="btn btn-primary btn-sm mr-2">Accept Request</button>
+                        {!! Form::close() !!}
+                        {!! Form::open(['url' => 'api/relationships/' . $rel['pivot']['id'], 'method' => 'delete']) !!}
+                                <button type="submit" class="btn btn-secondary btn-sm">Decline Request</button>
+                        {!! Form::close() !!}
+                    </div>
+                    @endif
+                    {{-- @endif --}}
+
                 @endif
 
             @elseif (Auth::check() && Auth::user()->id != $user->id && $user->getRelationship(Auth::user()->id, $user->id) == null)

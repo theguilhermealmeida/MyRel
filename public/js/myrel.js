@@ -35,16 +35,18 @@ if (btn3 != null && btn3.value == '') {
   };
 }
 
-const targetDiv4 = document.getElementById("edit_comment");
-const btn4 = document.getElementById("toggle_edit_comment");
-if (btn4 != null && btn4.value == '') {
-  btn4.onclick = function () {
-    if (targetDiv4.style.display !== "none") {
-      targetDiv4.style.display = "none";
-    } else {
-      targetDiv4.style.display = "block";
-    }
-  };
+var btn = document.getElementsByClassName("toggle_edit_comment");
+for (var i = btn.length - 1; i >= 0; i--) {
+  if (btn[i] != null && btn[i].value == '') {
+    btn[i].onclick = function () {
+      let node = this.parentElement.nextElementSibling;
+      if (node.style.display !== "none") {
+        node.style.display = "none";
+      } else {
+        node.style.display = "block";
+      }
+    };
+  }
 }
 
 const targetDiv5 = document.getElementById("create_comment");
@@ -59,43 +61,46 @@ if (btn5 != null && btn5.value == '') {
   };
 }
 
-const targetDiv6 = document.getElementById("edit_reply");
-const btn6 = document.getElementById("toggle_edit_reply");
-if (btn6 != null && btn6.value == '') {
-  btn6.onclick = function () {
-    if (targetDiv6.style.display !== "none") {
-      targetDiv6.style.display = "none";
-    } else {
-      targetDiv6.style.display = "block";
-    }
-  };
+var btn = document.getElementsByClassName("toggle_edit_reply");
+for (var i = btn.length - 1; i >= 0; i--) {
+  if (btn[i] != null && btn[i].value == '') {
+    btn[i].onclick = function () {
+      let node = this.parentElement.nextElementSibling;
+      if (node.style.display !== "none") {
+        node.style.display = "none";
+      } else {
+        node.style.display = "block";
+      }
+    };
+  }
 }
 
 var btn = document.getElementsByClassName("toggle_create_reply");
-for (var i = btn.length - 1; i >= 0; i--){
+for (var i = btn.length - 1; i >= 0; i--) {
   if (btn[i] != null && btn[i].value == '') {
     btn[i].onclick = function () {
       if (this.nextElementSibling.style.display !== "none") {
-        this.nextElementSibling.style.display  = "none";
+        this.nextElementSibling.style.display = "none";
       } else {
-        this.nextElementSibling.style.display  = "block";
+        this.nextElementSibling.style.display = "block";
       }
     };
   }
 }
 
 var btn = document.getElementsByClassName("comment-label");
-for (var i = btn.length - 1; i >= 0; i--){
+for (var i = btn.length - 1; i >= 0; i--) {
   if (btn[i] != null && btn[i].value == '') {
     btn[i].onclick = function () {
-      let node = this.parentElement;
-      while (!(node.classList.contains('replies'))) {
+      let node = this.parentElement.nextElementSibling;
+      while (!(node.classList.contains('post-replies'))) {
         node = node.nextElementSibling;
       }
-      if (node.style.display !== "none") {
-        node.style.display  = "none";
+      let childnode = node.firstElementChild;
+      if (childnode.style.display !== "none") {
+        childnode.style.display = "none";
       } else {
-        node.style.display  = "block";
+        childnode.style.display = "block";
       }
     };
   }
@@ -104,100 +109,100 @@ for (var i = btn.length - 1; i >= 0; i--){
 
 
 
-var loadFile = function(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
-    }
-  };
+var loadFile = function (event) {
+  var output = document.getElementById('output');
+  output.src = URL.createObjectURL(event.target.files[0]);
+  output.onload = function () {
+    URL.revokeObjectURL(output.src) // free memory
+  }
+};
 
-function countChars(obj,obj2,length){
-    var maxLength = length;
-    var strLength = obj.value.length;
-    
-    if(strLength == maxLength){
-        obj2.innerHTML = '<span style="color: red;">'+strLength+' out of '+maxLength+' characters</span>';
-    }else{
-        obj2.innerHTML = strLength+' out of '+maxLength+' characters';
-    }
+function countChars(obj, obj2, length) {
+  var maxLength = length;
+  var strLength = obj.value.length;
+
+  if (strLength == maxLength) {
+    obj2.innerHTML = '<span style="color: red;">' + strLength + ' out of ' + maxLength + ' characters</span>';
+  } else {
+    obj2.innerHTML = strLength + ' out of ' + maxLength + ' characters';
+  }
 }
 
-if(document.getElementById("edit_profile_form")){
+if (document.getElementById("edit_profile_form")) {
   document.getElementById("edit_profile_form").reset();
 }
 
-if(document.getElementById("create_post_form")){
+if (document.getElementById("create_post_form")) {
   document.getElementById("create_post_form").reset();
 }
 
-if(document.getElementById("create_comment_form")){
+if (document.getElementById("create_comment_form")) {
   document.getElementById("create_comment_form").reset();
 }
 
-if(document.getElementById("edit_comment_form")){
+if (document.getElementById("edit_comment_form")) {
   document.getElementById("edit_comment_form").reset();
 }
 
-if(document.getElementById("create_reply_form")){
+if (document.getElementById("create_reply_form")) {
   document.getElementById("create_reply_form").reset();
 }
 
-if(document.getElementById("edit_reply_form")){
+if (document.getElementById("edit_reply_form")) {
   document.getElementById("edit_reply_form").reset();
 }
 
-if(document.getElementById("charNumName")){
+if (document.getElementById("charNumName")) {
   var count_chars_edit_profile_name = document.getElementById('charNumName');
-  count_chars_edit_profile_name.onload = countChars(document.getElementById('edit_profile_name'),count_chars_edit_profile_name,30);
+  count_chars_edit_profile_name.onload = countChars(document.getElementById('edit_profile_name'), count_chars_edit_profile_name, 30);
 }
 
-if(document.getElementById("charNumDescription")){
+if (document.getElementById("charNumDescription")) {
   var count_chars_edit_profile_description = document.getElementById('charNumDescription');
-  count_chars_edit_profile_description.onload = countChars(document.getElementById('edit_profile_description'),count_chars_edit_profile_description,280);
+  count_chars_edit_profile_description.onload = countChars(document.getElementById('edit_profile_description'), count_chars_edit_profile_description, 280);
 }
 
-if(document.getElementById("charNumTextEdit")){
+if (document.getElementById("charNumTextEdit")) {
   var count_chars_edit_post_text = document.getElementById('charNumTextEdit');
-  count_chars_edit_post_text.onload = countChars(document.getElementById('edit_post_text'),count_chars_edit_post_text,280);
+  count_chars_edit_post_text.onload = countChars(document.getElementById('edit_post_text'), count_chars_edit_post_text, 280);
 }
 
-if(document.getElementById("charNumCommentEdit")){
+if (document.getElementById("charNumCommentEdit")) {
   var count_chars_edit_comment_text = document.getElementById('charNumCommentEdit');
-  count_chars_edit_comment_text.onload = countChars(document.getElementById('edit_comment_text'),count_chars_edit_comment_text,280);
+  count_chars_edit_comment_text.onload = countChars(document.getElementById('edit_comment_text'), count_chars_edit_comment_text, 280);
 }
 
-if(document.getElementById("charNumReplyEdit")){
+if (document.getElementById("charNumReplyEdit")) {
   var count_chars_edit_reply_text = document.getElementById('charNumReplyEdit');
-  count_chars_edit_reply_text.onload = countChars(document.getElementById('edit_reply_text'),count_chars_edit_reply_text,280);
+  count_chars_edit_reply_text.onload = countChars(document.getElementById('edit_reply_text'), count_chars_edit_reply_text, 280);
 }
 
-function sameValue(element,value){
-  if(element.value == value){
+function sameValue(element, value) {
+  if (element.value == value) {
     element.selected = "selected";
   }
 }
 
-function selectOption(element,value){
+function selectOption(element, value) {
   var options = element.getElementsByTagName("option");
-  for (var i = options.length - 1; i >= 0; i--){
-    sameValue(options[i],value);
+  for (var i = options.length - 1; i >= 0; i--) {
+    sameValue(options[i], value);
   }
 }
 
-if(document.getElementById('edit_profile_gender')){
-  selectOption(document.getElementById('edit_profile_gender'),document.getElementById('edit_profile_gender').getAttribute('data-gender'));
+if (document.getElementById('edit_profile_gender')) {
+  selectOption(document.getElementById('edit_profile_gender'), document.getElementById('edit_profile_gender').getAttribute('data-gender'));
 }
 
-if(document.getElementById('edit_post_visibility')){
-  selectOption(document.getElementById('edit_post_visibility'),document.getElementById('edit_post_visibility').getAttribute('data-visibility'));
+if (document.getElementById('edit_post_visibility')) {
+  selectOption(document.getElementById('edit_post_visibility'), document.getElementById('edit_post_visibility').getAttribute('data-visibility'));
 }
 
 
 
 function encodeForAjax(data) {
   if (data == null) return null;
-  return Object.keys(data).map(function(k){
+  return Object.keys(data).map(function (k) {
     return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
   }).join('&');
 }
@@ -213,7 +218,7 @@ function sendAjaxRequest(method, url, data, handler) {
   request.send(encodeForAjax(data));
 }
 
-function build_search_results_dropdown(response_json){
+function build_search_results_dropdown(response_json) {
   let new_dropdown = document.createElement('div');
   new_dropdown.classList.add('dropdown');
   new_dropdown.classList.add('search_results_dropdown');
@@ -227,7 +232,7 @@ function build_search_results_dropdown(response_json){
   new_dropdown_menu_ul.classList.add('list-group-flush');
   new_dropdown_menu.appendChild(new_dropdown_menu_ul);
   // add response_json.posts 
-  for (let i = 0; i < response_json.posts.length; i++){
+  for (let i = 0; i < response_json.posts.length; i++) {
     let new_dropdown_menu_ul_li = document.createElement('li');
     new_dropdown_menu_ul_li.classList.add('list-group-item');
     new_dropdown_menu_ul_li.classList.add('search_results_dropdown_item');
@@ -251,15 +256,15 @@ function build_search_results_dropdown(response_json){
     let text_el = document.createElement('span');
     text_el.innerHTML = response_json.posts[i].text;
     //cut the text to the first 50 characters and add '...' if the text is longer than 50 characters
-    if (text_el.innerHTML.length > 50){
-      text_el.innerHTML = text_el.innerHTML.substring(0,50) + '...';
+    if (text_el.innerHTML.length > 50) {
+      text_el.innerHTML = text_el.innerHTML.substring(0, 50) + '...';
     }
 
     new_dropdown_menu_ul_li.appendChild(text_el);
 
     new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
 
-    new_dropdown_menu_ul_li.addEventListener('click', function(event){
+    new_dropdown_menu_ul_li.addEventListener('click', function (event) {
       let post_id = event.target.getAttribute('data-post-id');
       let post_title = event.target.getAttribute('data-post-title');
       let search_input = document.querySelector('input[name="search"]');
@@ -273,7 +278,7 @@ function build_search_results_dropdown(response_json){
 
 
   // add response_json.users
-  for (let i = 0; i < response_json.users.data.length; i++){
+  for (let i = 0; i < response_json.users.data.length; i++) {
     let new_dropdown_menu_ul_li = document.createElement('li');
     new_dropdown_menu_ul_li.classList.add('list-group-item');
     new_dropdown_menu_ul_li.classList.add('search_results_dropdown_item');
@@ -299,15 +304,15 @@ function build_search_results_dropdown(response_json){
     let text_el = document.createElement('span');
     text_el.innerHTML = response_json.users.data[i].name;
     //cut the text to the first 50 characters and add '...' if the text is longer than 50 characters
-    if (text_el.innerHTML.length > 50){
-      text_el.innerHTML = text_el.innerHTML.substring(0,50) + '...';
+    if (text_el.innerHTML.length > 50) {
+      text_el.innerHTML = text_el.innerHTML.substring(0, 50) + '...';
     }
 
     new_dropdown_menu_ul_li.appendChild(text_el);
 
     new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
 
-    new_dropdown_menu_ul_li.addEventListener('click', function(event){
+    new_dropdown_menu_ul_li.addEventListener('click', function (event) {
       let user_id = event.target.getAttribute('data-user-id');
       let user_name = event.target.getAttribute('data-user-name');
       let search_input = document.querySelector('input[name="search"]');
@@ -324,33 +329,70 @@ function build_search_results_dropdown(response_json){
 }
 
 
-function add_dropwon_to_search_input(search_input, dropdown){
+function add_dropwon_to_search_input(search_input, dropdown) {
   let search_input_parent = search_input.parentNode;
   search_input_parent.appendChild(dropdown);
 }
 
-function remove_dropdown_from_search_input(search_input){
+function remove_dropdown_from_search_input(search_input) {
   let search_input_parent = search_input.parentNode;
   let dropdown = search_input_parent.querySelector('.search_results_dropdown');
   if (dropdown) search_input_parent.removeChild(dropdown);
 }
 
+function reset_reaction_holder(reaction_holder){
+  var forms = reaction_holder.querySelectorAll('form');
+  for (var i = forms.length - 1; i >= 0; i--) {
+    if (forms[i] != null) {
+      let span = forms[i].querySelector('.user-reaction');
+      if(span){
+        span.classList.remove('user-reaction');
+        let reactionCountElement = span.querySelector('.reaction-count');
+        let currentCount = parseInt(reactionCountElement.textContent, 10);
+        reactionCountElement.textContent = currentCount - 1;
+      }
+    }
+  }
+}
+
+const hideReactionsButton = document.querySelector('.ReactionsButton');
+  // Add a click event listener to the hide reactions button
+  hideReactionsButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    // Toggle the visibility of the reactions
+    event.target.parentElement.nextElementSibling.classList.toggle('d-none');
+  });
 
 
-window.addEventListener("load", function(){
+  const refreshBtn = document.getElementById('refresh-reaction-list-btn');
+
+  refreshBtn.addEventListener('click', function() {
+    // Get the ID of the post from the data-post-id attribute of the button
+    let postId = this.getAttribute('data-post-id');
+  
+    // Send an AJAX request to the server to get the updated reaction list for the post
+    sendAjaxRequest('GET', '/posts/' + postId + '/reactions', null, function(event) {
+      // Update the tabbed reaction list with the returned HTML
+      //console.log(event.target.response);
+      document.getElementById('reactionTabsContent').innerHTML = event.target.response;
+    });
+  });
+  
+
+window.addEventListener("load", function () {
 
   let search = document.querySelector('input[name="search"]');
 
   //remove autocomplete
   search.setAttribute('autocomplete', 'off');
 
-  search.addEventListener('input', function(event){
+  search.addEventListener('input', function (event) {
     let search_query = event.target.value;
-    if (!search_query){
+    if (!search_query) {
       remove_dropdown_from_search_input(search);
       return;
     }
-    sendAjaxRequest("POST", "/api/search", {"search": search_query}, function(event){
+    sendAjaxRequest("POST", "/api/search", { "search": search_query }, function (event) {
       let response_json_str = event.target.response;
       let response_json = JSON.parse(response_json_str);
       console.log(response_json);
@@ -364,4 +406,41 @@ window.addEventListener("load", function(){
   })
 })
 
+$('.notification-bell').on('beforeClose.bs.dropdown', function (e) {
+  // Mark the notifications as read here
+  $.ajax({
+    url: '../notifications/'+user_id+'/mark-all-as-read',
+    method: 'POST',
+    success: function() {
+      $('#notifications-bell').dropdown('toggle');
+    }
+  });
+});
 
+
+
+window.addEventListener("load", function () {
+
+  var btn = document.getElementsByClassName("btn reaction-label");
+  for (var i = btn.length - 1; i >= 0; i--) {
+    if (btn[i] != null) {
+      btn[i].onclick = function (event) {
+        event.preventDefault();
+        let span = event.target.parentElement;
+        let form = span.parentElement;
+        let url = form.getAttribute('action');
+        let reaction = this.value;
+        sendAjaxRequest("POST", url, { "reaction_type": reaction }, function () {
+        });
+        remove_reaction = span.classList.contains('user-reaction'); //indicates if it is a remove of a reaction instead of changing reaction
+        reset_reaction_holder(form.parentElement);
+        if(!remove_reaction){
+          let reactionCountElement = event.target.nextElementSibling;
+          let currentCount = parseInt(reactionCountElement.textContent, 10);
+          reactionCountElement.textContent = currentCount + 1;
+          span.classList.add('user-reaction');
+        }
+      };
+    }
+  }
+});

@@ -1,35 +1,36 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Notifications;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
-class Commentreaction extends Model
+class Commentnotification extends Model
 {
     // Don't add create and update timestamps in database.
   public $timestamps  = false;
 
-    /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
+  
   protected $fillable = [
-    'user_id', 'comment_id', 'type'
-  ];
+    'read'
+];
 
   /**
-   * The user this commentreaction belongs to
+   * The user this Commentnotification belongs to
    */
   public function user() {
     return $this->belongsTo('App\Models\User');
   }
 
     /**
-   * The comment this reaction belongs to
+   * The comment this Commentnotification belongs to
    */
   public function comment() {
     return $this->belongsTo('App\Models\Comment');
   }
+
+  /**
+   * 
+   */
   
 }

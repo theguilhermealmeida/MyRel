@@ -31,76 +31,9 @@
     @endcan
 </div>
 
-
-          </div>
-          <div class="post-body">
-              <p>{{ $post->text }}</p>
-              @if($post->photo !== null)
-              <div style="
-                    width: 100%;
-                    border-radius: 1em;
-                    height: 20em;
-                    background-image: url({{ $post->photo }});
-                    background-size: 100% 100%;"></div>
-              @endif
-          </a>
-          <div class="post-footer">
-              <span class="comment-label">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                      <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"></path>
-                  </svg>
-                  <span>{{$post->comments()->count()}}</span>
-              </span>
-              
         
-
-              <div class="reaction-holder">
-    <?php
-        $reaction = $post->reactions()
-            ->where('user_id', auth()->id())
-            ->first();
-
-        if ($reaction) {
-            $type = $reaction->type;
-        } else {
-            $type = null;
-        }
-    ?>
-
-
-
-    <span class="reaction-label {{ $type == 'Like' ? 'user-reaction' : '' }}">
-        <span>👍🏻</span>
-        <span>{{$post->reactions()->where('type','Like')->count()}}</span>
-    </span>
-    <span class="reaction-label {{ $type == 'Dislike' ? 'user-reaction' : '' }}">
-        <span>👎🏻</span>
-        <span>{{$post->reactions()->where('type','Dislike')->count()}}</span>
-    </span>
-    <span class="reaction-label {{ $type == 'Sad' ? 'user-reaction' : '' }}">
-        <span>😿</span>
-        <span>{{$post->reactions()->where('type','Sad')->count()}}</span>
-    </span>
-    <span class="reaction-label {{ $type == 'Angry' ? 'user-reaction' : '' }}">
-        <span>😡</span>
-        <span>{{$post->reactions()->where('type','Angry')->count()}}</span>
-    </span>
-    <span class="reaction-label {{ $type == 'Amazed' ? 'user-reaction' : '' }}">
-        <span>😍</span>
-        <span>{{$post->reactions()->where('type','Amazed')->count()}}</span>
-    </span>
-</div>
-
-
-
           </div>
-          <hr>
-          @if (Auth::check())
-                    <button id="toggle_create_comment" class="mx-auto btn btn-primary" style="margin-bottom:30px;">Comment</button>
-            @endif
-
-        @can('update', $post)
+          @can('update', $post)
             <div style="display:none" id="edit_post" class="post card mb-3">
             {!!Form::open(['url' => 'api/posts/' . $post->id, 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'edit_post_form']) !!}
             {!! Form::token() !!}
@@ -130,6 +63,117 @@
             {!! Form::close() !!}
         </div>
         @endcan
+          <div class="post-body">
+              <p>{{ $post->text }}</p>
+              @if($post->photo !== null)
+              <div style="
+                    width: 100%;
+                    border-radius: 1em;
+                    height: 20em;
+                    background-image: url({{ $post->photo }});
+                    background-size: 100% 100%;"></div>
+              @endif
+          </a>
+          <div class="post-footer">
+              <span style="cursor:default; " class="comment-label">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message-circle-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                      <path d="M3 20l1.3 -3.9a9 8 0 1 1 3.4 2.9l-4.7 1"></path>
+                  </svg>
+                  <span>{{$post->comments()->count()}}</span>
+              </span>
+              
+        
+
+              <div class="reaction-holder">
+                <?php
+                    $reaction = $post->reactions()
+                        ->where('user_id', auth()->id())
+                        ->first();
+            
+                    if ($reaction) {
+                        $type = $reaction->type;
+                    } else {
+                        $type = null;
+                    }
+                ?>
+            
+            
+            
+                    {!!Form::open(['route' => ['addReaction', $post->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_reaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Like' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Like'>👍🏻</button>
+                    <span class=reaction-count>{{$post->reactions()->where('type','Like')->count()}}</span>
+                </span>
+                    {!!Form::close()!!}                    
+                    {!!Form::open(['route' => ['addReaction', $post->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_reaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Dislike' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Dislike'>👎🏻</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$post->reactions()->where('type','Dislike')->count()}}</span>
+                </span>
+                    {!!Form::open(['route' => ['addReaction', $post->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_reaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Sad' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Sad'>😿</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$post->reactions()->where('type','Sad')->count()}}</span>
+                </span>
+                    {!!Form::open(['route' => ['addReaction', $post->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_reaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Angry' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Angry'>😡</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$post->reactions()->where('type','Angry')->count()}}</span>
+                </span>
+                    {!!Form::open(['route' => ['addReaction', $post->id], 'method' => 'post','enctype' => 'multipart/form-data','class'=>'form-horizontal','id'=>'add_reaction_form']) !!}
+                    {!!Form::token()!!}
+                <span class="reaction-label {{ $type == 'Amazed' ? 'user-reaction' : '' }}">
+                        <button class="btn btn-outline-secondary reaction-label" type='submit' name='reaction_type' value='Amazed'>😍</button>
+                    {!!Form::close()!!}
+                    <span class=reaction-count>{{$post->reactions()->where('type','Amazed')->count()}}</span>
+                </span>
+            </div>
+          </div>
+
+          <div class="card">
+            <!-- Button to refresh the tabbed reaction list -->
+            <!-- Refresh symbol -->
+            
+            <div class="card-header">
+                <button class="btn btn-secondary ReactionsButton">Reactions</button>
+                <button id="refresh-reaction-list-btn" type="button" class="btn btn-secondary ml-auto" data-post-id="{{ $post->id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg> 
+                </button>
+            </div>
+            <div class="show_post_reactions" id="reactionTabsContent">
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
+                    <li class="nav-item">
+                        <a class="nav-link{{ $key == 0 ? ' active' : '' }}" id="{{ $reactionType }}-tab" data-toggle="tab" href="#{{ $reactionType }}" role="tab" aria-controls="{{ $reactionType }}" aria-selected="true">{{ ucfirst($reactionType) }}</a>
+                    </li>
+                @endforeach
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    @foreach(['Like','Dislike','Sad','Angry','Amazed'] as $key => $reactionType)
+                        <div class="tab-pane fade{{ $key == 0 ? ' show active' : '' }}" id="{{ $reactionType }}" role="tabpanel" aria-labelledby="{{ $reactionType }}-tab">
+                            @each('partials.reaction', $post->reactions()->where('type',$reactionType)->get(), 'reaction')
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+          <hr>
+
+
+        @if (Auth::check())
+                    <button id="toggle_create_comment" class="mx-auto btn btn-primary" style="margin-bottom:30px;">Comment</button>
+        @endif
             <div style="display:none" id="create_comment" class="post card mb-3">
             {!!Form::open(['url' => 'api/comments', 'method' => 'PUT','class'=>'form-horizontal','id'=>'create_comment_form']) !!}
             {!! Form::token() !!}
@@ -147,10 +191,6 @@
             </div>
         <section id="comments" >
             @each('partials.comment', $post->comments()->get(), 'comment')
-        </section>
-        <section id="reactions" style="margin-top:30px;">
-            <h2>Reactions</h2>
-            @each('partials.reaction', $post->reactions()->get(), 'reaction')
         </section>
     </article>
 @endsection
