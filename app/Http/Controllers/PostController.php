@@ -38,10 +38,18 @@ class PostController extends Controller
         $relations = $relations->merge(User::find($user_id)->relationships2()->get());
         $posts = new \Illuminate\Database\Eloquent\Collection;
         foreach ($relations as $relation) {
-            if($relation->pivot->type == 'Family'){
-                $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('family',TRUE));
-            }else{
-                $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility',$relation->pivot->type));
+            if($relation->pivot->state=='accepted'){
+                if ($relation->pivot->type=== 'Family') {
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Family'));
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Friends'));
+                }
+                else if ($relation->pivot->type === 'Friends') {
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Friends'));
+                }
+                else if ($relation->pivot->type === 'Close Friends') {
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Close Friends'));
+                    $posts = $posts->merge(Post::all()->where('user_id',$relation->id)->where('visibility','Friends'));
+                }
             }
         }
         $posts = $posts->merge(Post::all()->where('user_id',$user_id));
@@ -76,7 +84,7 @@ class PostController extends Controller
             $posts = Post::where('visibility',NULL)->get();
         }
         else{
-            
+
             if ($request->input('type') === 'family') {
                 $posts = $this->allowed_posts(Auth::user()->id)->where('visibility','Family');
             }
