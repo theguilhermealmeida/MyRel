@@ -367,23 +367,6 @@ const hideReactionsButton = document.querySelector('.ReactionsButton');
 
 
 
-  const refreshBtn = document.getElementById('refresh-reaction-list-btn');
-
-  if(refreshBtn){  
-    refreshBtn.addEventListener('click', function() {
-    // Get the ID of the post from the data-post-id attribute of the button
-    let postId = this.getAttribute('data-post-id');
-  
-    // Send an AJAX request to the server to get the updated reaction list for the post
-    sendAjaxRequest('GET', '/posts/' + postId + '/reactions', null, function(event) {
-      // Update the tabbed reaction list with the returned HTML
-      //console.log(event.target.response);
-      document.getElementById('reactionTabsContent').innerHTML = event.target.response;
-    });
-  });}
-
-  
-
 window.addEventListener("load", function () {
 
   let search = document.querySelector('input[name="search"]');
@@ -446,6 +429,19 @@ window.addEventListener("load", function () {
         });
         remove_reaction = span.classList.contains('user-reaction'); //indicates if it is a remove of a reaction instead of changing reaction
         reset_reaction_holder(form.parentElement);
+        const refreshBtn = document.getElementById('refresh-reaction-list-btn');
+
+        if(refreshBtn){  
+          let postId = refreshBtn.getAttribute('data-post-id');
+        
+          // Send an AJAX request to the server to get the updated reaction list for the post
+          sendAjaxRequest('GET', '/posts/' + postId + '/reactions', null, function(event) {
+            // Update the tabbed reaction list with the returned HTML
+            //console.log(event.target.response);
+            document.getElementById('reactionTabsContent').innerHTML = event.target.response;
+          });
+         }
+        
         if(!remove_reaction){
           let reactionCountElement = event.target.nextElementSibling;
           let currentCount = parseInt(reactionCountElement.textContent, 10);
