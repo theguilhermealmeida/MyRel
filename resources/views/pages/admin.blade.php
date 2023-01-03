@@ -8,16 +8,16 @@
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Usuários</a>
+    <a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Users</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="false">Posts</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comentários</a>
+    <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comments</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="replies-tab" data-toggle="tab" href="#replies" role="tab" aria-controls="replies" aria-selected="false">Respostas</a>
+    <a class="nav-link" id="replies-tab" data-toggle="tab" href="#replies" role="tab" aria-controls="replies" aria-selected="false">Replies</a>
   </li>
 </ul>
 
