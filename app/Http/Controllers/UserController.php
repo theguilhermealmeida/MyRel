@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -35,8 +36,10 @@ class UserController extends Controller
 
     $all_rel = $friends->merge($close_friends->merge($family->merge($pending_relationships)));
 
+    $postController = new PostController();
+    $posts = $postController->allowed_posts($id)->where('user_id',$id);
     
-    return view('pages.profile', ['user' => $user, 'pending_relationships' => $pending_relationships, 'friends' => $friends, 'close_friends' => $close_friends, 'family' => $family, 'relationships' => $all_rel]);
+    return view('pages.profile', ['posts' => $posts, 'user' => $user, 'pending_relationships' => $pending_relationships, 'friends' => $friends, 'close_friends' => $close_friends, 'family' => $family, 'relationships' => $all_rel]);
     }
 
 

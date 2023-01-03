@@ -5,6 +5,7 @@
                   <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
                   <p>{{ $post->date }}</p>
               </div>
+              <div class="ml-auto badge badge-pill badge-info">{{ $post->visibility }}</div>
           </div>
           <a class="post-body" href="/posts/{{ $post->id }}">
               <p style="color:white;text-decoration: none; background-color: none;">{{ $post->text }}</p>
