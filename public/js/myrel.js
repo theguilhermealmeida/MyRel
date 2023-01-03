@@ -265,8 +265,8 @@ function build_search_results_dropdown(response_json) {
     new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
 
     new_dropdown_menu_ul_li.addEventListener('click', function (event) {
-      let post_id = event.target.getAttribute('data-post-id');
-      let post_title = event.target.getAttribute('data-post-title');
+      let post_id = event.currentTarget.getAttribute('data-post-id');
+      let post_title = event.currentTarget.getAttribute('data-post-title');
       let search_input = document.querySelector('input[name="search"]');
 
       search_input.value = post_title;
@@ -313,12 +313,12 @@ function build_search_results_dropdown(response_json) {
     new_dropdown_menu_ul.appendChild(new_dropdown_menu_ul_li);
 
     new_dropdown_menu_ul_li.addEventListener('click', function (event) {
-      let user_id = event.target.getAttribute('data-user-id');
-      let user_name = event.target.getAttribute('data-user-name');
+      let user_id = event.currentTarget.getAttribute('data-user-id');
+      let user_name = event.currentTarget.getAttribute('data-user-name');
       let search_input = document.querySelector('input[name="search"]');
       search_input.value = user_name;
       remove_dropdown_from_search_input(search_input);
-      window.location.href = '/users/' + user_id;
+      window.location.href = '/user/' + user_id;
     });
   }
 
@@ -357,16 +357,20 @@ function reset_reaction_holder(reaction_holder){
 
 const hideReactionsButton = document.querySelector('.ReactionsButton');
   // Add a click event listener to the hide reactions button
-  hideReactionsButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    // Toggle the visibility of the reactions
-    event.target.parentElement.nextElementSibling.classList.toggle('d-none');
-  });
+  if(hideReactionsButton){
+    hideReactionsButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      // Toggle the visibility of the reactions
+      event.target.parentElement.nextElementSibling.classList.toggle('d-none');
+    });
+  }
+
 
 
   const refreshBtn = document.getElementById('refresh-reaction-list-btn');
 
-  refreshBtn.addEventListener('click', function() {
+  if(refreshBtn){  
+    refreshBtn.addEventListener('click', function() {
     // Get the ID of the post from the data-post-id attribute of the button
     let postId = this.getAttribute('data-post-id');
   
@@ -376,7 +380,8 @@ const hideReactionsButton = document.querySelector('.ReactionsButton');
       //console.log(event.target.response);
       document.getElementById('reactionTabsContent').innerHTML = event.target.response;
     });
-  });
+  });}
+
   
 
 window.addEventListener("load", function () {

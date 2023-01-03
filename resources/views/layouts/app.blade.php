@@ -67,7 +67,7 @@
                     @if (Auth::check())
                     @can('beAdmin', Auth::user())
                     <div>
-                        <a class='btn btn-primary btn-margin' href="admin">
+                        <a class='btn btn-primary btn-margin' href="/admin">
                             <span>Admin</span>
                         </a>
                     </div>
@@ -144,17 +144,7 @@
                                     </a>
                                     @endif
                                     <hr style="margin:5px 0px; width: 80%;">
-                                    <a class="left-menu-item">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <circle cx="9" cy="7" r="4"></circle>
-                                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
-                                        </svg>
-                                        <span>Close Friends</span>
-                                    </a>
-                                    <a class="left-menu-item">
+                                    <a class="left-menu-item" href="/posts?type=friends">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-snowman" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M12 3a4 4 0 0 1 2.906 6.75a6 6 0 1 1 -5.81 0a4 4 0 0 1 2.904 -6.75z"></path>
@@ -165,7 +155,17 @@
                                         </svg>
                                         <span>Friends</span>
                                     </a>
-                                    <a class="left-menu-item">
+                                    <a class="left-menu-item" href="/posts?type=closefriends">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                                        </svg>
+                                        <span>Close Friends</span>
+                                    </a>
+                                    <a class="left-menu-item" href="/posts?type=family">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-seeding" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                             <path d="M12 10a6 6 0 0 0 -6 -6h-3v2a6 6 0 0 0 6 6h3"></path>

@@ -25,8 +25,7 @@ CREATE TABLE posts(
   date VARCHAR DEFAULT (TO_CHAR(NOW() at time zone 'utc','hh24:mi · dd mon. yyyy')) NOT NULL,
   text VARCHAR(800),
   photo VARCHAR(800),
-  visibility relationship_type,
-  family BOOLEAN NOT NULL DEFAULT FALSE
+  visibility relationship_type
 );
 
 CREATE TABLE postreactions(
@@ -732,30 +731,30 @@ INSERT INTO users VALUES (
 ); -- Password is 123456. Generated using Hash::make('123456')
 
 
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://www.sphereinc.com/wp-content/uploads/2021/07/Python-and-machine-learning-blog-header.webp','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'The best ADVANCED techniques I learned while building in public last month was How to use Chrome Inspect Console properly, especially the Network - Fetch/XHR - Responses feature','https://www.itsecurityguru.org/wp-content/uploads/2022/05/arget-zvHhKiVuR9M-unsplash-scaled.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'10 Python Mini Automation Projects','https://www.sphereinc.com/wp-content/uploads/2021/07/Python-and-machine-learning-blog-header.webp','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(1,'The best ADVANCED techniques I learned while building in public last month was How to use Chrome Inspect Console properly, especially the Network - Fetch/XHR - Responses feature','https://www.itsecurityguru.org/wp-content/uploads/2022/05/arget-zvHhKiVuR9M-unsplash-scaled.jpg','Close Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(18,'Halloween is coming','https://media.cnn.com/api/v1/images/stellar/prod/210922143623-pet-halloween-costumes-lead.jpg?q=x_0,y_0,h_2532,w_4499,c_fill/h_720,w_1280',NULL);
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(6,'October traffic has been in the red so far. Heres how I plan to make it green: Create helpful and relevant posts in communities (Reddit, Facebook, IH). Run an engineering as marketing campaign. Experiment with content marketing. As usual, will share everything here.','https://c4.wallpaperflare.com/wallpaper/646/235/690/icons-social-media-social-media-wallpaper-preview.jpg','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Puppy thinks hes a bunny...','https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/wp11895-baby-sandy-lop-rabbit-with-sleepy-golden-retriever-pup-warren-photographic.jpg','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'The Psychology of Manipulation You Should Know Before Its Too Late...','https://content.sintelly.com/articles/UOtgCx0zKsl6imeivLuq/content/dark-psychology-manipulation-and-mind-control-0-@sintelly.jpeg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,' Hacked filter: sepia() to colorize white walls by masking them with a canvas from an image from auto detected segment that adds it as a image-mask to the image. So that you user can soon colorize any walls with a slider','https://www.lunapic.com/editor/premade/sepia.gif','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'-you*','https://blog.petiko.com.br/wp-content/uploads/2022/10/Design-sem-nome-18-scaled.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(16,'20 must-watch movies that will change your life & mindset: 1. Schindler’s List','https://wallpaperaccess.com/full/2006556.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'Let us not forget the Indian version of Michael Jacksons THRILLER!','https://1.bp.blogspot.com/-LEmiPjLZs94/XWf8kYyjA1I/AAAAAAADnUQ/zcTmiemQ4Ec_KSo0O7wNshWHaow6c9K1wCLcBGAs/s1600/golimar-indian-thriller.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(4,'Heading for a $5k+ month. Someone once told me I`d never make it into the 40% tax bracket and yet here we are. A big thanks to all my clients, sponsors and supporters','https://dc-cdn.s3-ap-southeast-1.amazonaws.com/dc-Cover-qsm384jk7nnt0cehjkdj3trri3-20160408004801.Medi.jpeg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,' Hacked filter: sepia() to colorize white walls by masking them with a canvas from an image from auto detected segment that adds it as a image-mask to the image. So that you user can soon colorize any walls with a slider','https://www.lunapic.com/editor/premade/sepia.gif','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'-you*','https://blog.petiko.com.br/wp-content/uploads/2022/10/Design-sem-nome-18-scaled.jpg','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(16,'20 must-watch movies that will change your life & mindset: 1. Schindler’s List','https://wallpaperaccess.com/full/2006556.jpg',NULL);
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'Let us not forget the Indian version of Michael Jacksons THRILLER!','https://1.bp.blogspot.com/-LEmiPjLZs94/XWf8kYyjA1I/AAAAAAADnUQ/zcTmiemQ4Ec_KSo0O7wNshWHaow6c9K1wCLcBGAs/s1600/golimar-indian-thriller.jpg',NULL);
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(4,'Heading for a $5k+ month. Someone once told me I`d never make it into the 40% tax bracket and yet here we are. A big thanks to all my clients, sponsors and supporters','https://dc-cdn.s3-ap-southeast-1.amazonaws.com/dc-Cover-qsm384jk7nnt0cehjkdj3trri3-20160408004801.Medi.jpeg',NULL);
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(25,'Congratulations to Ulf Kristersson ,@moderaterna, on being elected PM of Sweden. Im sure - cooperation will continue active development, and ’s support in the fight against Russian aggression will increase. I am grateful to Magdalena Andersson for solidarity & supporting .','https://s3.operamundi.uol.com.br/thumb/8351537fd37c57383ff940320205af88_8d031a0218665282e816e973f7022368.png','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(21,'Steps to become a data analyst (my preference) :SQL, Storytelling with data, (Tableau/ PowerBI), Build dashboards ,Python, ,Visualization libraries, (Pandas, Matplotlib, NumPy, Seaborn), Portfolio projects, (From data cleaning → Data analysis)','https://media.istockphoto.com/id/913219882/photo/financial-graph-on-technology-abstract-background.jpg?b=1&s=170667a&w=0&k=20&c=aFXB_2Bn_T7weuTYIqZAs8sIja9MHcT-u-TlBVftvqo=','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(14,'En route to SF for TechCrunch Disrupt. Seems like we have a fun crew here already. Who else should I meet? And who wants to join our tech crew?','https://api.techpost.com.br/wp-content/uploads/2021/09/laborit-techcrunch-disrupt-.-1-1064x632.png','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'A historic failure','https://historyhustle.com/wp-content/uploads/2021/04/biggest-fails-history.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Trabalhe mais feliz com os portáteis HP com a plataforma Intel® Evo™. Com a funcionalidade HP de redução do ruído pode trabalhar de onde quiser, quando quiser.','https://s2.glbimg.com/fNiIEJd115zqiXfnyXWIuok6upk=/1200x/smart/filters:cover():strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2022/V/2/Fz0knsRAae1sfKaiXMqQ/intel-vpro.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'Uncanny ','https://www.theparisreview.org/blog/wp-content/uploads/2019/09/5475199813_114f842f0d_o-1024x573-1024x573.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Mountain Climber Fights Off Bear (2022)','https://images.ladbible.com/resize?type=jpeg&quality=70&width=720&fit=contain&gravity=null&dpr=1&url=https://eu-images.contentstack.com/v3/assets/bltcd74acc1d0a99f3a/blt0ac954abe1f53334/634e677857c30050d493cb15/bearstry.JPG.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(7,'A historic failure','https://historyhustle.com/wp-content/uploads/2021/04/biggest-fails-history.jpg','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Trabalhe mais feliz com os portáteis HP com a plataforma Intel® Evo™. Com a funcionalidade HP de redução do ruído pode trabalhar de onde quiser, quando quiser.','https://picsum.photos/id/1/200/300','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'Uncanny ','https://www.theparisreview.org/blog/wp-content/uploads/2019/09/5475199813_114f842f0d_o-1024x573-1024x573.jpg','Family');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(5,'Mountain Climber Fights Off Bear (2022)','https://images.ladbible.com/resize?type=jpeg&quality=70&width=720&fit=contain&gravity=null&dpr=1&url=https://eu-images.contentstack.com/v3/assets/bltcd74acc1d0a99f3a/blt0ac954abe1f53334/634e677857c30050d493cb15/bearstry.JPG.jpg','Close Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(17,'Playful bear seems to dance in the forest','https://i.dailymail.co.uk/i/pix/scaled/2014/01/24/article-2545411-1AEECA9300000578-792_636x382.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(9,'Lose your belly fat','https://i.ytimg.com/vi/qTBfmwHN3_I/maxresdefault.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(19,'Submitting Tailscan to the Chrome Web Store later today! Yesterday, I finished one of the last core features:,,Tailwind CSS config support! You can save your own config so that all your custom classes and variants are available','https://s2.glbimg.com/QavifHSLZ8IqHHmX8evUdKtJhAs=/0x0:695x440/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2021/2/S/w4Y0MhSS28w5G3PXWT5w/2014-02-27-extensoes-so-poderao-ser-baixadas-via-chrome-web-store-a-partir-de-1-de-maio.png','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(9,'Lose your belly fat','https://i.ytimg.com/vi/qTBfmwHN3_I/maxresdefault.jpg','Close Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(19,'Submitting Tailscan to the Chrome Web Store later today! Yesterday, I finished one of the last core features:,,Tailwind CSS config support! You can save your own config so that all your custom classes and variants are available','https://picsum.photos/id/2/200/300','Friends');
 INSERT INTO posts(user_id, text, photo, visibility) VALUES(3,'mhuaw','https://wallpaperstock.net/wallpapers/thumbs1/42665hd.jpg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'If you want to build an African startup, its not about copying the Silicon Valley model.,,Its about finding the *African* way to do things. Different problems, different contexts, different solutions.','https://www.menosfios.com/wp-content/uploads/2022/02/AfricanStartups.jpeg','Friends');
-INSERT INTO posts(user_id, text, photo, visibility) VALUES(23,'Do you work in English? Check our specialized search engine for English-speaking professionals looking for opportunities in Portugal.','https://www.europelanguagejobs.com/uploads/posts/how-good1.jpg','Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(24,'If you want to build an African startup, its not about copying the Silicon Valley model.,,Its about finding the *African* way to do things. Different problems, different contexts, different solutions.','https://www.menosfios.com/wp-content/uploads/2022/02/AfricanStartups.jpeg','Close Friends');
+INSERT INTO posts(user_id, text, photo, visibility) VALUES(23,'Do you work in English? Check our specialized search engine for English-speaking professionals looking for opportunities in Portugal.','https://www.europelanguagejobs.com/uploads/posts/how-good1.jpg','Family');
 
 INSERT INTO comments(user_id, post_id, text) VALUES(2, 1, 'Thank you for the information');
 INSERT INTO comments(user_id, post_id, text) VALUES(1, 3, 'I will try it');
@@ -811,22 +810,24 @@ INSERT INTO commentreactions(comment_id, user_id, type) VALUES(2, 2, 'Angry');
 INSERT INTO replyreactions(reply_id, user_id, type) VALUES(1, 2, 'Sad');
 INSERT INTO replyreactions(reply_id, user_id, type) VALUES(2, 1, 'Like');
 
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 2, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 3, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 4, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 5, 'Close Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 6, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 7, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 7, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 8, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 9, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 10, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(2, 11, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 12, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 13, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 14, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 15, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 16, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 17, 'Family');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 18, 'Friends');
-INSERT INTO relationships(user_id, related_id, type) VALUES(1, 19, 'Close Friends');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 2, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 3, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 4, 'Close Friends','pending');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(5, 1, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 6, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(7, 1, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 7, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 8, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 9, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 10, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(2, 11, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 12, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 13, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 14, 'Friends','pending');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 15, 'Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 16, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 17, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 18, 'Friends','pending');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 19, 'Close Friends','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(1, 24, 'Family','accepted');
+INSERT INTO relationships(user_id, related_id, type,state) VALUES(10,1, 'Friends','pending');
