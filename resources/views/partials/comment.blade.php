@@ -1,6 +1,6 @@
 <div class="post card" data-id="{{ $comment->id }}">
     <div class="post-header">
-        <img src={{ $comment->user()->get()[0]->photo }} class="post-profile-pic">
+        <img src={{ $comment->user()->get()[0]->photo }} class="post-profile-pic" alt=id={{ $comment->user()->get()[0]->id }}>
         <div class="post-header-info">
             <h3><a href="/user/{{ $comment->user()->get()[0]->id }}">{{ $comment->user()->get()[0]->name }}</a></h3>
             <p>{{ $comment->date }}</p>

@@ -7,7 +7,7 @@
         @if (!$user->ban)
 
             <div class="post-header">
-                <img src={{ $user->photo }}>
+                <img src={{ $user->photo }} alt=id={{ $user->id }}>
                 <div class="post-header-info" style="margin-left:30px;">
                     <h2>{{ $user->getName() }}</a></h2>
                     <div>{{ $user->gender }}</div>
@@ -51,7 +51,7 @@
                         <div>
                         <label for="edit_profile_picture">Profile Picture</label>
                         <input style="color:black;background-color:white" id="edit_profile_picture" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
-                        <img class="m-3" id="output"/>
+                        <img class="m-3" id="output" alt=""/>
                         </div>
                     </div>
                     <div class="form-group">

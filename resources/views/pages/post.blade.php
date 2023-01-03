@@ -9,7 +9,7 @@
 
             <div>
 
-                <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic">
+                <img src={{ $post->user()->get()[0]->photo }} class="post-profile-pic" alt=id={{ $post->user()->get()[0]->id }}>
                 <div class="post-header-info">
                     <h3><a href="/user/{{ $post->user()->get()[0]->id }}">{{ $post->user()->get()[0]->getName() }}</a></h3>
                     <p>{{ $post->date }}</p>
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <div>
                     <input style="color:black;background-color:white" id="edit_post_picture" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
-                    <img class="m-3" id="output"/>
+                    <img class="m-3" id="output" alt=""/>
                     </div>
                 </div>
                 <div class="form-group">

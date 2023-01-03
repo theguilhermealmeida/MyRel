@@ -41,7 +41,7 @@
                 </button>
                 <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                   
-                    <a href="/posts" style="display:flex; align-items:center;"><img src="{{ asset('./img/logo.png') }}" style="height:42px;" alt="Tabler" class="navbar-brand-image"></a>
+                    <a href="/posts" style="display:flex; align-items:center;"><img src="{{ asset('./img/logo.png') }}" style="height:42px;" alt="MyRel" class="navbar-brand-image"></a>
                 </h1>
                 <div class="navbar-nav flex-row order-md-last">
                     @if (Auth::check())
@@ -79,10 +79,10 @@
                         
                     @endcan
 
-
+                    <fieldset>
                     <div class="dropdown">
                       <button style="background:none; border:none;" class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <img style="width:30px; height:30px;" class="avatar avatar-sm" src={{ Auth::user()->photo }}></img>
+                      <img style="width:30px; height:30px;" class="avatar avatar-sm" alt="" src={{ Auth::user()->photo }}></img>
 
                                 <div>{{Auth::user()->name}}</div>
 
@@ -91,7 +91,7 @@
                        
                       <a href="{{ url('/logout') }}" class="dropdown-item">Logout</a>
                       </div>
-                    </div>
+                    </div></fieldset>
                     @else
                     <div class="dropdown">
                       <button style="background:none; border:none;" class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

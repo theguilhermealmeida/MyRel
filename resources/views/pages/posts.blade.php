@@ -21,7 +21,7 @@
     <div class="form-group">
         <div>
           <input style="color:black;background-color:white" id="newpost" type="file" accept="image/*" class="form-control" name="image" onchange="loadFile(event)">
-          <img class="m-3" id="output"/>
+          <img class="m-3" id="output" alt=""/>
         </div>
     </div>
     <div class="form-group">

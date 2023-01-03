@@ -1,7 +1,7 @@
 
 <div class="relationship">
     <div class="relationship-header">
-    <img src={{ $relationship->photo }} >
+    <img src={{ $relationship->photo }} alt=id={{ $relationship->id }} >
     <h4 style="color: Orange;cursor:pointer; margin-left:10px;"><a href="/user/{{ $relationship->id }}">{{$relationship->name}}</a></h4>
     </div>
 
