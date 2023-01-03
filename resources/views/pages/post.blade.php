@@ -69,9 +69,10 @@
               <div style="
                     width: 100%;
                     border-radius: 1em;
-                    height: 20em;
+                    height: 22em;
                     background-image: url({{ $post->photo }});
-                    background-size: 100% 100%;"></div>
+                    background-size: cover;
+  background-position: center;"></div>
               @endif
           </a>
           <div class="post-footer">
